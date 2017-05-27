@@ -4,11 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestPlayer : MonoBehaviour {
+public class PlayerAction : MonoBehaviour {
 	private Animator animator;
 	public Animator gunAnimator;
+
+	private ShoulderAction shoulderAction;
+
 	private Rigidbody pBody;
 	private BoxCollider pCollider;
+	public bool holdOnWeapon = false;
 
 	public Vector3 velocity;
 
@@ -25,11 +29,11 @@ public class TestPlayer : MonoBehaviour {
     private void Awake()
     {
         // TODO factory pattern을 사용해서 리팩토링하면 될거 같은데
+		// 이건 고민해야 할 것 같아오..  by SungMin
         skills = new SkillBase[] { new TimePause(KeyCode.Z), new TimeRevert(KeyCode.X) };
         skillNum = skills.Length;
-
         // DEBUG 시간 돌아가는거 잘 확인하기 위해 이렇게 해둠
-        Physics.gravity = Vector3.down * 0.1f;
+        //Physics.gravity = Vector3.down * 0.1f;
     }
 
     private T GetSkill<T>()
@@ -40,18 +44,19 @@ public class TestPlayer : MonoBehaviour {
         return child;
     }
 
-    void Start () {
+    void Start () 
+	{
 		Physics.gravity = Vector3.down * 9.8f;
 		animator = transform.GetComponentInChildren<Animator> ();
 		pBody = GetComponent<Rigidbody> ();
 		pCollider = GetComponent<BoxCollider> ();
+		shoulderAction = gunAnimator.GetComponent<ShoulderAction> ();
 	}
 
 	Vector2 input;
-	bool isShot = false;
 
-	void Update () {
-
+	void Update ()
+	{
         // 오브젝트 하나 만들고 update 계속 돌리는 것이 좋을 거 같다
         for (int i = 0; i < skillNum; i++)
         {
@@ -63,15 +68,19 @@ public class TestPlayer : MonoBehaviour {
 
         input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
 
-		isShot = Input.GetMouseButton (0);
-		animator.SetBool ("IsShooting", isShot);
-		gunAnimator.SetBool ("IsShooting", isShot);
-
 		animator.SetFloat ("HorizontalInput", input.x);
 		animator.SetFloat ("VerticalInput", input.y);
 
 		animator.SetFloat ("MaxMoveSpeed", maxSpeed);
 		animator.SetFloat ("MoveAccel", accel);
+
+		animator.SetBool ("HoldOnWeapon", holdOnWeapon);
+
+		if (holdOnWeapon) {
+			ExcuteShotableLayer ();
+		} else {
+			ExcuteNoneShotableLayer ();
+		}
 
 		if (input.x == 0)
 		{
@@ -82,7 +91,7 @@ public class TestPlayer : MonoBehaviour {
 		if (!Input.GetKey(KeyCode.LeftShift) && input.x != 0)
 		{
 			animator.SetTrigger ("TriggerWalk");
-			gunAnimator.SetTrigger ("TriggerAim");
+			gunAnimator.SetTrigger ("TriggerIdle");
 		}
 
 		if (Input.GetKey (KeyCode.LeftShift) && input.x != 0) 
@@ -103,12 +112,20 @@ public class TestPlayer : MonoBehaviour {
 		{
 			animator.SetTrigger ("TriggerLanding");
 		}
+	}
 
-		if (isShot)
-		{
-			animator.SetTrigger ("TriggerShot");
-			gunAnimator.SetTrigger ("TriggerShot");
-		}
+	void ExcuteShotableLayer ()
+	{
+		animator.SetLayerWeight (1, 0);
+		animator.SetLayerWeight (2, 1);
+		GetComponent<AimTarget> ().hideShoulder = false;
+	}
+
+	void ExcuteNoneShotableLayer ()
+	{
+		animator.SetLayerWeight (1, 1);
+		animator.SetLayerWeight (2, 0);
+		GetComponent<AimTarget> ().hideShoulder = true;
 	}
 
 	void FixedUpdate()

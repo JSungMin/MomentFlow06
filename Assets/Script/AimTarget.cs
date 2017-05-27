@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AimTarget : MonoBehaviour {
 	public bool isActive = false;
+	public bool hideShoulder = false;
 	private Animator animator;
 	public Transform shoulder;
 
@@ -79,8 +80,17 @@ public class AimTarget : MonoBehaviour {
 			return;
 		}
 
+		if (true == hideShoulder)
+		{
+			shoulder.GetComponent<SpriteRenderer> ().enabled = false;
+		}
+		else
+		{
+			shoulder.GetComponent<SpriteRenderer> ().enabled = true;
+		}
 
 		var mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+
 		if (isActive) {
 			AimToObject (mousePos);
 		} else {

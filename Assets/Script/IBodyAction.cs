@@ -2,43 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IAction : StateMachineBehaviour {
+public class IBodyAction : StateMachineBehaviour {		
+	static void SetStepMode (Animator animator)
+	{
+		if (animator.GetFloat ("HorizontalInput") != 0)
+			animator.SetFloat ("IsForwardWalk", Mathf.Sign (animator.GetFloat ("HorizontalInput") * animator.transform.parent.localScale.x));
+		else {
+			animator.ResetTrigger ("TriggerWalk");
+		}
+	}
 
 	static void Walk (Animator animator, AnimatorStateInfo stateInfo)
 	{
 		if (stateInfo.IsName ("Walk"))
 		{
-			var aimScr = animator.GetComponentInParent<AimTarget> ();
-			if (null != aimScr) {
-				aimScr.isActive = false;
-			}
+			SetStepMode (animator);
 
-			if (animator.GetFloat ("HorizontalInput") != 0)
-				animator.SetFloat ("IsForwardWalk", Mathf.Sign (animator.GetFloat ("HorizontalInput") * animator.transform.parent.localScale.x));
-			else {
-				animator.ResetTrigger ("TriggerWalk");
-				//animator.Play ("Idle");
-			}
-		
 			var accel = animator.GetFloat ("MoveAccel");
 			var newVelocity = animator.GetComponentInParent<Rigidbody> ().velocity;
+
 			newVelocity += Vector3.right * animator.GetFloat ("HorizontalInput") * accel * Time.deltaTime;
-			newVelocity.x = Mathf.Clamp (newVelocity.x, -animator.GetFloat("MoveSpeed"), animator.GetFloat("MoveSpeed"));
+
+			if (animator.GetBool("IsAimming"))
+			{
+				newVelocity.x = Mathf.Clamp (newVelocity.x, -animator.GetFloat("MoveSpeed"), animator.GetFloat("MoveSpeed")) * 0.8f;
+			}
+			else
+				newVelocity.x = Mathf.Clamp (newVelocity.x, -animator.GetFloat("MoveSpeed"), animator.GetFloat("MoveSpeed"));
+
 			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity;
 		}
 	}
+
 	static void Run (Animator animator, AnimatorStateInfo stateInfo)
 	{
 		if (stateInfo.IsName ("Run"))
 		{
-			var aimScr = animator.GetComponentInParent<AimTarget> ();
-			if (null != aimScr) {
-				aimScr.isActive = false;
-			}
-
 			if (animator.GetFloat ("HorizontalInput") == 0) {
 				animator.ResetTrigger ("TriggerRun");
-				//animator.Play ("Idle");
 			}
 
 			var accel = animator.GetFloat ("MoveAccel");
@@ -53,8 +54,9 @@ public class IAction : StateMachineBehaviour {
 	{
 		if (stateInfo.IsName ("Jump"))
 		{
-			Debug.Log ("Jump");
-			animator.GetComponentInParent<Rigidbody> ().AddForce (Vector3.up * 25 * Time.deltaTime, ForceMode.Impulse);
+			var rigid = animator.GetComponentInParent<Rigidbody> ();
+			rigid.velocity = new Vector3 (rigid.velocity.x, 0, 0);
+			rigid.AddForce (Vector3.up * 10 * Time.fixedDeltaTime, ForceMode.Impulse);
 		}
 	}
 		
@@ -62,7 +64,7 @@ public class IAction : StateMachineBehaviour {
 	{
 		if (stateInfo.IsName ("Falling"))
 		{
-			Debug.Log ("Falling");
+			
 		}
 	}
 
@@ -70,7 +72,7 @@ public class IAction : StateMachineBehaviour {
 	{
 		if (stateInfo.IsName ("Landing"))
 		{
-			Debug.Log ("Landing");
+			
 		}
 	}
 
@@ -85,14 +87,11 @@ public class IAction : StateMachineBehaviour {
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 		Walk (animator, stateInfo);
 		Run (animator, stateInfo);
+
 	}
 
 	//OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		var aimScr = animator.GetComponentInParent<AimTarget> ();
-		if (null != aimScr) {
-			aimScr.isActive = true;
-		}
 	}
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
