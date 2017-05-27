@@ -41,6 +41,7 @@ public class TestPlayer : MonoBehaviour {
     }
 
     void Start () {
+		Physics.gravity = Vector3.down * 9.8f;
 		animator = transform.GetComponentInChildren<Animator> ();
 		pBody = GetComponent<Rigidbody> ();
 		pCollider = GetComponent<BoxCollider> ();

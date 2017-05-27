@@ -13,8 +13,6 @@ public class AimTarget : MonoBehaviour {
 
 	public float defaultAngle = 45f;
 
-	public float ppu;
-
 	// Use this for initialization
 	void Start () {
 		animator = GetComponent<Animator> ();
