@@ -8,6 +8,8 @@ public class PlayerAction : MonoBehaviour {
 	private Animator animator;
 	public Animator gunAnimator;
 
+	private EquiptInfo equiptInfo;
+
 	private ShoulderAction shoulderAction;
 
 	private Rigidbody pBody;
@@ -25,6 +27,8 @@ public class PlayerAction : MonoBehaviour {
 
     private SkillBase[] skills;
     private int skillNum;
+
+	Vector2 input;
 
     private void Awake()
     {
@@ -51,9 +55,9 @@ public class PlayerAction : MonoBehaviour {
 		pBody = GetComponent<Rigidbody> ();
 		pCollider = GetComponent<BoxCollider> ();
 		shoulderAction = gunAnimator.GetComponent<ShoulderAction> ();
+		equiptInfo = GetComponent<EquiptInfo> ();
+		EquiptDefaultWeapon ();
 	}
-
-	Vector2 input;
 
 	void Update ()
 	{
@@ -112,6 +116,12 @@ public class PlayerAction : MonoBehaviour {
 		{
 			animator.SetTrigger ("TriggerLanding");
 		}
+	}
+
+	void EquiptDefaultWeapon ()
+	{
+		equiptInfo.AddWeapon (0);
+		equiptInfo.EquiptWeapon (0);
 	}
 
 	void ExcuteShotableLayer ()

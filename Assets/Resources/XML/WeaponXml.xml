@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<WeaponSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Weapon>
+		<Id>0</Id>
+		<Name>기본권총</Name>
+		<WeaponType>1</WeaponType>
+		<RifleType>0</RifleType>
+		<Damage>5</Damage>
+		<AttackDelay>0.25</AttackDelay>
+		<MaxAmmo>7</MaxAmmo>
+		<UsingBullet>0.45mm</UsingBullet>
+	</Weapon>
+	<Weapon>
+		<Id>1</Id>
+		<Name>기본칼</Name>
+		<WeaponType>0</WeaponType>
+		<Damage>10</Damage>
+		<AttackDelay>0.4</AttackDelay>
+	</Weapon>
+</WeaponSet>
