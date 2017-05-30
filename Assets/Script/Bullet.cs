@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour {
-
+	public int bulletIndex;
 	private Rigidbody rigid;
+
+	public Rigidbody Rigid {
+		get {
+			return rigid;
+		}
+	}
 
 	public float damage;
 	public float moveSpeed;
@@ -14,6 +20,11 @@ public class Bullet : MonoBehaviour {
 	public GameObject destoryParticle;
 
 	public LayerMask collisionMask;
+
+	public void Start()
+	{
+		rigid = GetComponent<Rigidbody> ();
+	}
 
 	public void OnTriggerEnter(Collider col)
 	{
@@ -34,7 +45,6 @@ public class Bullet : MonoBehaviour {
 
 	public void DestroyBullet()
 	{
-		rigid.velocity = Vector3.zero;
-
+		BulletPool.Instance.ReturnBullet (gameObject);
 	}
 }

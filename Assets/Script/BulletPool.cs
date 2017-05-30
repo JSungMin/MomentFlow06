@@ -18,7 +18,6 @@ public class BulletPool : MonoBehaviour {
 
 	public Transform bulletPoolParent;
 	public List<Transform> bulletPools;
-	public List<int> bulletPoolIndexList;
 
 	public void Awake()
 	{
@@ -58,6 +57,16 @@ public class BulletPool : MonoBehaviour {
 		}
 	}
 
+	public void AddAmmoToPool (GameObject usingBullet, int addedAmmmo, Transform pool)
+	{
+		for (int i = 0; i < addedAmmmo; i++)
+		{
+			var newBullet = Instantiate (usingBullet, pool) as GameObject;
+			newBullet.transform.position = Vector3.zero;
+			newBullet.SetActive (false);
+		}
+	}
+
 	public Bullet BorrowBullet (GameObject usingBullet)
 	{
 		for (int i = 0; i < bulletPools.Count; i++)
@@ -65,10 +74,36 @@ public class BulletPool : MonoBehaviour {
 			if (bulletPools[i].name.Contains (usingBullet.name))
 			{
 				var pool = bulletPools [i];
+				var index = 0;
+				var borrowBullet = new Bullet ();
 
+				while (index < pool.childCount)
+				{
+					if (pool.GetChild(index).gameObject.activeSelf)
+					{
+						index++;
+						continue;
+					}
+					borrowBullet = pool.GetChild (index).GetComponent<Bullet> ();
+					borrowBullet.bulletIndex = index;
+					borrowBullet.gameObject.SetActive (true);
+					return borrowBullet;
+				}
+				AddAmmoToPool (usingBullet, 1, pool);
+				borrowBullet = pool.GetChild (index).GetComponent<Bullet> ();
+				borrowBullet.bulletIndex = index;
+				borrowBullet.gameObject.SetActive (true);
+				return borrowBullet;
 			}
 		}
 		return null;
+	}
+
+	public void ReturnBullet (GameObject usedBullet)
+	{
+		var bullet = usedBullet.GetComponent<Bullet> ();
+		bullet.Rigid.velocity = Vector3.zero;
+		usedBullet.SetActive (false);
 	}
 
 	private List<Rifle> FindRifleWeapons()
