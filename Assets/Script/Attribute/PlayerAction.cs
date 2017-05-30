@@ -53,7 +53,7 @@ public class PlayerAction : MonoBehaviour {
 		shoulderAction = gunAnimator.GetComponent<ShoulderAction> ();
 		equiptInfo = GetComponent<EquiptInfo> ();
 		EquiptDefaultWeapon ();
-		BulletFactory.Instance.InitBullets ();
+		BulletPool.Instance.InitBullets ();
 	}
 
 	void Update ()
