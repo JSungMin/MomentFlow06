@@ -4,21 +4,31 @@ using UnityEngine;
 
 public class TimeRevertable : MonoBehaviour
 {
+    public delegate void TimeRevertDel(TimeRevertable timeRevertable);
+    public TimeRevertDel AddTimeRevertable;
+    public TimeRevertDel RemoveTimeRevertable;
+
     private const int listSize = 120;
     // 이게 느리다면 직접 자료구조를 만들어야 할 듯
     private LinkedList<Vector3> positions = new LinkedList<Vector3>();
     LinkedListNode<Vector3> positionsLastNode;
 
     private bool isReverting;
+    private bool isNowRevertable;
     private int revertingCount;
 
     private Vector3 beforeVelocity;
     private Rigidbody rigidBody;
 
+    private BoxCollider boxcollider;
+
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
+        boxcollider = GetComponent<BoxCollider>();
+        
         isReverting = false;
+        isNowRevertable = true;
     }
 
     private void Update()
@@ -58,5 +68,15 @@ public class TimeRevertable : MonoBehaviour
         beforeVelocity = rigidBody.velocity;
         revertingCount = revertingCnt;
         isReverting = true;
+    }
+
+    private void OnMouseEnter()
+    {
+        AddTimeRevertable(this);
+    }
+
+    private void OnMouseExit()
+    {
+        RemoveTimeRevertable(this);
     }
 }

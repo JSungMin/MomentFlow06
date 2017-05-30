@@ -3,14 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO
+// Key pressing 한 상태에서는 시간이 느려지고, 오브젝트들을 클릭할 수 있게 된다
+// 오브젝트들을 클릭하게 되면 list에 담아두고 key를 unpress하면 스킬이 시전된다.
 public class TimeRevert : SkillBase
 {
     public bool isInTimeRevertPhase { private set; get; }
+
+    private List<TimeRevertable> timeRevertables = new List<TimeRevertable>();
 
     public TimeRevert(KeyCode keyCode)
     {
         isInTimeRevertPhase = false;
         this.keyCode = keyCode;
+
+        TimeRevertable[] tmpArray = GameObject.FindObjectsOfType<TimeRevertable>();
+
+        // delegate 셋팅
+        for (int i = 0; i < tmpArray.Length; i++)
+        {
+            tmpArray[i].AddTimeRevertable = AddTimeRevertableObj;
+            tmpArray[i].RemoveTimeRevertable = RemoveTimeRevertableObj;
+        }
     }
 
     public override bool IsTryUseSKill()
@@ -32,16 +46,12 @@ public class TimeRevert : SkillBase
     {
         return true;
     }
-
-    // 원래 기획은 스킬을 사용하면 시간이 멈추고
-    // 마우스로 타겟을 설정한 뒤
-    // 다시 스킬을 사용해서 실행시키는 거였던거 같음
+    
     protected override void UseSkill()
     {
-        Time.timeScale = 0.3f;
+        Time.timeScale = 0.1f;
         isInTimeRevertPhase = true;
-        // TODO mouse cursor로부터 받아올 것, MouseCursor 객체를 이 클래스에서 만들고 활용해야 할 듯
-        Revert(GameObject.FindObjectOfType<TimeRevertable>());
+        Revert(timeRevertables);
     }
 
     protected override void CancelSkill()
@@ -50,8 +60,22 @@ public class TimeRevert : SkillBase
         isInTimeRevertPhase = false;
     }
 
-    private void Revert(TimeRevertable obj)
+    // 다른곳에서도 호출할 수 있지 않을까? 하는 생각 때문에 인자로 둠
+    public void Revert(List<TimeRevertable> objs)
     {
-        obj.StartRevertFor(30);
+        for (int i = 0; i < objs.Count; i++)
+        {
+            objs[i].StartRevertFor(300);
+        }
+    }
+
+    private void AddTimeRevertableObj(TimeRevertable obj)
+    {
+        timeRevertables.Add(obj);
+    }
+
+    private void RemoveTimeRevertableObj(TimeRevertable obj)
+    {
+        timeRevertables.Remove(obj);
     }
 }
