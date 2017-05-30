@@ -36,12 +36,12 @@ public class TimePause : SkillBase
     protected override void UseSkill()
     {
         isTimePaused = true;
-        Time.timeScale = 0.0f;
+        TimeManager.GetInstance().SetTimeScale(0.0f);
     }
 
     protected override void CancelSkill()
     {
         isTimePaused = false;
-        Time.timeScale = 1.0f;
+        TimeManager.GetInstance().SetTimeScale(1.0f);
     }
 }

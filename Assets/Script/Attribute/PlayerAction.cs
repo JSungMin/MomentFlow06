@@ -32,12 +32,8 @@ public class PlayerAction : MonoBehaviour {
 
     private void Awake()
     {
-        // TODO factory pattern을 사용해서 리팩토링하면 될거 같은데
-		// 이건 고민해야 할 것 같아오..  by SungMin
         skills = new SkillBase[] { new TimePause(KeyCode.Z), new TimeRevert(KeyCode.X) };
         skillNum = skills.Length;
-        // DEBUG 시간 돌아가는거 잘 확인하기 위해 이렇게 해둠
-        //Physics.gravity = Vector3.down * 0.1f;
     }
 
     private T GetSkill<T>()

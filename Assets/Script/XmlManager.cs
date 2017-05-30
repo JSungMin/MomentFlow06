@@ -7,18 +7,23 @@ public class XmlManager : MonoBehaviour {
 
 	private static XmlManager instance;
 
-	public static XmlManager Instance {
-		get {
-			if (null == instance) {
-				instance = GameObject.Find ("XmlManager").GetComponent<XmlManager>();
-				if (instance == null) {
-					GameObject newXmlManager = new GameObject ("XmlManager");
-					instance = newXmlManager.AddComponent<XmlManager> ();
-				}
-			}
-			return instance;
-		}
-	}
+	public static XmlManager Instance
+    {
+        get
+        {
+            if (null == instance)
+            {
+                GameObject newXmlManager = GameObject.Find("XmlManager");
+                if (null == newXmlManager)
+                    newXmlManager = new GameObject("XmlManager");
+
+                instance = newXmlManager.GetComponent<XmlManager>();
+                if (instance == null)
+                    instance = newXmlManager.AddComponent<XmlManager>();
+            }
+            return instance;
+        }
+    }
 
 	public void Awake()
 	{
