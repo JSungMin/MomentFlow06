@@ -53,7 +53,7 @@ public class WeaponFactory : MonoBehaviour {
 				weapon = new Rifle ();
 				SetGeneralWeaponInfo (ref weapon, node);
 				((Rifle)weapon).maxAmmo = int.Parse(node.SelectSingleNode ("MaxAmmo").InnerText);
-				((Rifle)weapon).usingBullet = Resources.Load ("Prefabs/Bullets" + node.SelectSingleNode ("UsingBullet").InnerText) as GameObject;
+				((Rifle)weapon).usingBullet = Resources.Load ("Prefabs/Bullets/" + node.SelectSingleNode ("UsingBullet").InnerText) as GameObject;
 			} 
 			else if (weapon.weaponType == WeaponType.Sword)
 			{

@@ -21,7 +21,6 @@ public class ShoulderAction : MonoBehaviour {
 	void Update ()
 	{
 		if (!parentAnimator.GetBool ("HoldOnWeapon")) {
-			Debug.Log (parentAnimator.name);
 			return;
 		}
 

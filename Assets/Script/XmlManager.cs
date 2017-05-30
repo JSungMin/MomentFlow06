@@ -10,8 +10,11 @@ public class XmlManager : MonoBehaviour {
 	public static XmlManager Instance {
 		get {
 			if (null == instance) {
-				GameObject newXmlManager = new GameObject ("XmlManager");
-				instance = newXmlManager.AddComponent<XmlManager> ();
+				instance = GameObject.Find ("XmlManager").GetComponent<XmlManager>();
+				if (instance == null) {
+					GameObject newXmlManager = new GameObject ("XmlManager");
+					instance = newXmlManager.AddComponent<XmlManager> ();
+				}
 			}
 			return instance;
 		}

@@ -57,6 +57,7 @@ public class PlayerAction : MonoBehaviour {
 		shoulderAction = gunAnimator.GetComponent<ShoulderAction> ();
 		equiptInfo = GetComponent<EquiptInfo> ();
 		EquiptDefaultWeapon ();
+		BulletFactory.Instance.InitBullets ();
 	}
 
 	void Update ()
@@ -152,7 +153,7 @@ public class PlayerAction : MonoBehaviour {
 		GetDistanceToGround ();
 		animator.SetFloat ("DistanceToGround", distanceToGround);
 
-		if (distanceToGround > 0.1f) {
+		if (distanceToGround > 0.05f) {
 			animator.SetBool ("IsAir", true);
 		} else {
 			animator.SetBool ("IsAir", false);
