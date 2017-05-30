@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletFactory : MonoBehaviour {
-	private static BulletFactory instance;
+public class BulletPool : MonoBehaviour {
+	private static BulletPool instance;
 
-	public static BulletFactory Instance {
+	public static BulletPool Instance {
 		get {
 			if (instance == null)
 			{
 				var newWeaponFactory = new GameObject ("BulletFactory");
-				instance = newWeaponFactory.AddComponent<BulletFactory> ();
+				instance = newWeaponFactory.AddComponent<BulletPool> ();
 			}
 			return instance;
 		}
@@ -18,6 +18,7 @@ public class BulletFactory : MonoBehaviour {
 
 	public Transform bulletPoolParent;
 	public List<Transform> bulletPools;
+	public List<int> bulletPoolIndexList;
 
 	public void Awake()
 	{
@@ -55,6 +56,19 @@ public class BulletFactory : MonoBehaviour {
 			newBullet.transform.position = Vector3.zero;
 			newBullet.SetActive (false);
 		}
+	}
+
+	public Bullet BorrowBullet (GameObject usingBullet)
+	{
+		for (int i = 0; i < bulletPools.Count; i++)
+		{
+			if (bulletPools[i].name.Contains (usingBullet.name))
+			{
+				var pool = bulletPools [i];
+
+			}
+		}
+		return null;
 	}
 
 	private List<Rifle> FindRifleWeapons()
