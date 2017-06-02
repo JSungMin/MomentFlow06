@@ -5,8 +5,7 @@ using UnityEngine;
 public class TimeRevertable : MonoBehaviour
 {
     public delegate void TimeRevertDel(TimeRevertable timeRevertable);
-    public TimeRevertDel AddTimeRevertable;
-    public TimeRevertDel RemoveTimeRevertable;
+    public TimeRevertDel AddOrRemoveTimeRevertable;
 
     private const int listSize = 120;
     // 이게 느리다면 직접 자료구조를 만들어야 할 듯
@@ -22,11 +21,15 @@ public class TimeRevertable : MonoBehaviour
 
     private BoxCollider boxcollider;
 
+    private Renderer mRenderer;
+
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
         boxcollider = GetComponent<BoxCollider>();
-        
+
+        mRenderer = GetComponent<Renderer>();
+
         isReverting = false;
         isNowRevertable = true;
     }
@@ -68,15 +71,23 @@ public class TimeRevertable : MonoBehaviour
         beforeVelocity = rigidBody.velocity;
         revertingCount = revertingCnt;
         isReverting = true;
+        NotIndicateRevert();
     }
 
-    private void OnMouseEnter()
+    private void OnMouseDown()
     {
-        AddTimeRevertable(this);
+        AddOrRemoveTimeRevertable(this);
     }
 
-    private void OnMouseExit()
+    // 따로 renderer를 관리하는 클래스에 넣든가
+    // Revert 만을 위한 이펙트가 구현되든가
+    public void IndicateRevert()
     {
-        RemoveTimeRevertable(this);
+        mRenderer.material.color = Color.red;
+    }
+
+    public void NotIndicateRevert()
+    {
+        mRenderer.material.color = Color.white;
     }
 }

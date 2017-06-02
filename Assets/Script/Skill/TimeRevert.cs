@@ -22,8 +22,7 @@ public class TimeRevert : SkillBase
         // delegate 셋팅
         for (int i = 0; i < tmpArray.Length; i++)
         {
-            tmpArray[i].AddTimeRevertable = AddTimeRevertableObj;
-            tmpArray[i].RemoveTimeRevertable = RemoveTimeRevertableObj;
+            tmpArray[i].AddOrRemoveTimeRevertable = AddOrRemoveTimeRevertableObj;
         }
     }
 
@@ -34,7 +33,7 @@ public class TimeRevert : SkillBase
 
     public override bool IsTryCancelSkill()
     {
-        return Input.GetKeyDown(keyCode) && isInTimeRevertPhase;
+        return Input.GetKeyUp(keyCode) && isInTimeRevertPhase;
     }
 
     protected override bool CanUseSkill()
@@ -51,31 +50,46 @@ public class TimeRevert : SkillBase
     {
         Time.timeScale = 0.1f;
         isInTimeRevertPhase = true;
-        Revert(timeRevertables);
     }
 
+    // 키가 떼어졌을 때
     protected override void CancelSkill()
     {
+        RevertObjs(timeRevertables);
+
         Time.timeScale = 1.0f;
         isInTimeRevertPhase = false;
     }
 
     // 다른곳에서도 호출할 수 있지 않을까? 하는 생각 때문에 인자로 둠
-    public void Revert(List<TimeRevertable> objs)
+    public void RevertObjs(List<TimeRevertable> objs)
     {
         for (int i = 0; i < objs.Count; i++)
         {
-            objs[i].StartRevertFor(300);
+            objs[i].StartRevertFor(100);
         }
+    }
+
+    private void AddOrRemoveTimeRevertableObj(TimeRevertable obj)
+    {
+        if (!isInTimeRevertPhase)
+            return;
+
+        if (timeRevertables.Contains(obj))
+            RemoveTimeRevertableObj(obj);
+        else
+            AddTimeRevertableObj(obj);
     }
 
     private void AddTimeRevertableObj(TimeRevertable obj)
     {
         timeRevertables.Add(obj);
+        obj.IndicateRevert();
     }
 
     private void RemoveTimeRevertableObj(TimeRevertable obj)
     {
         timeRevertables.Remove(obj);
+        obj.NotIndicateRevert();
     }
 }
