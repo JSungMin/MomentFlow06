@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShotState : StateMachineBehaviour {
 	public Transform shotPosition;
-	public Weapon nowEquiptWeapon;
+	private Weapon nowEquiptWeapon = null;
 
 	void Shot (Animator animator)
 	{
@@ -17,22 +17,33 @@ public class ShotState : StateMachineBehaviour {
  
 	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		if (null == nowEquiptWeapon)
-		{
+		if (null == nowEquiptWeapon) {
 			nowEquiptWeapon = animator.GetComponentInParent<EquiptInfo> ().nowEquiptWeapon;
-		}
-		if (nowEquiptWeapon.weaponType == WeaponType.Rifle)
-		{
-			if (shotPosition == null)
-				shotPosition = animator.transform.GetChild (0);
-			Shot (animator);
+		} 
+		else {
+			if (nowEquiptWeapon.weaponType == WeaponType.Rifle)
+			{
+				if (shotPosition == null)
+					shotPosition = animator.transform.GetChild (0);
+				Shot (animator);
+			}
 		}
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-	//override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-	//
-	//}
+	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+		if (null == nowEquiptWeapon) {
+			nowEquiptWeapon = animator.GetComponentInParent<EquiptInfo> ().nowEquiptWeapon;
+		} 
+		else {
+			if (nowEquiptWeapon.weaponType == WeaponType.Rifle)
+			{
+				if (shotPosition == null)
+					shotPosition = animator.transform.GetChild (0);
+				Shot (animator);
+			}
+		}
+	}
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	//override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
