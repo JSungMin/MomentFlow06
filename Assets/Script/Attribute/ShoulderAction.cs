@@ -44,37 +44,4 @@ public class ShoulderAction : MonoBehaviour {
             shoulderAnimator.SetTrigger("TriggerShot");
         }
     }
-=======
-
-	public void Shot()
-	{
-		var usingBullet = ((Rifle)nowEquiptWeapon).usingBullet;
-		var borrowedBullet = BulletPool.Instance.BorrowBullet (usingBullet);
-		borrowedBullet.transform.position = shotPosition.position;
-		borrowedBullet.GetComponent<Rigidbody> ().velocity = (shotPosition.position - transform.position).normalized * borrowedBullet.maxSpeed;
-	}
-
-	// Update is called once per frame
-	void Update ()
-	{
-		if (!parentAnimator.GetBool ("HoldOnWeapon")) {
-			return;
-		}
-
-		isShooting = Input.GetMouseButton (0);
-		isAimming = Input.GetMouseButton (1);
-
-		parentAnimator.SetBool ("IsShooting", isShooting);
-		shoulderAnimator.SetBool ("IsShooting", isShooting);
-
-		parentAnimator.SetBool ("IsAimming", isAimming);
-		shoulderAnimator.SetBool ("IsAimming", isAimming);
-
-		if (isShooting)
-		{
-			parentAnimator.SetTrigger ("TriggerShot");
-			shoulderAnimator.SetTrigger ("TriggerShot");
-		}
-	}
->>>>>>> 7b47aebff23d903b74acd813de09c07e1279d149
 }
