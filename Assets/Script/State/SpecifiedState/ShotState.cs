@@ -10,24 +10,26 @@ public class ShotState : StateMachineBehaviour {
 	{
 		var usingBullet = ((Rifle)nowEquiptWeapon).usingBullet;
 		var borrowedBullet = BulletPool.Instance.BorrowBullet (usingBullet);
+        Debug.Log(borrowedBullet);
 		borrowedBullet.transform.position = shotPosition.position;
 		borrowedBullet.GetComponent<Rigidbody> ().velocity = (shotPosition.position - animator.transform.position).normalized * borrowedBullet.maxSpeed;
 	}
 
- 
-	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		if (null == nowEquiptWeapon)
-		{
-			nowEquiptWeapon = animator.GetComponentInParent<EquiptInfo> ().nowEquiptWeapon;
-		}
-		if (nowEquiptWeapon.weaponType == WeaponType.Rifle)
-		{
-			if (shotPosition == null)
-				shotPosition = animator.transform.GetChild (0);
-			Shot (animator);
-		}
-	}
+
+    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (null == nowEquiptWeapon)
+        {
+            nowEquiptWeapon = animator.GetComponentInParent<EquiptInfo>().nowEquiptWeapon;
+        }
+        if (nowEquiptWeapon.weaponType == WeaponType.Rifle)
+        {
+            if (shotPosition == null)
+                shotPosition = animator.transform.GetChild(0);
+            Shot(animator);
+        }
+    }
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	//override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
