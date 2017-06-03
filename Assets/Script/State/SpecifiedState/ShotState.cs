@@ -10,7 +10,6 @@ public class ShotState : StateMachineBehaviour {
 	{
 		var usingBullet = ((Rifle)nowEquiptWeapon).usingBullet;
 		var borrowedBullet = BulletPool.Instance.BorrowBullet (usingBullet);
-        Debug.Log(borrowedBullet);
 		borrowedBullet.transform.position = shotPosition.position;
 		borrowedBullet.GetComponent<Rigidbody> ().velocity = (shotPosition.position - animator.transform.position).normalized * borrowedBullet.maxSpeed;
 	}

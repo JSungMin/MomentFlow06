@@ -113,6 +113,11 @@ public class PlayerAction : MonoBehaviour {
 		{
 			animator.SetTrigger ("TriggerLanding");
 		}
+
+        if(Input.GetKey(KeyCode.LeftControl) && input.x != 0)
+        {
+            animator.SetTrigger("TriggerCrouch");
+        }
 	}
 
 	void EquiptDefaultWeapon ()
