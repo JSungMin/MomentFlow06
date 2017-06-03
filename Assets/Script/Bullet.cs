@@ -17,6 +17,11 @@ public class Bullet : MonoBehaviour {
 	public float maxSpeed;
 	public float accel;
 
+	public float maxFlingDistance;
+
+	private Vector3 startPosition = Vector3.zero;
+	private float flingDistance = 0;
+
 	public GameObject destoryParticle;
 
 	public LayerMask collisionMask;
@@ -24,27 +29,39 @@ public class Bullet : MonoBehaviour {
 	public void Start()
 	{
 		rigid = GetComponent<Rigidbody> ();
+		startPosition = transform.position;
 	}
 
-	public void OnTriggerEnter(Collider col)
+	public void Update()
 	{
-		if (col.gameObject.layer == collisionMask)
+		flingDistance += rigid.velocity.magnitude * Time.deltaTime;
+		if (maxFlingDistance < flingDistance)
 		{
-			ProcessHitCollider (ref col);
+			DestroyBullet ();
 		}
 	}
 
-	public void ProcessHitCollider(ref Collider col)
+	public void OnCollisionEnter(Collision col)
 	{
-		if (col.CompareTag("Enemy"))
+		ProcessHitCollider (ref col);
+	}
+		
+	public void ProcessHitCollider(ref Collision col)
+	{
+		Debug.Log (col.collider.name);
+		if (col.collider.CompareTag("Enemy"))
 		{
 
 		}
+		//destoryParticle.GetComponent<ParticleSystem> ().Play ();
 		DestroyBullet ();
 	}
-
+		
 	public void DestroyBullet()
 	{
+		flingDistance = 0;
+		rigid.velocity = Vector3.zero;
+		transform.position = Vector3.zero;
 		BulletPool.Instance.ReturnBullet (gameObject);
 	}
 }

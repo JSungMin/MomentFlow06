@@ -10,13 +10,27 @@ public class ShoulderAction : MonoBehaviour {
 	private Animator parentAnimator;
 	private Animator shoulderAnimator;
 
+	private Weapon nowEquiptWeapon = null;
+
+	public Transform shotPosition;
+
 	// Use this for initialization
 	void Start ()
 	{
 		parentAnimator = transform.parent.GetComponent<Animator> ();
 		shoulderAnimator = GetComponent<Animator> ();
+
+		nowEquiptWeapon = GetComponentInParent<EquiptInfo> ().nowEquiptWeapon;
 	}
-	
+
+	public void Shot()
+	{
+		var usingBullet = ((Rifle)nowEquiptWeapon).usingBullet;
+		var borrowedBullet = BulletPool.Instance.BorrowBullet (usingBullet);
+		borrowedBullet.transform.position = shotPosition.position;
+		borrowedBullet.GetComponent<Rigidbody> ().velocity = (shotPosition.position - transform.position).normalized * borrowedBullet.maxSpeed;
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{

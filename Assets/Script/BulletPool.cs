@@ -100,8 +100,7 @@ public class BulletPool : MonoBehaviour {
 
 	public void ReturnBullet (GameObject usedBullet)
 	{
-		var bullet = usedBullet.GetComponent<Bullet> ();
-		bullet.Rigid.velocity = Vector3.zero;
+		usedBullet.GetComponent<TrailRenderer> ().Clear ();
 		usedBullet.SetActive (false);
 	}
 
