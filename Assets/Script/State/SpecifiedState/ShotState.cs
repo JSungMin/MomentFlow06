@@ -17,32 +17,12 @@ public class ShotState : StateMachineBehaviour {
  
 	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		if (null == nowEquiptWeapon) {
-			nowEquiptWeapon = animator.GetComponentInParent<EquiptInfo> ().nowEquiptWeapon;
-		} 
-		else {
-			if (nowEquiptWeapon.weaponType == WeaponType.Rifle)
-			{
-				if (shotPosition == null)
-					shotPosition = animator.transform.GetChild (0);
-				Shot (animator);
-			}
-		}
+		
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		if (null == nowEquiptWeapon) {
-			nowEquiptWeapon = animator.GetComponentInParent<EquiptInfo> ().nowEquiptWeapon;
-		} 
-		else {
-			if (nowEquiptWeapon.weaponType == WeaponType.Rifle)
-			{
-				if (shotPosition == null)
-					shotPosition = animator.transform.GetChild (0);
-				Shot (animator);
-			}
-		}
+		
 	}
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
