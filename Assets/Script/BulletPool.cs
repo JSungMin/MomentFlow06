@@ -27,7 +27,6 @@ public class BulletPool : MonoBehaviour {
 	public void InitBullets()
 	{
 		var rifles = FindRifleWeapons ();
-		Debug.Log (rifles.Count);
 		for (int i = 0; i < rifles.Count; i++) {
 			var rifle = rifles [i];
 			GameObject pool = GameObject.Find (rifle.usingBullet.name + "Pool");
