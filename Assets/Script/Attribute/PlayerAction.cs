@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAction : MonoBehaviour {
-	private Animator animator;
+	public Animator playerAnimator;
 	public Animator gunAnimator;
 
 	private EquiptInfo equiptInfo;
@@ -36,6 +36,16 @@ public class PlayerAction : MonoBehaviour {
         skillNum = skills.Length;
     }
 
+	public void Start()
+	{
+		Physics.gravity = Vector3.down * 9.8f;
+		playerAnimator = transform.GetComponentInChildren<Animator> ();
+		pBody = GetComponent<Rigidbody> ();
+		pCollider = GetComponent<BoxCollider> ();
+		shoulderAction = gunAnimator.GetComponent<ShoulderAction> ();
+		equiptInfo = GetComponent<EquiptInfo> ();
+	}
+
     private T GetSkill<T>()
     {
         T child = skills.OfType<T>().FirstOrDefault();
@@ -43,18 +53,6 @@ public class PlayerAction : MonoBehaviour {
             return default(T);
         return child;
     }
-
-    void Start () 
-	{
-		Physics.gravity = Vector3.down * 9.8f;
-		animator = transform.GetComponentInChildren<Animator> ();
-		pBody = GetComponent<Rigidbody> ();
-		pCollider = GetComponent<BoxCollider> ();
-		shoulderAction = gunAnimator.GetComponent<ShoulderAction> ();
-		equiptInfo = GetComponent<EquiptInfo> ();
-		EquiptDefaultWeapon ();
-		BulletPool.Instance.InitBullets ();
-	}
 
 	void Update ()
 	{
@@ -69,13 +67,13 @@ public class PlayerAction : MonoBehaviour {
 
         input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
 
-		animator.SetFloat ("HorizontalInput", input.x);
-		animator.SetFloat ("VerticalInput", input.y);
+		playerAnimator.SetFloat ("HorizontalInput", input.x);
+		playerAnimator.SetFloat ("VerticalInput", input.y);
 
-		animator.SetFloat ("MaxMoveSpeed", maxSpeed);
-		animator.SetFloat ("MoveAccel", accel);
+		playerAnimator.SetFloat ("MaxMoveSpeed", maxSpeed);
+		playerAnimator.SetFloat ("MoveAccel", accel);
 
-		animator.SetBool ("HoldOnWeapon", holdOnWeapon);
+		playerAnimator.SetBool ("HoldOnWeapon", holdOnWeapon);
 
 		if (holdOnWeapon) {
 			ExcuteShotableLayer ();
@@ -85,69 +83,63 @@ public class PlayerAction : MonoBehaviour {
 
 		if (input.x == 0)
 		{
-			animator.SetTrigger ("TriggerIdle");
+			playerAnimator.SetTrigger ("TriggerIdle");
 			gunAnimator.SetTrigger ("TriggerIdle");
 		}
 		
 		if (!Input.GetKey(KeyCode.LeftShift) && input.x != 0)
 		{
-			animator.SetTrigger ("TriggerWalk");
+			playerAnimator.SetTrigger ("TriggerWalk");
 			gunAnimator.SetTrigger ("TriggerIdle");
 		}
 
 		if (Input.GetKey (KeyCode.LeftShift) && input.x != 0) 
 		{
-			animator.SetTrigger ("TriggerRun");
+			playerAnimator.SetTrigger ("TriggerRun");
 			gunAnimator.SetTrigger ("TriggerRun");
 		}
 		
 		if (Input.GetKeyDown (KeyCode.Space))
 		{
-			animator.SetTrigger ("TriggerJump");
+			playerAnimator.SetTrigger ("TriggerJump");
 		}
 
 		if (Input.GetKey (KeyCode.S)) {
-			animator.SetTrigger ("TriggerCrouch");
-			animator.ResetTrigger ("TriggerStandUp");
-			animator.SetBool ("IsCrouching", true);
+			playerAnimator.SetTrigger ("TriggerCrouch");
+			playerAnimator.ResetTrigger ("TriggerStandUp");
+			playerAnimator.SetBool ("IsCrouching", true);
 		} else {
-			animator.SetTrigger ("TriggerStandUp");
+			playerAnimator.SetTrigger ("TriggerStandUp");
 		}
 
 		if (velocity.y < 0 && (pCollider.bounds.min.y + velocity.y * Time.deltaTime) >= distanceToGround)
 		{
-			animator.SetTrigger ("TriggerFalling");
+			playerAnimator.SetTrigger ("TriggerFalling");
 		}
 		else if (velocity.y < 0 && (pCollider.bounds.min.y + velocity.y* Time.deltaTime) < distanceToGround)
 		{
-			animator.SetTrigger ("TriggerLanding");
+			playerAnimator.SetTrigger ("TriggerLanding");
 		}
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            animator.SetTrigger("TriggerDie");
+            playerAnimator.SetTrigger("TriggerDie");
             holdOnWeapon = false;
             GetComponent<AimTarget>().hideShoulder = true;
         }
     }
 
-	void EquiptDefaultWeapon ()
-	{
-		equiptInfo.AddWeapon (0);
-		equiptInfo.EquiptWeapon (0);
-	}
-
 	void ExcuteShotableLayer ()
 	{
-		animator.SetLayerWeight (1, 0);
-		animator.SetLayerWeight (2, 1);
+		playerAnimator.SetLayerWeight (1, 0);
+		playerAnimator.SetLayerWeight (2, 1);
 		GetComponent<AimTarget> ().hideShoulder = false;
 	}
 
 	void ExcuteNoneShotableLayer ()
 	{
-		animator.SetLayerWeight (1, 1);
-		animator.SetLayerWeight (2, 0);
+		playerAnimator.SetLayerWeight (1, 1);
+		playerAnimator.SetLayerWeight (2, 0);
 		GetComponent<AimTarget> ().hideShoulder = true;
 	}
 
@@ -160,15 +152,15 @@ public class PlayerAction : MonoBehaviour {
 			0
 		);
 		velocity = pBody.velocity;
-		animator.SetFloat ("VelocityY", velocity.y);
+		playerAnimator.SetFloat ("VelocityY", velocity.y);
 
 		GetDistanceToGround ();
-		animator.SetFloat ("DistanceToGround", distanceToGround);
+		playerAnimator.SetFloat ("DistanceToGround", distanceToGround);
 
 		if (distanceToGround > 0.05f) {
-			animator.SetBool ("IsAir", true);
+			playerAnimator.SetBool ("IsAir", true);
 		} else {
-			animator.SetBool ("IsAir", false);
+			playerAnimator.SetBool ("IsAir", false);
 		}
 	}
 		

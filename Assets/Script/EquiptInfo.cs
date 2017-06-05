@@ -6,6 +6,14 @@ public class EquiptInfo : MonoBehaviour {
 	public List<Weapon> weapons;
 	public Weapon nowEquiptWeapon;
 
+	public int defaultEquiptWeaponId;
+
+	public void Awake()
+	{
+		AddWeapon (defaultEquiptWeaponId);
+		EquiptWeapon (0);
+	}
+
 	public void AddWeapon (Weapon newWeapon)
 	{
 		weapons.Add (newWeapon);

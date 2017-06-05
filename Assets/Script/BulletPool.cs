@@ -24,6 +24,11 @@ public class BulletPool : MonoBehaviour {
 		instance = this;
 	}
 		
+	public void Start()
+	{
+		InitBullets ();
+	}
+
 	public void InitBullets()
 	{
 		var rifles = FindRifleWeapons ();
@@ -113,7 +118,7 @@ public class BulletPool : MonoBehaviour {
 			{
 				if (weapon.weaponType == WeaponType.Rifle)
 				{
-					rifles.Add ((Rifle)weapon);
+					rifles.Add (((Rifle)weapon));
 				}
 			}
 		}
