@@ -29,8 +29,6 @@ public class PlayerAction : MonoBehaviour {
     private int skillNum;
 
 	Vector2 input;
-
-    bool IsCrouching = false;
     
     private void Awake()
     {
@@ -108,6 +106,14 @@ public class PlayerAction : MonoBehaviour {
 			animator.SetTrigger ("TriggerJump");
 		}
 
+		if (Input.GetKey (KeyCode.S)) {
+			animator.SetTrigger ("TriggerCrouch");
+			animator.ResetTrigger ("TriggerStandUp");
+			animator.SetBool ("IsCrouching", true);
+		} else {
+			animator.SetTrigger ("TriggerStandUp");
+		}
+
 		if (velocity.y < 0 && (pCollider.bounds.min.y + velocity.y * Time.deltaTime) >= distanceToGround)
 		{
 			animator.SetTrigger ("TriggerFalling");
@@ -122,11 +128,6 @@ public class PlayerAction : MonoBehaviour {
             animator.SetTrigger("TriggerDie");
             holdOnWeapon = false;
             GetComponent<AimTarget>().hideShoulder = true;
-        }
-        
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            IsCrouching = true;
         }
     }
 

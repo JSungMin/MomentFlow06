@@ -22,6 +22,14 @@ public class ShoulderAction : MonoBehaviour {
 		nowEquiptWeapon = GetComponentInParent<EquiptInfo> ().nowEquiptWeapon;
 	}
 
+	public void Shot ()
+	{
+		var usingBullet = ((Rifle)nowEquiptWeapon).usingBullet;
+		var borrowedBullet = BulletPool.Instance.BorrowBullet (usingBullet);
+		borrowedBullet.transform.position = shotPosition.position;
+		borrowedBullet.GetComponent<Rigidbody> ().velocity = (shotPosition.position - transform.position).normalized * borrowedBullet.maxSpeed;
+	}
+
     void Update()
     {
         if (!parentAnimator.GetBool("HoldOnWeapon"))
