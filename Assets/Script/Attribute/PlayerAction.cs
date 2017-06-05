@@ -10,7 +10,7 @@ public class PlayerAction : MonoBehaviour {
 
 	private EquiptInfo equiptInfo;
 
-	private ShoulderAction shoulderAction;
+	private Shoulder shoulderAction;
 
 	private Rigidbody pBody;
 	private BoxCollider pCollider;
@@ -41,8 +41,8 @@ public class PlayerAction : MonoBehaviour {
 		Physics.gravity = Vector3.down * 9.8f;
 		playerAnimator = transform.GetComponentInChildren<Animator> ();
 		pBody = GetComponent<Rigidbody> ();
-		pCollider = GetComponent<BoxCollider> ();
-		shoulderAction = gunAnimator.GetComponent<ShoulderAction> ();
+		pCollider = GetComponentInChildren<BoxCollider> ();
+		shoulderAction = gunAnimator.GetComponent<Shoulder> ();
 		equiptInfo = GetComponent<EquiptInfo> ();
 	}
 
@@ -112,6 +112,11 @@ public class PlayerAction : MonoBehaviour {
 			playerAnimator.SetTrigger ("TriggerStandUp");
 		}
 
+		if (Input.GetKeyDown (KeyCode.F))
+		{
+			playerAnimator.SetTrigger ("TriggerCross");
+		}
+
 		if (velocity.y < 0 && (pCollider.bounds.min.y + velocity.y * Time.deltaTime) >= distanceToGround)
 		{
 			playerAnimator.SetTrigger ("TriggerFalling");
@@ -133,14 +138,12 @@ public class PlayerAction : MonoBehaviour {
 	{
 		playerAnimator.SetLayerWeight (1, 0);
 		playerAnimator.SetLayerWeight (2, 1);
-		GetComponent<AimTarget> ().hideShoulder = false;
 	}
 
 	void ExcuteNoneShotableLayer ()
 	{
 		playerAnimator.SetLayerWeight (1, 1);
 		playerAnimator.SetLayerWeight (2, 0);
-		GetComponent<AimTarget> ().hideShoulder = true;
 	}
 
 	void FixedUpdate()

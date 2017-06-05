@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour {
 	private Vector3 startPosition = Vector3.zero;
 	private float flingDistance = 0;
 
-	public GameObject destoryParticle;
+	public GameObject destroyParticle;
 
 	public LayerMask collisionMask;
 
@@ -30,6 +30,7 @@ public class Bullet : MonoBehaviour {
 	{
 		rigid = GetComponent<Rigidbody> ();
 		startPosition = transform.position;
+		destroyParticle = GetComponentInChildren<ParticleSystem> ().gameObject;
 	}
 
 	public void Update()
@@ -51,9 +52,14 @@ public class Bullet : MonoBehaviour {
 		Debug.Log (col.collider.name);
 		if (col.collider.CompareTag("Enemy"))
 		{
-
+			col.collider.GetComponent<Rigidbody> ().AddForce (new Vector3 (rigid.velocity.x, 0).normalized * 2, ForceMode.Impulse);
 		}
-		//destoryParticle.GetComponent<ParticleSystem> ().Play ();
+		destroyParticle.transform.parent = transform.parent;
+		destroyParticle.transform.position = transform.position;
+		destroyParticle.transform.localScale = Vector3.one;
+		destroyParticle.transform.rotation = Quaternion.LookRotation (rigid.velocity.normalized);
+		destroyParticle.GetComponent<ParticleSystem> ().Play ();
+
 		DestroyBullet ();
 	}
 		

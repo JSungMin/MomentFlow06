@@ -1,33 +1,25 @@
 fileFormatVersion: 2
-guid: 8915c29c15bbed54597e1c732eadfaa2
-timeCreated: 1496689683
+guid: c9bdc83febd946840b2307fac72fe221
+timeCreated: 1496689903
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Enemy_WalkHand_withoutArm_0
-    21300002: Enemy_WalkHand_withoutArm_1
-    21300004: Enemy_WalkHand_withoutArm_2
-    21300006: Enemy_WalkHand_withoutArm_3
-    21300008: Enemy_WalkHand_withoutArm_4
-    21300010: Enemy_WalkHand_withoutArm_5
-    21300012: Enemy_WalkHand_withoutArm_6
-    21300014: Enemy_WalkHand_withoutArm_7
-    21300016: Enemy_WalkHand_withoutArm_8
-    21300018: Enemy_WalkHand_withoutArm_9
-    21300020: Enemy_WalkHand_withoutArm_10
-    21300022: Enemy_WalkHand_withoutArm_11
-    21300024: Enemy_WalkHand_withoutArm_12
-    21300026: Enemy_WalkHand_withoutArm_13
-    21300028: Enemy_WalkHand_withoutArm_14
-    21300030: Enemy_WalkHand_withoutArm_15
-    21300032: Enemy_WalkHand_withoutArm_16
-    21300034: Enemy_WalkHand_withoutArm_17
-    21300036: Enemy_WalkHand_withoutArm_18
-    21300038: Enemy_WalkHand_withoutArm_19
-    21300040: Enemy_WalkHand_withoutArm_20
-    21300042: Enemy_WalkHand_withoutArm_21
-    21300044: Enemy_WalkHand_withoutArm_22
-    21300046: Enemy_WalkHand_withoutArm_23
+    21300000: Cross_Obstacle_0
+    21300002: Cross_Obstacle_1
+    21300004: Cross_Obstacle_2
+    21300006: Cross_Obstacle_3
+    21300008: Cross_Obstacle_4
+    21300010: Cross_Obstacle_5
+    21300012: Cross_Obstacle_6
+    21300014: Cross_Obstacle_7
+    21300016: Cross_Obstacle_8
+    21300018: Cross_Obstacle_9
+    21300020: Cross_Obstacle_10
+    21300022: Cross_Obstacle_11
+    21300024: Cross_Obstacle_12
+    21300026: Cross_Obstacle_13
+    21300028: Cross_Obstacle_14
+    21300030: Cross_Obstacle_15
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -110,314 +102,210 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 200
-        width: 50
-        height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_1
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 200
-        width: 50
-        height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_2
-      rect:
-        serializedVersion: 2
-        x: 100
-        y: 200
-        width: 50
-        height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_3
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 200
-        width: 50
-        height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_4
-      rect:
-        serializedVersion: 2
-        x: 200
-        y: 200
-        width: 50
-        height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_5
+      name: Cross_Obstacle_0
       rect:
         serializedVersion: 2
         x: 0
         y: 150
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_6
+      name: Cross_Obstacle_1
       rect:
         serializedVersion: 2
         x: 50
         y: 150
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_7
+      name: Cross_Obstacle_2
       rect:
         serializedVersion: 2
         x: 100
         y: 150
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_8
+      name: Cross_Obstacle_3
       rect:
         serializedVersion: 2
         x: 150
         y: 150
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_9
-      rect:
-        serializedVersion: 2
-        x: 200
-        y: 150
-        width: 50
-        height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_10
+      name: Cross_Obstacle_4
       rect:
         serializedVersion: 2
         x: 0
         y: 100
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_11
+      name: Cross_Obstacle_5
       rect:
         serializedVersion: 2
         x: 50
         y: 100
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_12
+      name: Cross_Obstacle_6
       rect:
         serializedVersion: 2
         x: 100
         y: 100
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_13
+      name: Cross_Obstacle_7
       rect:
         serializedVersion: 2
         x: 150
         y: 100
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_14
-      rect:
-        serializedVersion: 2
-        x: 200
-        y: 100
-        width: 50
-        height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_15
+      name: Cross_Obstacle_8
       rect:
         serializedVersion: 2
         x: 0
         y: 50
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_16
+      name: Cross_Obstacle_9
       rect:
         serializedVersion: 2
         x: 50
         y: 50
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_17
+      name: Cross_Obstacle_10
       rect:
         serializedVersion: 2
         x: 100
         y: 50
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_18
+      name: Cross_Obstacle_11
       rect:
         serializedVersion: 2
         x: 150
         y: 50
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_19
-      rect:
-        serializedVersion: 2
-        x: 200
-        y: 50
-        width: 50
-        height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_20
+      name: Cross_Obstacle_12
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_21
+      name: Cross_Obstacle_13
       rect:
         serializedVersion: 2
         x: 50
         y: 0
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_22
+      name: Cross_Obstacle_14
       rect:
         serializedVersion: 2
         x: 100
         y: 0
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_WalkHand_withoutArm_23
+      name: Cross_Obstacle_15
       rect:
         serializedVersion: 2
         x: 150
         y: 0
         width: 50
         height: 50
-      alignment: 9
-      pivot: {x: 0.9295483, y: 0.6914615}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

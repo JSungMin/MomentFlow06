@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: dce3ce08785d43341bbe712a5aad99e9
-timeCreated: 1496654794
+timeCreated: 1496689674
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -14,6 +14,20 @@ TextureImporter:
     21300014: Enemy_Walk_Hand_WithArm_7
     21300016: Enemy_Walk_Hand_WithArm_8
     21300018: Enemy_Walk_Hand_WithArm_9
+    21300020: Enemy_Walk_Hand_WithArm_10
+    21300022: Enemy_Walk_Hand_WithArm_11
+    21300024: Enemy_Walk_Hand_WithArm_12
+    21300026: Enemy_Walk_Hand_WithArm_13
+    21300028: Enemy_Walk_Hand_WithArm_14
+    21300030: Enemy_Walk_Hand_WithArm_15
+    21300032: Enemy_Walk_Hand_WithArm_16
+    21300034: Enemy_Walk_Hand_WithArm_17
+    21300036: Enemy_Walk_Hand_WithArm_18
+    21300038: Enemy_Walk_Hand_WithArm_19
+    21300040: Enemy_Walk_Hand_WithArm_20
+    21300042: Enemy_Walk_Hand_WithArm_21
+    21300044: Enemy_Walk_Hand_WithArm_22
+    21300046: Enemy_Walk_Hand_WithArm_23
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -84,6 +98,14 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Tizen
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -92,7 +114,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 150
+        y: 200
         width: 50
         height: 50
       alignment: 9
@@ -105,7 +127,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 50
-        y: 150
+        y: 200
         width: 50
         height: 50
       alignment: 9
@@ -118,7 +140,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 100
-        y: 150
+        y: 200
         width: 50
         height: 50
       alignment: 9
@@ -130,8 +152,8 @@ TextureImporter:
       name: Enemy_Walk_Hand_WithArm_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 100
+        x: 150
+        y: 200
         width: 50
         height: 50
       alignment: 9
@@ -143,8 +165,8 @@ TextureImporter:
       name: Enemy_Walk_Hand_WithArm_4
       rect:
         serializedVersion: 2
-        x: 50
-        y: 100
+        x: 200
+        y: 200
         width: 50
         height: 50
       alignment: 9
@@ -156,6 +178,97 @@ TextureImporter:
       name: Enemy_Walk_Hand_WithArm_5
       rect:
         serializedVersion: 2
+        x: 0
+        y: 150
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_6
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 150
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_7
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 150
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_8
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 150
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_9
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 150
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 100
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_11
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 100
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_12
+      rect:
+        serializedVersion: 2
         x: 100
         y: 100
         width: 50
@@ -166,7 +279,33 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_Walk_Hand_WithArm_6
+      name: Enemy_Walk_Hand_WithArm_13
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 100
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_14
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 100
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_15
       rect:
         serializedVersion: 2
         x: 0
@@ -179,7 +318,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_Walk_Hand_WithArm_7
+      name: Enemy_Walk_Hand_WithArm_16
       rect:
         serializedVersion: 2
         x: 50
@@ -192,7 +331,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_Walk_Hand_WithArm_8
+      name: Enemy_Walk_Hand_WithArm_17
       rect:
         serializedVersion: 2
         x: 100
@@ -205,10 +344,75 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Enemy_Walk_Hand_WithArm_9
+      name: Enemy_Walk_Hand_WithArm_18
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 50
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_19
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 50
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_20
       rect:
         serializedVersion: 2
         x: 0
+        y: 0
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_21
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 0
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_22
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.9295483, y: 0.6914615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Enemy_Walk_Hand_WithArm_23
+      rect:
+        serializedVersion: 2
+        x: 150
         y: 0
         width: 50
         height: 50
