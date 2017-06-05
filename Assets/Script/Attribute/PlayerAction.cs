@@ -30,6 +30,8 @@ public class PlayerAction : MonoBehaviour {
 
 	Vector2 input;
 
+    bool IsCrouching = false;
+    
     private void Awake()
     {
         skills = new SkillBase[] { new TimePause(KeyCode.Z), new TimeRevert(KeyCode.X) };
@@ -105,6 +107,7 @@ public class PlayerAction : MonoBehaviour {
 		{
 			animator.SetTrigger ("TriggerJump");
 		}
+
 		if (velocity.y < 0 && (pCollider.bounds.min.y + velocity.y * Time.deltaTime) >= distanceToGround)
 		{
 			animator.SetTrigger ("TriggerFalling");
@@ -114,11 +117,18 @@ public class PlayerAction : MonoBehaviour {
 			animator.SetTrigger ("TriggerLanding");
 		}
 
-        if(Input.GetKey(KeyCode.LeftControl) && input.x != 0)
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            animator.SetTrigger("TriggerCrouch");
+            animator.SetTrigger("TriggerDie");
+            holdOnWeapon = false;
+            GetComponent<AimTarget>().hideShoulder = true;
         }
-	}
+        
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            IsCrouching = true;
+        }
+    }
 
 	void EquiptDefaultWeapon ()
 	{
