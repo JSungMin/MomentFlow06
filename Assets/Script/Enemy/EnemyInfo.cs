@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyInfo : MonoBehaviour
 {
-
+    public int hp { private set; get; }
 }

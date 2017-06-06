@@ -32,7 +32,7 @@ public class PlayerAction : MonoBehaviour {
     
     private void Awake()
     {
-        skills = new SkillBase[] { new TimePause(KeyCode.Z), new TimeRevert(KeyCode.X) };
+        skills = new SkillBase[] { new TimePause(KeyCode.Z), new TimeRecall(KeyCode.X) };
         skillNum = skills.Length;
     }
 
