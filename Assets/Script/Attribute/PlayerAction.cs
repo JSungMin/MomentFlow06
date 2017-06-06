@@ -9,7 +9,7 @@ public class PlayerAction : MonoBehaviour {
 	public Animator gunAnimator;
 
 	private EquiptInfo equiptInfo;
-
+	private OutsideInfo outsideInfo;
 	private Shoulder shoulderAction;
 
 	private Rigidbody pBody;
@@ -44,6 +44,7 @@ public class PlayerAction : MonoBehaviour {
 		pCollider = GetComponentInChildren<BoxCollider> ();
 		shoulderAction = gunAnimator.GetComponent<Shoulder> ();
 		equiptInfo = GetComponent<EquiptInfo> ();
+		outsideInfo = GetComponent<OutsideInfo> ();
 	}
 
     private T GetSkill<T>()
@@ -67,72 +68,37 @@ public class PlayerAction : MonoBehaviour {
 
         input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
 
-		playerAnimator.SetFloat ("HorizontalInput", input.x);
-		playerAnimator.SetFloat ("VerticalInput", input.y);
+		var nearestObstacle = outsideInfo.GetNearestObstacleObject ();
 
-		playerAnimator.SetFloat ("MaxMoveSpeed", maxSpeed);
-		playerAnimator.SetFloat ("MoveAccel", accel);
+		InitAnimatorParameters ();
 
-		playerAnimator.SetBool ("HoldOnWeapon", holdOnWeapon);
+		SelectAnimatorLayer ();
 
-		if (holdOnWeapon) {
+		TriggerActions ();
+
+		CheckCrossObstacle (nearestObstacle);
+    }
+
+	void SelectAnimatorLayer ()
+	{
+		if (holdOnWeapon) 
+		{
 			ExcuteShotableLayer ();
-		} else {
+		}
+		else
+		{
 			ExcuteNoneShotableLayer ();
 		}
+	}
 
-		if (input.x == 0)
-		{
-			playerAnimator.SetTrigger ("TriggerIdle");
-			gunAnimator.SetTrigger ("TriggerIdle");
-		}
-		
-		if (!Input.GetKey(KeyCode.LeftShift) && input.x != 0)
-		{
-			playerAnimator.SetTrigger ("TriggerWalk");
-			gunAnimator.SetTrigger ("TriggerIdle");
-		}
-
-		if (Input.GetKey (KeyCode.LeftShift) && input.x != 0) 
-		{
-			playerAnimator.SetTrigger ("TriggerRun");
-			gunAnimator.SetTrigger ("TriggerRun");
-		}
-		
-		if (Input.GetKeyDown (KeyCode.Space))
-		{
-			playerAnimator.SetTrigger ("TriggerJump");
-		}
-
-		if (Input.GetKey (KeyCode.S)) {
-			playerAnimator.SetTrigger ("TriggerCrouch");
-			playerAnimator.ResetTrigger ("TriggerStandUp");
-			playerAnimator.SetBool ("IsCrouching", true);
-		} else {
-			playerAnimator.SetTrigger ("TriggerStandUp");
-		}
-
-		if (Input.GetKeyDown (KeyCode.F))
-		{
-			playerAnimator.SetTrigger ("TriggerCross");
-		}
-
-		if (velocity.y < 0 && (pCollider.bounds.min.y + velocity.y * Time.deltaTime) >= distanceToGround)
-		{
-			playerAnimator.SetTrigger ("TriggerFalling");
-		}
-		else if (velocity.y < 0 && (pCollider.bounds.min.y + velocity.y* Time.deltaTime) < distanceToGround)
-		{
-			playerAnimator.SetTrigger ("TriggerLanding");
-		}
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            playerAnimator.SetTrigger("TriggerDie");
-            holdOnWeapon = false;
-            GetComponent<AimTarget>().hideShoulder = true;
-        }
-    }
+	void InitAnimatorParameters ()
+	{
+		playerAnimator.SetFloat ("HorizontalInput", input.x);
+		playerAnimator.SetFloat ("VerticalInput", input.y);
+		playerAnimator.SetFloat ("MaxMoveSpeed", maxSpeed);
+		playerAnimator.SetFloat ("MoveAccel", accel);
+		playerAnimator.SetBool ("HoldOnWeapon", holdOnWeapon);
+	}
 
 	void ExcuteShotableLayer ()
 	{
@@ -144,6 +110,65 @@ public class PlayerAction : MonoBehaviour {
 	{
 		playerAnimator.SetLayerWeight (1, 1);
 		playerAnimator.SetLayerWeight (2, 0);
+	}
+
+	void CheckCrossObstacle (GameObject nearestObstacle)
+	{
+		if (nearestObstacle != null) {
+			if (Input.GetKeyDown (KeyCode.F)) {
+				var obstacleWidth = nearestObstacle.GetComponent<Collider> ().bounds.size.x;
+				var obstacleHeight = nearestObstacle.GetComponent<Collider> ().bounds.size.y;
+				playerAnimator.SetTrigger ("TriggerCross");
+			}
+		}
+	}
+
+	void TriggerActions ()
+	{
+		if (input.x == 0)
+		{
+			playerAnimator.SetTrigger ("TriggerIdle");
+			gunAnimator.SetTrigger ("TriggerIdle");
+		}
+		if (!Input.GetKey (KeyCode.LeftShift) && input.x != 0)
+		{
+			playerAnimator.SetTrigger ("TriggerWalk");
+			gunAnimator.SetTrigger ("TriggerIdle");
+		}
+		if (Input.GetKey (KeyCode.LeftShift) && input.x != 0) 
+		{
+			playerAnimator.SetTrigger ("TriggerRun");
+			gunAnimator.SetTrigger ("TriggerRun");
+		}
+		if (Input.GetKeyDown (KeyCode.Space)) 
+		{
+			playerAnimator.SetTrigger ("TriggerJump");
+		}
+		if (Input.GetKey (KeyCode.S)) {
+			playerAnimator.SetTrigger ("TriggerCrouch");
+			playerAnimator.ResetTrigger ("TriggerStandUp");
+			playerAnimator.SetBool ("IsCrouching", true);
+		}
+		else
+		{
+			playerAnimator.SetTrigger ("TriggerStandUp");
+		}
+
+		if (velocity.y < 0 && (pCollider.bounds.min.y + velocity.y * Time.deltaTime) >= distanceToGround)
+		{
+			playerAnimator.SetTrigger ("TriggerFalling");
+		}
+		else
+			if (velocity.y < 0 && (pCollider.bounds.min.y + velocity.y * Time.deltaTime) < distanceToGround) 
+			{
+				playerAnimator.SetTrigger ("TriggerLanding");
+			}
+		if (Input.GetKeyDown (KeyCode.C))
+		{
+			playerAnimator.SetTrigger ("TriggerDie");
+			holdOnWeapon = false;
+			GetComponent<AimTarget> ().hideShoulder = true;
+		}
 	}
 
 	void FixedUpdate()
@@ -160,7 +185,7 @@ public class PlayerAction : MonoBehaviour {
 		GetDistanceToGround ();
 		playerAnimator.SetFloat ("DistanceToGround", distanceToGround);
 
-		if (distanceToGround > 0.05f) {
+		if (velocity.y < -0.05f) {
 			playerAnimator.SetBool ("IsAir", true);
 		} else {
 			playerAnimator.SetBool ("IsAir", false);
