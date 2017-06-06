@@ -6,11 +6,25 @@ public class ConditionChecker : MonoBehaviour
 {
     protected EnemyInfo enemyInfo;
     protected Animator animator;
+    protected SpriteRenderer[] spriteRenderers;
 
-    private void Awake()
+    protected void Awake()
     {
-        enemyInfo = GetComponent<EnemyInfo>();
+        enemyInfo = GetComponentInParent<EnemyInfo>();
         animator = GetComponent<Animator>();
-        Debug.Log("!!");
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+    }
+
+    protected string GetCurrentStateName()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (Animator.StringToHash(((StateType)((int)StateType.Die + i)).ToString()) == 
+                animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
+            {
+                return (StateType.Die + i).ToString();
+            }
+        }
+        return "NONE";
     }
 }

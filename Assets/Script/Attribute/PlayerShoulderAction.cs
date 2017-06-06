@@ -5,9 +5,8 @@ using UnityEngine;
 public class PlayerShoulderAction : Shoulder {
 
 	private AimTarget playerAimTarget;
-
-	// Use this for initialization
-	protected void Start () {
+    
+	protected new void Start () {
 		playerAimTarget = GetComponentInParent<AimTarget> ();
 		base.Start ();
 	}
@@ -15,11 +14,12 @@ public class PlayerShoulderAction : Shoulder {
 	protected void Update()
 	{
 		if (!parentAnimator.GetBool("HoldOnWeapon"))
-		{
 			return;
-		}
 
-		isShooting = Input.GetMouseButton(0);
+        if (TimeRecall.isInTimeRevertPhase)
+            return;
+
+        isShooting = Input.GetMouseButton(0);
 		isAimming = Input.GetMouseButton(1);
 
 		parentAnimator.SetBool("IsShooting", isShooting);
@@ -29,8 +29,8 @@ public class PlayerShoulderAction : Shoulder {
 		shoulderAnimator.SetBool("IsAimming", isAimming);
 
 		if (isShooting)
-		{
-			parentAnimator.SetTrigger("TriggerShot");
+        {
+            parentAnimator.SetTrigger("TriggerShot");
 			shoulderAnimator.SetTrigger("TriggerShot");
 		}
 	}

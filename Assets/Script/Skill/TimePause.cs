@@ -37,11 +37,13 @@ public class TimePause : SkillBase
     {
         isTimePaused = true;
         TimeManager.GetInstance().SetTimeScale(0.0f);
+        Time.timeScale = 0.0f;
     }
 
     protected override void CancelSkill()
     {
         isTimePaused = false;
         TimeManager.GetInstance().SetTimeScale(1.0f);
+        Time.timeScale = 1.0f;
     }
 }

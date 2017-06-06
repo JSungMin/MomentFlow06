@@ -16,7 +16,7 @@ public class AimTarget : MonoBehaviour
     public float minAngle;
 
     public float defaultAngle = 45f;
-    
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -64,7 +64,7 @@ public class AimTarget : MonoBehaviour
         shoulder.transform.localRotation = Quaternion.Euler(0, 0, degree + defaultAngle);
     }
 
-    public void AimToForward(Vector3 targetpos)
+    public void AimToForward()
     {
         var inputX = Input.GetAxis("Horizontal");
         if (inputX < 0)
@@ -85,7 +85,7 @@ public class AimTarget : MonoBehaviour
     {
         if (null == shoulder)
             return;
-   
+
         if (true == hideShoulder)
         {
             shoulderSpriteRenderer.enabled = false;
@@ -93,17 +93,6 @@ public class AimTarget : MonoBehaviour
         else
         {
             shoulderSpriteRenderer.enabled = true;
-        }
-
-        var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        if (isActive)
-        {
-            AimToObject(mousePos);
-        }
-        else
-        {
-            AimToForward(mousePos);
         }
     }
 }

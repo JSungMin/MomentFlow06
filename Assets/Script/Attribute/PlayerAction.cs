@@ -29,11 +29,14 @@ public class PlayerAction : MonoBehaviour {
     private int skillNum;
 
 	Vector2 input;
+    private AimTarget aimTarget;
     
     private void Awake()
     {
         skills = new SkillBase[] { new TimePause(KeyCode.Z), new TimeRecall(KeyCode.X) };
         skillNum = skills.Length;
+
+        aimTarget = GetComponent<AimTarget>();
     }
 
 	public void Start()
@@ -77,6 +80,11 @@ public class PlayerAction : MonoBehaviour {
 		TriggerActions ();
 
 		CheckCrossObstacle (nearestObstacle);
+
+        if (aimTarget.isActive)
+            aimTarget.AimToObject(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        else
+            aimTarget.AimToForward();
     }
 
 	void SelectAnimatorLayer ()

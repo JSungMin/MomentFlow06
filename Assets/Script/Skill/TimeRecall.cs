@@ -8,7 +8,7 @@ using UnityEngine;
 // 오브젝트들을 클릭하게 되면 list에 담아두고 key를 unpress하면 스킬이 시전된다.
 public class TimeRecall : SkillBase
 {
-    public bool isInTimeRevertPhase { private set; get; }
+    public static bool isInTimeRevertPhase { private set; get; }
 
     private List<TimeRevertable> timeRevertables = new List<TimeRevertable>();
 

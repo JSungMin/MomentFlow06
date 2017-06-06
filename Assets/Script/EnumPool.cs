@@ -21,6 +21,13 @@ public enum RifleType
 	Grenade
 }
 
+public enum StateType
+{
+    Die = 0,
+    Shot = 1,
+    Idle = 2
+}
+
 public class EnumPool : MonoBehaviour {
 	
 }

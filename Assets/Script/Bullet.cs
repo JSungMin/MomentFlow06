@@ -49,10 +49,10 @@ public class Bullet : MonoBehaviour {
 		
 	public void ProcessHitCollider(ref Collision col)
 	{
-		Debug.Log (col.collider.name);
 		if (col.collider.CompareTag("Enemy"))
 		{
 			col.collider.GetComponent<Rigidbody> ().AddForce (new Vector3 (rigid.velocity.x, 0).normalized * 2, ForceMode.Impulse);
+            col.collider.GetComponentInChildren<InteractConditionChecker>().Damage(10);
 		}
 		destroyParticle.transform.parent = transform.parent;
 		destroyParticle.transform.position = transform.position;
