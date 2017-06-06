@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShotStateChecker : StateCheckerBase
+public class AimStateChecker : StateCheckerBase
 {
-    public ShotStateChecker(EnemyInfo enemyInfo, StateType stateType)
+    public AimStateChecker(EnemyInfo enemyInfo, StateType stateType)
     {
         this.enemyInfo = enemyInfo;
         this.stateType = stateType;
@@ -14,7 +14,7 @@ public class ShotStateChecker : StateCheckerBase
     {
         if (Vector3.Distance(EnemyInfo.player.transform.position, enemyInfo.transform.position) < enemyInfo.attackRange)
         {
-            if (enemyInfo.AttackDelayTimer >= enemyInfo.attackDelay)
+            if (enemyInfo.AttackDelayTimer < enemyInfo.attackDelay)
                 return true;
             else
                 return false;

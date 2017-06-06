@@ -10,14 +10,14 @@ public class SelfConditionChecker : ConditionChecker
     private new void Awake()
     {
         base.Awake();
-        // 순서가 중요함
-        // 인자도 중요함
+        // 인자 중요함
         // refactoring 하고 싶은데 어떻게 해야할지 모르겠다
         stateCheckers = new StateCheckerBase[] 
         {
             new DeadStateChecker(enemyInfo, StateType.Die),
             new ShotStateChecker(enemyInfo, StateType.Shot),
-            new IdleStateChecker(enemyInfo, StateType.Idle)
+            new IdleStateChecker(enemyInfo, StateType.Idle),
+            new AimStateChecker(enemyInfo, StateType.Aim)
         };
     }
 

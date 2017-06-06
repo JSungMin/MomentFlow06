@@ -12,6 +12,12 @@ public class IdleStateChecker : StateCheckerBase
 
     public override bool IsSatisfied()
     {
-        return true;
+        if (Vector3.Distance(EnemyInfo.player.transform.position, enemyInfo.transform.position) < 1.0f && 
+            enemyInfo.AttackDelayTimer > 3.0f)
+        {
+            return true;
+        }
+        else
+            return false;
     }
 }

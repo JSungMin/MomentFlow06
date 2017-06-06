@@ -25,7 +25,8 @@ public enum StateType
 {
     Die = 0,
     Shot = 1,
-    Idle = 2
+    Idle = 2,
+    Aim = 3
 }
 
 public class EnumPool : MonoBehaviour {

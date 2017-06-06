@@ -6,19 +6,17 @@ public class EnemyInfo : MonoBehaviour
 {
     private int hp;
     private Vector3 aimPos;
+    // attack 하기 전 aim을 하고 있는 시간
+    private float attackDelayTimer;
+    public float attackDelay { private set; get; }
+    public float attackRange { private set; get; }
+
     public static GameObject player { private set; get; }
 
     public Vector3 AimPos
     {
-        set
-        {
-            aimPos = value;
-        }
-
-        get
-        {
-            return aimPos;
-        }
+        set { aimPos = value; }
+        get { return aimPos; }
     }
 
     public int Hp
@@ -32,15 +30,20 @@ public class EnemyInfo : MonoBehaviour
                 hp = 100;
         }
 
-        get
-        {
-            return hp;
-        }
+        get { return hp; }
+    }
+
+    public float AttackDelayTimer
+    {
+        set { attackDelayTimer = value; }
+        get { return attackDelayTimer; }
     }
 
     private void Awake()
     {
         hp = 100;
         player = GameObject.FindWithTag("Player");
+        attackDelay = 3.0f;
+        attackRange = 1.0f;
     }
 }
