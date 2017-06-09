@@ -26,6 +26,8 @@ public class Bullet : MonoBehaviour {
 
 	public LayerMask collisionMask;
 
+	public Vector3 originVelocity;
+
 	public void Start()
 	{
 		rigid = GetComponent<Rigidbody> ();
@@ -35,11 +37,16 @@ public class Bullet : MonoBehaviour {
 
 	public void Update()
 	{
-		flingDistance += rigid.velocity.magnitude * Time.deltaTime;
+		flingDistance += rigid.velocity.magnitude * TimeManager.GetInstance().customDeltaTime;
 		if (maxFlingDistance < flingDistance)
 		{
 			DestroyBullet ();
 		}
+	}
+
+	public void FixedUpdate()
+	{
+		rigid.velocity = originVelocity * TimeManager.GetInstance().customTimeScale;
 	}
 
 	public void OnCollisionEnter(Collision col)
@@ -61,7 +68,8 @@ public class Bullet : MonoBehaviour {
 		{
 			destroyParticle.transform.rotation = Quaternion.LookRotation (rigid.velocity.normalized);
 		}
-		destroyParticle.GetComponent<ParticleSystem> ().Play ();
+
+		destroyParticle.GetComponent<ParticleSystem>().Play();
 
 		DestroyBullet ();
 	}

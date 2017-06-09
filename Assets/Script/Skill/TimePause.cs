@@ -37,13 +37,22 @@ public class TimePause : SkillBase
     {
         isTimePaused = true;
         TimeManager.GetInstance().SetTimeScale(0.0f);
-        Time.timeScale = 0.0f;
+		var animators = GameObject.FindObjectsOfType<Animator> ();
+		for (int i = 0; i < animators.Length; i++)
+		{
+			if (!animators[i].CompareTag("Player"))
+				animators [i].speed = TimeManager.GetInstance ().customTimeScale;
+		}
     }
 
     protected override void CancelSkill()
     {
         isTimePaused = false;
         TimeManager.GetInstance().SetTimeScale(1.0f);
-        Time.timeScale = 1.0f;
+		var animators = GameObject.FindObjectsOfType<Animator> ();
+		for (int i = 0; i < animators.Length; i++)
+		{
+			animators [i].speed = TimeManager.GetInstance ().customTimeScale;
+		}
     }
 }

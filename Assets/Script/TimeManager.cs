@@ -5,7 +5,7 @@ using UnityEngine;
 public class TimeManager : MonoBehaviour
 {
     public float customDeltaTime { private set; get; }
-    private float customTimeScale;
+	public float customTimeScale;
 
     private void Update()
     {
@@ -28,6 +28,7 @@ public class TimeManager : MonoBehaviour
             container = new GameObject();
             container.name = "TimeManager";
             instance = container.AddComponent<TimeManager>();
+			instance.customTimeScale = 1;
         }
         return instance;
     }
