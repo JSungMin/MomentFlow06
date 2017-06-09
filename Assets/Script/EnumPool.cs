@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnumType
+{
+    WeaponEnum,
+    SworldEnum,
+    RifleEnum,
+    StateEnum
+}
+
 public enum WeaponType
 {
 	Sword,

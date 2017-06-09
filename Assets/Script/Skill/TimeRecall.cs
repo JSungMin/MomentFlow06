@@ -3,21 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO
-// Key pressing 한 상태에서는 시간이 느려지고, 오브젝트들을 클릭할 수 있게 된다
-// 오브젝트들을 클릭하게 되면 list에 담아두고 key를 unpress하면 스킬이 시전된다.
 public class TimeRecall : SkillBase
 {
     public static bool isInTimeRevertPhase { private set; get; }
 
-    private List<TimeRevertable> timeRevertables = new List<TimeRevertable>();
+    private List<TimeRecallable> timeRevertables = new List<TimeRecallable>();
 
     public TimeRecall(KeyCode keyCode)
     {
         isInTimeRevertPhase = false;
         this.keyCode = keyCode;
 
-        TimeRevertable[] tmpArray = GameObject.FindObjectsOfType<TimeRevertable>();
+        TimeRecallable[] tmpArray = GameObject.FindObjectsOfType<TimeRecallable>();
 
         // delegate 셋팅
         for (int i = 0; i < tmpArray.Length; i++)
@@ -48,7 +45,7 @@ public class TimeRecall : SkillBase
     
     protected override void UseSkill()
     {
-        Time.timeScale = 0.1f;
+        Time.timeScale = 0.0f;
         isInTimeRevertPhase = true;
     }
 
@@ -63,15 +60,16 @@ public class TimeRecall : SkillBase
     }
 
     // 다른곳에서도 호출할 수 있지 않을까? 하는 생각 때문에 인자로 둠
-    public void RevertObjs(List<TimeRevertable> objs)
+    public void RevertObjs(List<TimeRecallable> objs)
     {
         for (int i = 0; i < objs.Count; i++)
         {
-            objs[i].StartRevertFor(100);
+            objs[i].StartRevert();
+            objs[i].StartRevertAni();
         }
     }
 
-    private void AddOrRemoveTimeRevertableObj(TimeRevertable obj)
+    private void AddOrRemoveTimeRevertableObj(TimeRecallable obj)
     {
         if (!isInTimeRevertPhase)
             return;
@@ -82,13 +80,13 @@ public class TimeRecall : SkillBase
             AddTimeRevertableObj(obj);
     }
 
-    private void AddTimeRevertableObj(TimeRevertable obj)
+    private void AddTimeRevertableObj(TimeRecallable obj)
     {
         timeRevertables.Add(obj);
         obj.IndicateRevert();
     }
 
-    private void RemoveTimeRevertableObj(TimeRevertable obj)
+    private void RemoveTimeRevertableObj(TimeRecallable obj)
     {
         timeRevertables.Remove(obj);
         obj.NotIndicateRevert();

@@ -14,6 +14,7 @@ public class ShotStateChecker : StateCheckerBase
     {
         if (Vector3.Distance(EnemyInfo.player.transform.position, enemyInfo.transform.position) < enemyInfo.attackRange)
         {
+            return true;
             if (enemyInfo.AttackDelayTimer >= enemyInfo.attackDelay)
                 return true;
             else
