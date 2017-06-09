@@ -14,6 +14,7 @@ public class IShoulderAction : StateMachineBehaviour {
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+		Debug.Log ("UPdate");
 		var aimSrc = animator.GetComponentInParent <AimTarget> ();
 		if (null == aimSrc)
 			return;

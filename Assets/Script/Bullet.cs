@@ -57,7 +57,10 @@ public class Bullet : MonoBehaviour {
 		destroyParticle.transform.parent = transform.parent;
 		destroyParticle.transform.position = transform.position;
 		destroyParticle.transform.localScale = Vector3.one;
-		destroyParticle.transform.rotation = Quaternion.LookRotation (rigid.velocity.normalized);
+		if (rigid.velocity.normalized != Vector3.zero)
+		{
+			destroyParticle.transform.rotation = Quaternion.LookRotation (rigid.velocity.normalized);
+		}
 		destroyParticle.GetComponent<ParticleSystem> ().Play ();
 
 		DestroyBullet ();
