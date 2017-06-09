@@ -31,13 +31,18 @@ public class AnimatorStateController : MonoBehaviour
                         return (RifleType.Pistol + i).ToString();
                 break;
 
-            case EnumType.StateEnum:
-                stateTypeNum = Enum.GetNames(typeof(StateType)).Length;
+			case EnumType.BodyStateEnum:
+				stateTypeNum = Enum.GetNames(typeof(BodyStateType)).Length;
                 for (int i = 0; i < stateTypeNum; i++)
-                    if (Animator.StringToHash(((StateType)i).ToString()) == animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
-                        return (StateType.Die + i).ToString();
+				if (Animator.StringToHash(((BodyStateType)i).ToString()) == animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
+					return (BodyStateType.Die + i).ToString();
                 break;
-
+		case EnumType.ShoulderStateEnum:
+			stateTypeNum = Enum.GetNames(typeof(ShoulderStateType)).Length;
+			for (int i = 0; i < stateTypeNum; i++)
+				if (Animator.StringToHash(((ShoulderStateType)i).ToString()) == animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
+					return (ShoulderStateType.Idle + i).ToString();
+			break;
             default:
                 return "NONE";
         }

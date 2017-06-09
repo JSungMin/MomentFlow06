@@ -7,7 +7,8 @@ public enum EnumType
     WeaponEnum,
     SworldEnum,
     RifleEnum,
-    StateEnum
+    BodyStateEnum,
+	ShoulderStateEnum
 }
 
 public enum WeaponType
@@ -29,12 +30,18 @@ public enum RifleType
 	Grenade
 }
 
-public enum StateType
+public enum BodyStateType
 {
     Die = 0,
     Shot = 1,
-    Idle = 2,
-    Aim = 3
+    Idle = 2
+}
+
+public enum ShoulderStateType
+{
+	Idle = 0,
+	Aim,
+	Shot
 }
 
 public class EnumPool : MonoBehaviour {

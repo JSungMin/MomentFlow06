@@ -48,8 +48,6 @@ public class PlayerAction : MonoBehaviour {
 		shoulderAction = gunAnimator.GetComponent<Shoulder> ();
 		equiptInfo = GetComponent<EquiptInfo> ();
 		outsideInfo = GetComponent<OutsideInfo> ();
-
-		StartCoroutine (UnTimeScaledUpdate ());
 	}
 
     private T GetSkill<T>()
@@ -60,33 +58,8 @@ public class PlayerAction : MonoBehaviour {
         return child;
     }
 
-	public IEnumerator UnTimeScaledUpdate()
-	{
-		while (true) {
-			Debug.Log ("dd");
-			input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
-
-			var nearestObstacle = outsideInfo.GetNearestObstacleObject ();
-
-			InitAnimatorParameters ();
-
-			SelectAnimatorLayer ();
-
-			TriggerActions ();
-
-			CheckCrossObstacle (nearestObstacle);
-
-			if (aimTarget.isActive)
-				aimTarget.AimToObject(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-			else
-				aimTarget.AimToForward();
-			yield return new WaitForEndOfFrame();
-		}
-	}
-
 	public void Update()
 	{
-		Debug.Log (GetSkill<TimePause>().isTimePaused);
 		// 오브젝트 하나 만들고 update 계속 돌리는 것이 좋을 거 같다
 		for (int i = 0; i < skillNum; i++)
 		{
@@ -95,6 +68,25 @@ public class PlayerAction : MonoBehaviour {
 			else if(skills[i].IsTryCancelSkill())
 				skills[i].TryCancelSkill();
 		}
+
+		input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
+
+		var nearestObstacle = outsideInfo.GetNearestObstacleObject ();
+
+		InitAnimatorParameters ();
+
+		SelectAnimatorLayer ();
+
+		TriggerActions ();
+
+		CheckCrossObstacle (nearestObstacle);
+
+		if (aimTarget.isActive)
+			aimTarget.AimToObject(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+		else
+			aimTarget.AimToForward();
+
+		aimTarget.CheckCanVisibleShoulder ();
 	}
 
 	void SelectAnimatorLayer ()
@@ -134,6 +126,7 @@ public class PlayerAction : MonoBehaviour {
 	{
 		if (nearestObstacle != null) {
 			if (Input.GetKeyDown (KeyCode.F)) {
+				Debug.Log ("?");
 				var obstacleWidth = nearestObstacle.GetComponent<Collider> ().bounds.size.x;
 				var obstacleHeight = nearestObstacle.GetComponent<Collider> ().bounds.size.y;
 				playerAnimator.SetTrigger ("TriggerCross");

@@ -11,7 +11,7 @@ public class EnemyShoulderAction : Shoulder {
 	
 	// Update is called once per frame
 	void Update () {
-		if (parentAnimator.GetCurrentAnimatorStateInfo (0).IsName ("Shot")) 
+		/*if (parentAnimator.GetCurrentAnimatorStateInfo (0).IsName ("Shot")) 
 		{
 			isShooting = true;
 			shoulderAnimator.SetTrigger ("TriggerShot");
@@ -36,6 +36,6 @@ public class EnemyShoulderAction : Shoulder {
 		{
 			shoulderAnimator.SetTrigger ("TriggerRun");
 		}
-		shoulderAnimator.SetBool ("IsShooting", isShooting);
+		shoulderAnimator.SetBool ("IsShooting", isShooting);*/
 	}
 }

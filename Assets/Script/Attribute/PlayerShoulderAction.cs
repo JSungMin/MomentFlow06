@@ -38,10 +38,12 @@ public class PlayerShoulderAction : Shoulder {
 	public void HideArm()
 	{
 		playerAimTarget.hideShoulder = true;
+		shoulderAnimator.enabled = false;
 	}
 
 	public void ActiveArm()
 	{
 		playerAimTarget.hideShoulder = false;
+		shoulderAnimator.enabled = true;
 	}
 }
