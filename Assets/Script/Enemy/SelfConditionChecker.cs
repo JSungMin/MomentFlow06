@@ -5,30 +5,45 @@ using UnityEngine;
 // TODO idle, shot, dead
 public class SelfConditionChecker : ConditionChecker
 {
-    private StateCheckerBase[] stateCheckers;
+	private StateCheckerBase[] bodyStateCheckers;
+	private StateCheckerBase[] shoulderStateCheckers;
 
     private new void Awake()
     {
         base.Awake();
         // 인자 중요함
         // refactoring 하고 싶은데 어떻게 해야할지 모르겠다
-        stateCheckers = new StateCheckerBase[] 
+        bodyStateCheckers = new StateCheckerBase[] 
         {
-            new DeadStateChecker(enemyInfo, StateType.Die),
-            new ShotStateChecker(enemyInfo, StateType.Shot),
-            new IdleStateChecker(enemyInfo, StateType.Idle),
-            new AimStateChecker(enemyInfo, StateType.Aim)
+			new BodyDeadStateChecker(enemyInfo, BodyStateType.Die),
+			new BodyShotStateChecker(enemyInfo, BodyStateType.Shot),
+			new BodyIdleStateChecker(enemyInfo, BodyStateType.Idle)
         };
+
+		shoulderStateCheckers = new StateCheckerBase[] 
+		{
+			new ShoulderIdleStateChecker (enemyInfo, ShoulderStateType.Idle),
+			new ShoulderAimStateChecker (enemyInfo, ShoulderStateType.Aim),
+			new ShoulderShotStateChecker (enemyInfo, ShoulderStateType.Shot)
+		};
+
     }
 
     private void Update()
     {
-        for (int i = 0; i < stateCheckers.Length; i++)
+        for (int i = 0; i < bodyStateCheckers.Length; i++)
         {
-            if (stateCheckers[i].IsSatisfied())
+            if (bodyStateCheckers[i].IsSatisfied())
             {
-                animator.SetTrigger("Trigger" + stateCheckers[i].stateType.ToString());
+				animator.SetTrigger("Trigger" + bodyStateCheckers[i].bodyStateType.ToString());
             }
         }
+		for (int i = 0 ; i < shoulderStateCheckers.Length; i++)
+		{
+			if (shoulderStateCheckers [i].IsSatisfied ())
+			{
+				shoulderAnimator.SetTrigger ("Trigger" + shoulderStateCheckers[i].shoulderStateType.ToString());	
+			}
+		}
     }
 }

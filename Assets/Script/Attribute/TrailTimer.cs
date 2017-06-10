@@ -12,6 +12,9 @@ public class TrailTimer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (TimeManager.GetInstance().customTimeScale == 0)
+		{
+			trail.Clear ();
+		}
 	}
 }

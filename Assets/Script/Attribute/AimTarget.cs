@@ -81,18 +81,15 @@ public class AimTarget : MonoBehaviour
         shoulder.transform.localRotation = Quaternion.Euler(Vector3.zero);
     }
 
-    void Update()
-    {
-        if (null == shoulder)
-            return;
-
-        if (true == hideShoulder)
-        {
-            shoulderSpriteRenderer.enabled = false;
-        }
-        else
-        {
-            shoulderSpriteRenderer.enabled = true;
-        }
-    }
+	public void CheckCanVisibleShoulder ()
+	{
+		if (null == shoulder)
+			return;
+		if (true == hideShoulder) {
+			shoulderSpriteRenderer.enabled = false;
+		}
+		else {
+			shoulderSpriteRenderer.enabled = true;
+		}
+	}
 }

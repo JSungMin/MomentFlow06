@@ -44,6 +44,6 @@ public class EnemyInfo : MonoBehaviour
         hp = 100;
         player = GameObject.FindWithTag("Player");
         attackDelay = 3.0f;
-        attackRange = 100;
+        attackRange = 1;
     }
 }

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleStateChecker : StateCheckerBase
+public class BodyIdleStateChecker : StateCheckerBase
 {
-    public IdleStateChecker(EnemyInfo enemyInfo, StateType stateType)
+	public BodyIdleStateChecker(EnemyInfo enemyInfo, BodyStateType stateType)
     {
         this.enemyInfo = enemyInfo;
-        this.stateType = stateType;
+		this.bodyStateType = stateType;
     }
 
     public override bool IsSatisfied()

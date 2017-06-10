@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadStateChecker : StateCheckerBase
+public class BodyDeadStateChecker : StateCheckerBase
 {
-    public DeadStateChecker(EnemyInfo enemyInfo, StateType stateType)
+	public BodyDeadStateChecker(EnemyInfo enemyInfo, BodyStateType stateType)
     {
         this.enemyInfo = enemyInfo;
-        this.stateType = stateType;
+		this.bodyStateType = stateType;
     }
 
     public override bool IsSatisfied()

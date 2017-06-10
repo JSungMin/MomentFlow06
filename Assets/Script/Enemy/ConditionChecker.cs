@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class ConditionChecker : MonoBehaviour
 {
-    private int stateTypeNum;
+	private int bodyStateTypeNum;
+	private int shoulderStateTypeNum;
 
     protected EnemyInfo enemyInfo;
     protected Animator animator;
@@ -16,13 +17,15 @@ public class ConditionChecker : MonoBehaviour
     {
         enemyInfo = GetComponentInParent<EnemyInfo>();
         animator = GetComponent<Animator>();
-        shoulderAnimator = GetComponentInChildren<Animator>();
+		shoulderAnimator = animator.transform.GetChild(0).GetComponentInChildren<Animator>();
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-        stateTypeNum = Enum.GetNames(typeof(StateType)).Length;
+		bodyStateTypeNum = Enum.GetNames(typeof(BodyStateType)).Length;
+		shoulderStateTypeNum = Enum.GetNames (typeof(ShoulderStateType)).Length;
     }
 
     protected string GetCurrentStateName()
     {
-        return AnimatorStateController.GetCurrentStateName(EnumType.StateEnum, animator);
+		return "";
+       // return AnimatorStateController.GetCurrentStateName(EnumType.StateEnum, animator);
     }
 }

@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AimStateChecker : StateCheckerBase
+public class ShoulderAimStateChecker : StateCheckerBase
 {
-    public AimStateChecker(EnemyInfo enemyInfo, StateType stateType)
+	public ShoulderAimStateChecker(EnemyInfo enemyInfo, ShoulderStateType stateType)
     {
         this.enemyInfo = enemyInfo;
-        this.stateType = stateType;
+		this.shoulderStateType = stateType;
     }
 
     public override bool IsSatisfied()
     {
-        return false;
-
+		Debug.Log ("Shoulder Aim, " + enemyInfo.AttackDelayTimer + " , " + enemyInfo.attackDelay);
         if (Vector3.Distance(EnemyInfo.player.transform.position, enemyInfo.transform.position) < enemyInfo.attackRange)
         {
-            if (enemyInfo.AttackDelayTimer < enemyInfo.attackDelay)
-                return true;
+			if (enemyInfo.AttackDelayTimer < enemyInfo.attackDelay) {
+				Debug.Log ("AIm True");
+				return true;
+			}
             else
                 return false;
         }
