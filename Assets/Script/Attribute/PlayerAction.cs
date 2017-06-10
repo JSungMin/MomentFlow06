@@ -30,6 +30,8 @@ public class PlayerAction : MonoBehaviour {
 
 	Vector2 input;
     private AimTarget aimTarget;
+
+    private Mana mana;
     
     private void Awake()
     {
@@ -37,6 +39,7 @@ public class PlayerAction : MonoBehaviour {
         skillNum = skills.Length;
 
         aimTarget = GetComponent<AimTarget>();
+        mana = gameObject.AddComponent<Mana>();
     }
 
 	public void Start()
