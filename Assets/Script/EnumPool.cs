@@ -39,9 +39,9 @@ public enum BodyStateType
 
 public enum ShoulderStateType
 {
-	Idle = 0,
-	Aim,
-	Shot
+	Shot = 0,
+    Aim = 1,
+    Idle = 2
 }
 
 public class EnumPool : MonoBehaviour {

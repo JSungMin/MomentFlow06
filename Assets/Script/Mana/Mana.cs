@@ -5,8 +5,6 @@ using UnityEngine;
 // Mana Controller
 public class Mana : MonoBehaviour
 {
-
-
     private void Update()
     {
     }

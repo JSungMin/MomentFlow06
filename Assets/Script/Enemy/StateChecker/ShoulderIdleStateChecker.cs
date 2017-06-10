@@ -12,6 +12,6 @@ public class ShoulderIdleStateChecker : StateCheckerBase
 
     public override bool IsSatisfied()
     {
-		return true;    
+		return true;
 	}
 }

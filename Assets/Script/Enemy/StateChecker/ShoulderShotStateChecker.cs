@@ -14,10 +14,10 @@ public class ShoulderShotStateChecker : StateCheckerBase
     {
         if (Vector3.Distance(EnemyInfo.player.transform.position, enemyInfo.transform.position) < enemyInfo.attackRange)
         {
-			if (enemyInfo.AttackDelayTimer >= enemyInfo.attackDelay) {
-				Debug.Log ("Shoulder Attack True");
-				return true;
-			}
+            if (enemyInfo.AttackDelayTimer >= enemyInfo.attackDelay)
+            {
+                return true;
+            }
             else
                 return false;
         }

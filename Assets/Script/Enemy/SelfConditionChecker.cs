@@ -20,11 +20,11 @@ public class SelfConditionChecker : ConditionChecker
 			new BodyIdleStateChecker(enemyInfo, BodyStateType.Idle)
         };
 
-		shoulderStateCheckers = new StateCheckerBase[] 
-		{
-			new ShoulderIdleStateChecker (enemyInfo, ShoulderStateType.Idle),
-			new ShoulderAimStateChecker (enemyInfo, ShoulderStateType.Aim),
-			new ShoulderShotStateChecker (enemyInfo, ShoulderStateType.Shot)
+		shoulderStateCheckers = new StateCheckerBase[]
+        {
+            new ShoulderShotStateChecker (enemyInfo, ShoulderStateType.Shot),
+            new ShoulderAimStateChecker (enemyInfo, ShoulderStateType.Aim),
+            new ShoulderIdleStateChecker (enemyInfo, ShoulderStateType.Idle)
 		};
 
     }
@@ -35,14 +35,27 @@ public class SelfConditionChecker : ConditionChecker
         {
             if (bodyStateCheckers[i].IsSatisfied())
             {
-				animator.SetTrigger("Trigger" + bodyStateCheckers[i].bodyStateType.ToString());
+                if (bodyStateCheckers[i].bodyStateType.ToString() == GetCurrentBodyStateName())
+                    break;
+                else
+                {
+                    animator.SetTrigger("Trigger" + bodyStateCheckers[i].bodyStateType.ToString());
+                    break;
+                }
             }
         }
+
 		for (int i = 0 ; i < shoulderStateCheckers.Length; i++)
 		{
 			if (shoulderStateCheckers [i].IsSatisfied ())
-			{
-				shoulderAnimator.SetTrigger ("Trigger" + shoulderStateCheckers[i].shoulderStateType.ToString());	
+            {
+                if (shoulderStateCheckers[i].shoulderStateType.ToString() == GetCurrentShoulderStateName())
+                    break;
+                else
+                {
+                    shoulderAnimator.SetTrigger("Trigger" + shoulderStateCheckers[i].shoulderStateType.ToString());
+                    break;
+                }
 			}
 		}
     }

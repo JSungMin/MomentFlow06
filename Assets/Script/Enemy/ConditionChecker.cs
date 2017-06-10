@@ -23,9 +23,13 @@ public class ConditionChecker : MonoBehaviour
 		shoulderStateTypeNum = Enum.GetNames (typeof(ShoulderStateType)).Length;
     }
 
-    protected string GetCurrentStateName()
+    protected string GetCurrentBodyStateName()
     {
-		return "";
-       // return AnimatorStateController.GetCurrentStateName(EnumType.StateEnum, animator);
+        return AnimatorStateController.GetCurrentStateName(EnumType.BodyStateEnum, animator);
+    }
+
+    protected string GetCurrentShoulderStateName()
+    {
+        return AnimatorStateController.GetCurrentStateName(EnumType.ShoulderStateEnum, shoulderAnimator);
     }
 }
