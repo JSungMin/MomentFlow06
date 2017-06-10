@@ -12,6 +12,8 @@ public class AimStateChecker : StateCheckerBase
 
     public override bool IsSatisfied()
     {
+        return false;
+
         if (Vector3.Distance(EnemyInfo.player.transform.position, enemyInfo.transform.position) < enemyInfo.attackRange)
         {
             if (enemyInfo.AttackDelayTimer < enemyInfo.attackDelay)

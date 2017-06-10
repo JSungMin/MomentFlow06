@@ -23,14 +23,6 @@ public class ConditionChecker : MonoBehaviour
 
     protected string GetCurrentStateName()
     {
-        for (int i = 0; i < stateTypeNum; i++)
-        {
-            if (Animator.StringToHash(((StateType)i).ToString()) == 
-                animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
-            {
-                return (StateType.Die + i).ToString();
-            }
-        }
-        return "NONE";
+        return AnimatorStateController.GetCurrentStateName(EnumType.StateEnum, animator);
     }
 }
