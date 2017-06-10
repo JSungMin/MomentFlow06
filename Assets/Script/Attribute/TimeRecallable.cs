@@ -23,14 +23,21 @@ public class TimeRecallable : MonoBehaviour
     private Renderer mRenderer;
     private Animator animator;
 
+    private Material originMaterial;
+    private Material outlineMaterial;
+
     private void Awake()
     {
+        outlineMaterial = Resources.Load("ExtraAssets/Selected Effect --- Outline/Material/OutlineSprite") as Material;
+
         lastFrameNode = TimeRecallNode.CreateNode(Vector3.zero, Vector3.zero, Vector3.zero);
 
         rigidbody = GetComponent<Rigidbody>();
         boxcollider = GetComponent<BoxCollider>();
 
         mRenderer = GetComponent<Renderer>();
+        originMaterial = mRenderer.material;
+
         animator = GetComponent<Animator>();
 
         isReverting = false;
@@ -87,7 +94,27 @@ public class TimeRecallable : MonoBehaviour
 
         NotIndicateRevert();
     }
-    
+
+
+    private bool isSelected = false;
+    private void OnMouseEnter()
+    {
+        mRenderer.material = outlineMaterial;
+        if (isSelected)
+            mRenderer.material.color = new Color(0.5f, 0.9f, 1.0f);
+        else
+            mRenderer.material.color = Color.white;
+    }
+
+    private void OnMouseExit()
+    {
+        mRenderer.material = originMaterial;
+        if (isSelected)
+            mRenderer.material.color = new Color(0.5f, 0.9f, 1.0f);
+        else
+            mRenderer.material.color = Color.white;
+    }
+
     private void OnMouseDown()
     {
         AddOrRemoveTimeRevertable(this);
@@ -98,10 +125,12 @@ public class TimeRecallable : MonoBehaviour
     public void IndicateRevert()
     {
         mRenderer.material.color = new Color(0.5f, 0.9f, 1.0f);
+        isSelected = true;
     }
 
     public void NotIndicateRevert()
     {
         mRenderer.material.color = Color.white;
+        isSelected = false;
     }
 }
