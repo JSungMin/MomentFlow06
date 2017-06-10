@@ -181,7 +181,7 @@ public class PlayerAction : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-
+		Debug.Log ("EE");
 		pBody.velocity = new Vector3 (
 			Mathf.Clamp (pBody.velocity.x, -maxSpeed, maxSpeed),
 			pBody.velocity.y,
