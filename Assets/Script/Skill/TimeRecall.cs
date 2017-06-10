@@ -25,7 +25,7 @@ public class TimeRecall : SkillBase
 
     public override bool IsTryUseSKill()
     {
-        return Input.GetKeyDown(keyCode) && !isInTimeRevertPhase;
+		return Input.GetKeyDown(keyCode) && !isInTimeRevertPhase;
     }
 
     public override bool IsTryCancelSkill()
@@ -45,8 +45,13 @@ public class TimeRecall : SkillBase
     
     protected override void UseSkill()
     {
-        Time.timeScale = 0.0f;
         isInTimeRevertPhase = true;
+		TimeManager.GetInstance().SetTimeScale(0.8f);
+		var animators = GameObject.FindObjectsOfType<Animator> ();
+		for (int i = 0; i < animators.Length; i++)
+		{
+			animators [i].speed = TimeManager.GetInstance ().customTimeScale;
+		}
     }
 
     // 키가 떼어졌을 때
@@ -54,9 +59,15 @@ public class TimeRecall : SkillBase
     {
         RevertObjs(timeRevertables);
 
-        Time.timeScale = 1.0f;
         isInTimeRevertPhase = false;
         timeRevertables.Clear();
+
+		TimeManager.GetInstance().SetTimeScale(1f);
+		var animators = GameObject.FindObjectsOfType<Animator> ();
+		for (int i = 0; i < animators.Length; i++)
+		{
+			animators [i].speed = TimeManager.GetInstance ().customTimeScale;
+		}
     }
 
     // 다른곳에서도 호출할 수 있지 않을까? 하는 생각 때문에 인자로 둠

@@ -50,7 +50,7 @@ public class PlayerAction : MonoBehaviour {
 		outsideInfo = GetComponent<OutsideInfo> ();
 	}
 
-    private T GetSkill<T>()
+	public T GetSkill<T>()
     {
         T child = skills.OfType<T>().FirstOrDefault();
         if (child == null)

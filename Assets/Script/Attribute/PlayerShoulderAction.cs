@@ -16,9 +16,6 @@ public class PlayerShoulderAction : Shoulder {
 		if (!parentAnimator.GetBool("HoldOnWeapon"))
 			return;
 
-        if (TimeRecall.isInTimeRevertPhase)
-            return;
-
         isShooting = Input.GetMouseButton(0);
 		isAimming = Input.GetMouseButton(1);
 
@@ -27,6 +24,16 @@ public class PlayerShoulderAction : Shoulder {
 
 		parentAnimator.SetBool("IsAimming", isAimming);
 		shoulderAnimator.SetBool("IsAimming", isAimming);
+
+		if (TimeRecall.isInTimeRevertPhase) 
+		{
+			parentAnimator.ResetTrigger("TriggerShot");
+			shoulderAnimator.ResetTrigger("TriggerShot");
+			parentAnimator.SetBool ("IsShooting", false);
+			shoulderAnimator.SetBool ("IsShooting", false);
+
+			return;
+		}
 
 		if (isShooting)
         {
