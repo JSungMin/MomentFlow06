@@ -48,6 +48,8 @@ public class PlayerAction : MonoBehaviour {
 		shoulderAction = gunAnimator.GetComponent<Shoulder> ();
 		equiptInfo = GetComponent<EquiptInfo> ();
 		outsideInfo = GetComponent<OutsideInfo> ();
+
+		StartCoroutine (UnTimeScaledUpdate ());
 	}
 
     private T GetSkill<T>()
@@ -58,34 +60,42 @@ public class PlayerAction : MonoBehaviour {
         return child;
     }
 
-	void Update ()
+	public IEnumerator UnTimeScaledUpdate()
 	{
-        // 오브젝트 하나 만들고 update 계속 돌리는 것이 좋을 거 같다
-        for (int i = 0; i < skillNum; i++)
-        {
-            if (skills[i].IsTryUseSKill())
-                skills[i].TryUseSkill();
-            else if(skills[i].IsTryCancelSkill())
-                skills[i].TryCancelSkill();
-        }
+		while (true) {
+			Debug.Log ("dd");
+			input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
 
-        input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
+			var nearestObstacle = outsideInfo.GetNearestObstacleObject ();
 
-		var nearestObstacle = outsideInfo.GetNearestObstacleObject ();
+			InitAnimatorParameters ();
 
-		InitAnimatorParameters ();
+			SelectAnimatorLayer ();
 
-		SelectAnimatorLayer ();
+			TriggerActions ();
 
-		TriggerActions ();
+			CheckCrossObstacle (nearestObstacle);
 
-		CheckCrossObstacle (nearestObstacle);
+			if (aimTarget.isActive)
+				aimTarget.AimToObject(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+			else
+				aimTarget.AimToForward();
+			yield return new WaitForEndOfFrame();
+		}
+	}
 
-        if (aimTarget.isActive)
-            aimTarget.AimToObject(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        else
-            aimTarget.AimToForward();
-    }
+	public void Update()
+	{
+		Debug.Log (GetSkill<TimePause>().isTimePaused);
+		// 오브젝트 하나 만들고 update 계속 돌리는 것이 좋을 거 같다
+		for (int i = 0; i < skillNum; i++)
+		{
+			if (skills[i].IsTryUseSKill())
+				skills[i].TryUseSkill();
+			else if(skills[i].IsTryCancelSkill())
+				skills[i].TryCancelSkill();
+		}
+	}
 
 	void SelectAnimatorLayer ()
 	{
