@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class IBodyAction : StateMachineBehaviour {		
-	static void SetStepMode (Animator animator)
+	static void SetStepDirection (Animator animator)
 	{
 		if (animator.GetFloat ("HorizontalInput") != 0)
 			animator.SetFloat ("IsForwardWalk", Mathf.Sign (animator.GetFloat ("HorizontalInput") * animator.transform.parent.localScale.x));
@@ -16,7 +16,7 @@ public class IBodyAction : StateMachineBehaviour {
 	{
 		if (stateInfo.IsName ("Walk"))
 		{
-			SetStepMode (animator);
+			SetStepDirection (animator);
 
 			var accel = animator.GetFloat ("MoveAccel");
 			var newVelocity = animator.GetComponentInParent<Rigidbody> ().velocity;

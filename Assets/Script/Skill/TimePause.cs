@@ -37,6 +37,7 @@ public class TimePause : SkillBase
     {
         isTimePaused = true;
         TimeManager.GetInstance().SetTimeScale(0.0f);
+
 		var animators = GameObject.FindObjectsOfType<Animator> ();
 		for (int i = 0; i < animators.Length; i++)
 		{
@@ -49,6 +50,7 @@ public class TimePause : SkillBase
     {
         isTimePaused = false;
         TimeManager.GetInstance().SetTimeScale(1.0f);
+
 		var animators = GameObject.FindObjectsOfType<Animator> ();
 		for (int i = 0; i < animators.Length; i++)
 		{

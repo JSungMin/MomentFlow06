@@ -9,7 +9,7 @@ public class TimeManager : MonoBehaviour
 
     private void Update()
     {
-        customDeltaTime = Time.deltaTime * customTimeScale;
+		customDeltaTime =  Time.deltaTime * customTimeScale;
     }
 
     public void SetTimeScale(float scale)

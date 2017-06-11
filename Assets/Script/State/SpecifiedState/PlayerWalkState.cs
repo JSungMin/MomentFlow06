@@ -21,17 +21,20 @@ public class PlayerWalkState : StateMachineBehaviour {
 		var newVelocity = animator.GetComponentInParent<Rigidbody> ().velocity;
 
 
-		newVelocity += Vector3.right * animator.GetFloat ("HorizontalInput") * accel * Time.deltaTime;
+		newVelocity += Vector3.right * animator.GetFloat ("HorizontalInput") * accel * Time.unscaledDeltaTime;
 
 		if (animator.GetBool ("IsAimming")) {
 			newVelocity.x = Mathf.Clamp (newVelocity.x, -animator.GetFloat ("MoveSpeed"), animator.GetFloat ("MoveSpeed")) * 0.8f;
 		} else
 			newVelocity.x = Mathf.Clamp (newVelocity.x, -animator.GetFloat ("MoveSpeed"), animator.GetFloat ("MoveSpeed"));
 
-		if (TimeManager.GetInstance().customTimeScale != 0) {
-			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity * TimeManager.GetInstance ().customTimeScale;
-		} else
+		if (TimeRecall.isInTimeRevertPhase) {
+			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity * TimeManager.GetInstance().customTimeScale;
+		} 
+		else
 			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity;
+
+		Debug.Log (animator.GetComponentInParent<Rigidbody>().velocity);
 	}
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
