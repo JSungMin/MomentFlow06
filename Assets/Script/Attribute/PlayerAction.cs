@@ -14,6 +14,9 @@ public class PlayerAction : MonoBehaviour {
 
 	private Rigidbody pBody;
 	private BoxCollider pCollider;
+
+	public static GameObject nearestStair;
+
 	public bool holdOnWeapon = false;
 
 	public Vector3 velocity;
@@ -75,14 +78,17 @@ public class PlayerAction : MonoBehaviour {
 		input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
 
 		var nearestObstacle = outsideInfo.GetNearestObstacleObject ();
+		nearestStair = outsideInfo.GetNearestStairObject ();
 
 		InitAnimatorParameters ();
 
 		SelectAnimatorLayer ();
 
-		TriggerActions ();
-
 		CheckCrossObstacle (nearestObstacle);
+
+		CheckOnStair (nearestStair);
+
+		TriggerActions ();
 
 		if (aimTarget.isActive)
 			aimTarget.AimToObject(Camera.main.ScreenToWorldPoint(Input.mousePosition));
@@ -129,10 +135,26 @@ public class PlayerAction : MonoBehaviour {
 	{
 		if (nearestObstacle != null) {
 			if (Input.GetKeyDown (KeyCode.F)) {
-				Debug.Log ("?");
-				var obstacleWidth = nearestObstacle.GetComponent<Collider> ().bounds.size.x;
-				var obstacleHeight = nearestObstacle.GetComponent<Collider> ().bounds.size.y;
 				playerAnimator.SetTrigger ("TriggerCross");
+			}
+		}
+	}
+
+	void CheckOnStair (GameObject nearestStair)
+	{
+		if (null != nearestStair) {
+			var stairCol = nearestStair.GetComponent<Collider> ();
+			var playerCol = playerAnimator.GetComponent<Collider> ();
+			if (input.y > 0 && stairCol.bounds.min.y > playerCol.bounds.min.y)
+			{
+				playerAnimator.SetTrigger ("TriggerStair");
+				playerAnimator.SetBool ("IsOnStair", true);
+			}
+			else if (input.y < 0 && stairCol.bounds.max.y > playerCol.bounds.min.y &&
+				playerCol.bounds.min.y >= stairCol.bounds.min.y)
+			{
+				playerAnimator.SetTrigger ("TriggerStair");
+				playerAnimator.SetBool ("IsOnStair", true);
 			}
 		}
 	}
@@ -158,7 +180,9 @@ public class PlayerAction : MonoBehaviour {
 		{
 			playerAnimator.SetTrigger ("TriggerJump");
 		}
-		if (Input.GetKey (KeyCode.S)) {
+
+		if (Input.GetKey (KeyCode.S)) 
+		{
 			playerAnimator.SetTrigger ("TriggerCrouch");
 			playerAnimator.ResetTrigger ("TriggerStandUp");
 			playerAnimator.SetBool ("IsCrouching", true);

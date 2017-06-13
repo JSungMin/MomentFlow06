@@ -20,7 +20,6 @@ public class PlayerWalkState : StateMachineBehaviour {
 		var accel = animator.GetFloat ("MoveAccel");
 		var newVelocity = animator.GetComponentInParent<Rigidbody> ().velocity;
 
-
 		newVelocity += Vector3.right * animator.GetFloat ("HorizontalInput") * accel * Time.unscaledDeltaTime;
 
 		if (animator.GetBool ("IsAimming")) {
