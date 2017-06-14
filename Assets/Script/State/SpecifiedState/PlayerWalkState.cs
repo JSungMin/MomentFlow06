@@ -32,8 +32,6 @@ public class PlayerWalkState : StateMachineBehaviour {
 		} 
 		else
 			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity;
-
-		Debug.Log (animator.GetComponentInParent<Rigidbody>().velocity);
 	}
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

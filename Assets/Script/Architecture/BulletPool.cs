@@ -9,8 +9,8 @@ public class BulletPool : MonoBehaviour {
 		get {
 			if (instance == null)
 			{
-				var newWeaponFactory = new GameObject ("BulletFactory");
-				instance = newWeaponFactory.AddComponent<BulletPool> ();
+				var newBulletPool = new GameObject ("BulletPool");
+				instance = newBulletPool.AddComponent<BulletPool> ();
 			}
 			return instance;
 		}

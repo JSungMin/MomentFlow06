@@ -13,7 +13,9 @@ public class PlayerUpStair : StateMachineBehaviour {
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 		pRigid = animator.GetComponentInParent<Rigidbody> ();
 		playerCol = animator.GetComponent<Collider> ();
-		stairCol = animator.GetComponentInParent<OutsideInfo> ().GetNearestStairObject ().GetComponent<Collider>();
+		if (null != PlayerAction.nearestStair) {
+			stairCol = PlayerAction.nearestStair.GetComponent<Collider> ();
+		}
 	}
 
 	void UpStair (Animator animator, AnimatorStateInfo stateInfo)
@@ -29,7 +31,7 @@ public class PlayerUpStair : StateMachineBehaviour {
 
 		newVelocity = Vector3.up * animator.GetFloat ("VerticalInput") * moveSpeed * Time.unscaledDeltaTime;
 
-		animator.GetComponentInParent<Rigidbody>().transform.position += newVelocity;
+		pRigid.transform.position += newVelocity;
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

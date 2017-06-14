@@ -29,7 +29,8 @@ public class PlayerStairState : StateMachineBehaviour {
 	// OnStateExit is called before OnStateExit is called on any state inside this state machine
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 		animator.GetComponentInParent<Rigidbody> ().isKinematic = false;
-		animator.SetBool ("IsOnStair", false);
+
+		Debug.Log ("Exit");
 	}
 
 	// OnStateMove is called before OnStateMove is called on any state inside this state machine

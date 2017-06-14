@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ChatSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Chat>
+		<Title>대화01</Title>
+		<Page>0</Page>
+            <NextPage>1</NextPage>
+		<Content>셀마가 말을 한다 홍 홍 홍</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+	<Chat>
+		<Title>대화01</Title>
+		<Page>1</Page>
+            <NextPage>-1</NextPage>
+		<Content>적이 말을 한다 홍 홍 홍</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+</ChatSet>

@@ -6,7 +6,7 @@ public class DieState : StateMachineBehaviour {
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        animator.GetComponentInParent<AimTarget>().hideShoulder = true;
+		animator.transform.GetChild (0).GetComponent<SpriteRenderer> ().enabled = false;
         animator.transform.GetChild(0).GetComponent<Animator>().enabled = false;
 	}
 

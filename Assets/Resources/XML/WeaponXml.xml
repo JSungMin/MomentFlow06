@@ -8,6 +8,7 @@
 		<Damage>5</Damage>
 		<AttackDelay>0.25</AttackDelay>
 		<MaxAmmo>7</MaxAmmo>
+            <Magazine>35</Magazine>
 		<UsingBullet>0.45mm</UsingBullet>
 	</Weapon>
 	<Weapon>
@@ -17,4 +18,15 @@
 		<Damage>10</Damage>
 		<AttackDelay>0.4</AttackDelay>
 	</Weapon>
+      <Weapon>
+            <Id>2</Id>
+            <Name>돌격소총</Name>
+		<WeaponType>1</WeaponType>
+		<RifleType>0</RifleType>
+		<Damage>10</Damage>
+		<AttackDelay>0.25</AttackDelay>
+		<MaxAmmo>30</MaxAmmo>
+            <Magazine>150</Magazine>
+		<UsingBullet>0.45mm</UsingBullet>
+      </Weapon>
 </WeaponSet>

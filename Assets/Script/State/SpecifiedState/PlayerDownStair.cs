@@ -13,7 +13,9 @@ public class PlayerDownStair : StateMachineBehaviour {
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 		pRigid = animator.GetComponentInParent<Rigidbody> ();
 		playerCol = animator.GetComponent<Collider> ();
-		stairCol = animator.GetComponentInParent<OutsideInfo> ().GetNearestStairObject ().GetComponent<Collider>();
+		if (null != PlayerAction.nearestStair) {
+			stairCol = PlayerAction.nearestStair.GetComponent<Collider> ();
+		}
 	}
 
 	void DownStair (Animator animator, AnimatorStateInfo stateInfo)

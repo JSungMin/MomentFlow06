@@ -46,7 +46,7 @@ public class TimeRecall : SkillBase
     protected override void UseSkill()
     {
         isInTimeRevertPhase = true;
-		TimeManager.GetInstance().SetTimeScale(0.8f);
+		Time.timeScale = 0.25f;
 		var animators = GameObject.FindObjectsOfType<Animator> ();
 		for (int i = 0; i < animators.Length; i++)
 		{
@@ -62,7 +62,7 @@ public class TimeRecall : SkillBase
         isInTimeRevertPhase = false;
         timeRevertables.Clear();
 
-		TimeManager.GetInstance().SetTimeScale(1f);
+		Time.timeScale = 1f;
 		var animators = GameObject.FindObjectsOfType<Animator> ();
 		for (int i = 0; i < animators.Length; i++)
 		{
