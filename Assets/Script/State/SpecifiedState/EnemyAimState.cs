@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class EnemyAimState : StateMachineBehaviour {
     
+	private AimTarget aimTarget;
+	private Vector3 targetPos;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+		if (null == aimTarget) {
+			aimTarget = animator.GetComponentInParent<AimTarget> ();
+		}
         animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer = 0;
+		targetPos = GameObject.FindObjectOfType<PlayerAction> ().transform.GetChild (0).GetComponent<Collider> ().bounds.center;
     }
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //if(animator.GetComponentInParent<EnemyInfo>().AimPos > )
-
+		aimTarget.AimToObject (targetPos = GameObject.FindObjectOfType<PlayerAction> ().transform.GetChild (0).GetComponent<Collider> ().bounds.center);
         animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer += TimeManager.GetInstance().customDeltaTime;
     }
     

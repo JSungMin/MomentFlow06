@@ -66,15 +66,17 @@ public class AimTarget : MonoBehaviour
 
     public void AimToForward()
     {
-        var inputX = Input.GetAxis("Horizontal");
-        if (inputX < 0)
-        {
-            SetDirection(false);
-        }
-        else if (inputX > 0)
-        {
-            SetDirection(true);
-        }
+		if (transform.CompareTag ("Player")) {
+			var inputX = Input.GetAxis("Horizontal");
+			if (inputX < 0)
+			{
+				SetDirection(false);
+			}
+			else if (inputX > 0)
+			{
+				SetDirection(true);
+			}
+		}
 
         animator.SetFloat("AimAngleRatio", 0.5f);
 
