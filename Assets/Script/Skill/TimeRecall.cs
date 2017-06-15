@@ -9,10 +9,11 @@ public class TimeRecall : SkillBase
 
     private List<TimeRecallable> timeRevertables = new List<TimeRecallable>();
 
-    public TimeRecall(KeyCode keyCode)
+    public TimeRecall(KeyCode keyCode, float manaCost)
     {
         isInTimeRevertPhase = false;
         this.keyCode = keyCode;
+        this.manaCost = manaCost;
 
         TimeRecallable[] tmpArray = GameObject.FindObjectsOfType<TimeRecallable>();
 
@@ -35,7 +36,9 @@ public class TimeRecall : SkillBase
 
     protected override bool CanUseSkill()
     {
-        return true;
+        if (playerAction.mana.ManaPoint >= manaCost)
+            return true;
+        return false;
     }
 
     protected override bool CanCancelSkill()
@@ -57,6 +60,7 @@ public class TimeRecall : SkillBase
     // 키가 떼어졌을 때
     protected override void CancelSkill()
     {
+        playerAction.mana.ConsumeMana(manaCost);
         RevertObjs(timeRevertables);
 
         isInTimeRevertPhase = false;

@@ -3,15 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Mana Controller
-public class Mana : MonoBehaviour
+public class Mana
 {
-    private const float maxManaPoint = 100.0f;
-    private const float perIncManaPoint = 0.5f;
+    public Mana(float maxManaPoint)
+    {
+        this.maxManaPoint = maxManaPoint;
+    }
 
+    public IEnumerator RecoveryMana(float perIncManaPoint, float incDeltaTm)
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(incDeltaTm);
+            ManaPoint += perIncManaPoint;
+        }
+    }
+
+    public void ConsumeMana(float manaPoint)
+    {
+        this.ManaPoint -= manaPoint;
+    }
+
+    private float maxManaPoint;
     private float manaPoint;
     public float ManaPoint
     {
-        set
+        private set
         {
             manaPoint = value;
             if (manaPoint > maxManaPoint)
@@ -26,15 +43,5 @@ public class Mana : MonoBehaviour
         {
             return manaPoint;
         }
-    }
-
-    private void Awake()
-    {
-        ManaPoint = 0.0f;
-    }
-
-    private void Update()
-    {
-        ManaPoint += perIncManaPoint;
     }
 }

@@ -8,10 +8,10 @@ public class ManaText : MonoBehaviour
 {
     private Mana mana;
     private Text textComponent;
-
-    private void Awake()
+    
+    private void Start()
     {
-        mana = GameObject.FindObjectOfType<Mana>();
+        mana = GameObject.FindObjectOfType<PlayerAction>().mana;
         textComponent = GetComponent<Text>();
     }
 

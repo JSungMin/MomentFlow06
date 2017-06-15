@@ -34,15 +34,18 @@ public class PlayerAction : MonoBehaviour {
 	Vector2 input;
     private AimTarget aimTarget;
 
-    private Mana mana;
+    public Mana mana { private set; get; }
+    private Coroutine RecoveryManaCo; 
     
     private void Awake()
     {
-        skills = new SkillBase[] { new TimePause(KeyCode.Z), new TimeRecall(KeyCode.X) };
+        skills = new SkillBase[] { new TimePause(KeyCode.Z, 15.0f), new TimeRecall(KeyCode.X, 10.0f) };
         skillNum = skills.Length;
 
         aimTarget = GetComponent<AimTarget>();
-        mana = gameObject.AddComponent<Mana>();
+
+        mana = new Mana(100.0f);
+        RecoveryManaCo = StartCoroutine(mana.RecoveryMana(1.0f, 0.5f));
     }
 
 	public void Start()
@@ -74,7 +77,7 @@ public class PlayerAction : MonoBehaviour {
 			else if(skills[i].IsTryCancelSkill())
 				skills[i].TryCancelSkill();
 		}
-
+        
 		input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
 
 		var nearestObstacle = outsideInfo.GetNearestObstacleObject ();

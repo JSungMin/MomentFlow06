@@ -58,6 +58,11 @@ public class Bullet : MonoBehaviour {
 	{
 		if (col.collider.CompareTag("Enemy"))
 		{
+            if (col.collider.GetComponent<EnemyInfo>().Hp <= 0)
+            {
+                return;
+            }
+
 			col.collider.GetComponent<Rigidbody> ().AddForce (new Vector3 (rigid.velocity.x, 0).normalized * 2, ForceMode.Impulse);
             col.collider.GetComponentInChildren<InteractConditionChecker>().Damage(10);
 		}

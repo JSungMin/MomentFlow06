@@ -7,10 +7,11 @@ public class TimePause : SkillBase
 {
     public bool isTimePaused { private set; get; }
 
-    public TimePause(KeyCode keyCode)
+    public TimePause(KeyCode keyCode,float manaCost)
     {
         isTimePaused = false;
         this.keyCode = keyCode;
+        this.manaCost = manaCost;
     }
 
     public override bool IsTryUseSKill()
@@ -25,7 +26,9 @@ public class TimePause : SkillBase
 
     protected override bool CanUseSkill()
     {
-        return true;
+        if (playerAction.mana.ManaPoint >= manaCost)
+            return true;
+        return false;
     }
 
     protected override bool CanCancelSkill()
@@ -36,6 +39,7 @@ public class TimePause : SkillBase
     protected override void UseSkill()
     {
         isTimePaused = true;
+        playerAction.mana.ConsumeMana(manaCost);
         TimeManager.GetInstance().SetTimeScale(0.0f);
 
 		var animators = GameObject.FindObjectsOfType<Animator> ();
