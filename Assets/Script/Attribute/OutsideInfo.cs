@@ -6,7 +6,7 @@ public class OutsideInfo : MonoBehaviour {
 
 	public List<GameObject> obstacleList;
 	public List<GameObject> stairList;
-	public List<GameObject> doorList;
+	public List<GameObject> interactableObject;
 
 	public static GameObject nearestStair = null;
 
@@ -21,10 +21,10 @@ public class OutsideInfo : MonoBehaviour {
 			if (!stairList.Contains(col.gameObject))
 				stairList.Add (col.gameObject);
 		}
-		if (col.CompareTag ("Door"))
+		if (col.CompareTag ("InteractableObject"))
 		{
-			if (!doorList.Contains (col.gameObject))
-				doorList.Add (col.gameObject);
+			if (!interactableObject.Contains (col.gameObject))
+				interactableObject.Add (col.gameObject);
 		}
 	}
 
@@ -36,10 +36,10 @@ public class OutsideInfo : MonoBehaviour {
 				stairList.Add (col.gameObject);
 			}
 		}
-		if (col.CompareTag ("Door"))
+		if (col.CompareTag ("InteractableObject"))
 		{
-			if (!doorList.Contains (col.gameObject))
-				doorList.Add (col.gameObject);
+			if (!interactableObject.Contains (col.gameObject))
+				interactableObject.Add (col.gameObject);
 		}
 	}
 
@@ -55,11 +55,11 @@ public class OutsideInfo : MonoBehaviour {
 			if (stairList.Contains(col.gameObject))
 				stairList.Remove (col.gameObject);
 		}
-		if (col.CompareTag ("Door"))
+		if (col.CompareTag ("InteractableObject"))
 		{
-			if (doorList.Contains (col.gameObject)) 
+			if (interactableObject.Contains (col.gameObject)) 
 			{
-				doorList.Remove (col.gameObject);
+				interactableObject.Remove (col.gameObject);
 			}
 		}
 	}

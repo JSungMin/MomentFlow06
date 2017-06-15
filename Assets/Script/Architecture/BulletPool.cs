@@ -71,7 +71,7 @@ public class BulletPool : MonoBehaviour {
 		}
 	}
 
-	public Bullet BorrowBullet (GameObject usingBullet)
+	public Bullet BorrowBullet (GameObject usingBullet, GameObject owner)
 	{
 		for (int i = 0; i < bulletPools.Count; i++)
 		{
@@ -90,12 +90,14 @@ public class BulletPool : MonoBehaviour {
 					}
 					borrowBullet = pool.GetChild (index).GetComponent<Bullet> ();
 					borrowBullet.bulletIndex = index;
+					borrowBullet.owner = owner;
 					borrowBullet.gameObject.SetActive (true);
 					return borrowBullet;
 				}
 				AddAmmoToPool (usingBullet, 1, pool);
 				borrowBullet = pool.GetChild (index).GetComponent<Bullet> ();
 				borrowBullet.bulletIndex = index;
+				borrowBullet.owner = owner;
 				borrowBullet.gameObject.SetActive (true);
 				return borrowBullet;
 			}
@@ -106,6 +108,7 @@ public class BulletPool : MonoBehaviour {
 	public void ReturnBullet (GameObject usedBullet)
 	{
 		usedBullet.GetComponent<TrailRenderer> ().Clear ();
+		usedBullet.GetComponent<Bullet> ().owner = null;
 		usedBullet.SetActive (false);
 	}
 

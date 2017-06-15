@@ -93,17 +93,7 @@ public class PlayerAction : MonoBehaviour {
 
 		CheckOnStair (nearestStair);
 
-		if (inputF)
-		{
-			for (int i = 0 ; i < outsideInfo.doorList.Count; i++)
-			{
-				var door = outsideInfo.doorList [i].GetComponentInParent<Door>();
-				if (door.isInteracted)
-					door.cancelInteractActions.Invoke ();
-				else
-					door.TryInteract (gameObject);
-			}
-		}
+		CheckInteractWithObject ();
 
 		TriggerActions ();
 
@@ -172,6 +162,20 @@ public class PlayerAction : MonoBehaviour {
 			{
 				playerAnimator.SetTrigger ("TriggerStair");
 				playerAnimator.SetBool ("IsOnStair", true);
+			}
+		}
+	}
+
+	void CheckInteractWithObject ()
+	{
+		if (inputF) {
+			for (int i = 0; i < outsideInfo.interactableObject.Count; i++) {
+				var interactableObject = outsideInfo.interactableObject [i].GetComponentInParent<InteractableObject>();
+
+				if (interactableObject.isInteracted)
+					interactableObject.cancelInteractActions.Invoke ();
+				else
+					interactableObject.TryInteract (gameObject);
 			}
 		}
 	}

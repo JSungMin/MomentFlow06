@@ -26,7 +26,7 @@ public class WeaponFactory : MonoBehaviour {
 		LoadWeaponsInfo ();
 	}
 
-	private void SetGeneralWeaponInfo(ref Weapon weapon, XmlNode node)
+	private void SetGeneralWeaponInfo(Weapon weapon, XmlNode node)
 	{
 		weapon.weaponType = (WeaponType)Enum.Parse (typeof(WeaponType), node.SelectSingleNode ("WeaponType").InnerText);
 		weapon.id = int.Parse(node.SelectSingleNode ("Id").InnerText);
@@ -51,7 +51,7 @@ public class WeaponFactory : MonoBehaviour {
 			if (weapon.weaponType == WeaponType.Rifle)
 			{
 				weapon = new Rifle ();
-				SetGeneralWeaponInfo (ref weapon, node);
+				SetGeneralWeaponInfo (weapon, node);
 				((Rifle)weapon).maxAmmo = int.Parse(node.SelectSingleNode ("MaxAmmo").InnerText);
 				((Rifle)weapon).ammo = ((Rifle)weapon).maxAmmo;
 				((Rifle)weapon).magazine = int.Parse(node.SelectSingleNode ("Magazine").InnerText);
@@ -60,7 +60,7 @@ public class WeaponFactory : MonoBehaviour {
 			else if (weapon.weaponType == WeaponType.Sword)
 			{
 				weapon = new Sword ();
-				SetGeneralWeaponInfo (ref weapon, node);
+				SetGeneralWeaponInfo (weapon, node);
 				//아직 Sword에 대한 정의 부족으로 추후 세부적인 데이터 추가 필요
 			}
 			weaponList.Add (weapon);
@@ -69,6 +69,22 @@ public class WeaponFactory : MonoBehaviour {
 
 	public T GetWeapon<T>(int weaponId) where T : Weapon
 	{
-		return (T)(weaponList [weaponId]);
+		var savedWeapon = weaponList [weaponId];
+		var newWeapon = new Weapon ();
+		if (savedWeapon.weaponType == WeaponType.Rifle)
+		{
+			newWeapon = new Rifle ();
+			newWeapon.id = savedWeapon.id;
+			newWeapon.name = savedWeapon.name;
+			newWeapon.weaponType = savedWeapon.weaponType;
+			newWeapon.damage = savedWeapon.damage;
+			newWeapon.attackDelay = savedWeapon.damage;
+			((Rifle)newWeapon).maxAmmo = ((Rifle)savedWeapon).maxAmmo;
+			((Rifle)newWeapon).ammo = ((Rifle)savedWeapon).ammo;
+			((Rifle)newWeapon).magazine = ((Rifle)savedWeapon).magazine;
+			((Rifle)newWeapon).rifleType = ((Rifle)savedWeapon).rifleType;
+			((Rifle)newWeapon).usingBullet = ((Rifle)savedWeapon).usingBullet;
+		}
+		return (T)(newWeapon);
 	}
 }

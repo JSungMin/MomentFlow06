@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 	public int bulletIndex;
+
+	public GameObject owner;
+
 	private Rigidbody rigid;
 
 	public Rigidbody Rigid {
@@ -53,30 +56,61 @@ public class Bullet : MonoBehaviour {
 	{
 		ProcessHitCollider (ref col);
 	}
-		
+
 	public void ProcessHitCollider(ref Collision col)
 	{
-		if (col.collider.CompareTag("Enemy"))
+		
+		if (owner.CompareTag ("Player")) {
+			if (col.collider.CompareTag ("Enemy"))
+			{
+				DamageToEnemy (col);
+			}
+			else if (col.collider.CompareTag ("Player"))
+			{
+				return;
+			}
+		} 
+		else if (owner.CompareTag ("Enemy"))
 		{
-            if (col.collider.GetComponent<EnemyInfo>().Hp <= 0)
-            {
-                return;
-            }
-
-			col.collider.GetComponent<Rigidbody> ().AddForce (new Vector3 (rigid.velocity.x, 0).normalized * 2, ForceMode.Impulse);
-            col.collider.GetComponentInChildren<InteractConditionChecker>().Damage(10);
+			if (col.collider.CompareTag ("Player"))
+			{
+				Debug.Log ("DamageTo Player");
+			}
+			if (col.collider.CompareTag ("Enemy"))
+			{
+				var enemy = col.collider;
+				if (enemy.GetComponentInParent<EnemyInfo> ().teamId != owner.GetComponentInParent<EnemyInfo> ().teamId) {
+					DamageToEnemy (col);
+				}
+				else {
+					Physics.IgnoreCollision (col.collider, GetComponent<Collider> ());
+					return;
+				}
+			}
 		}
+
+		MakeParticle ();
+		DestroyBullet ();
+	}
+
+	void DamageToEnemy (Collision col)
+	{
+		if (col.collider.GetComponentInParent<EnemyInfo> ().Hp <= 0) {
+			return;
+		}
+		col.collider.GetComponentInParent<Rigidbody> ().AddForce (new Vector3 (rigid.velocity.x, 0).normalized * 2, ForceMode.Impulse);
+		col.collider.GetComponentInChildren<InteractConditionChecker> ().Damage ((int)damage);
+	}
+
+	void MakeParticle ()
+	{
 		destroyParticle.transform.parent = transform.parent;
 		destroyParticle.transform.position = transform.position;
 		destroyParticle.transform.localScale = Vector3.one;
-		if (rigid.velocity.normalized != Vector3.zero)
-		{
+		if (rigid.velocity.normalized != Vector3.zero) {
 			destroyParticle.transform.rotation = Quaternion.LookRotation (rigid.velocity.normalized);
 		}
-
-		destroyParticle.GetComponent<ParticleSystem>().Play();
-
-		DestroyBullet ();
+		destroyParticle.GetComponent<ParticleSystem> ().Play ();
 	}
 		
 	public void DestroyBullet()

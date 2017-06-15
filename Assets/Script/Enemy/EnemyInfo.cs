@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyInfo : MonoBehaviour
 {
+	public int teamId;
     private int hp;
     private Vector3 aimPos;
     // attack 하기 전 aim을 하고 있는 시간

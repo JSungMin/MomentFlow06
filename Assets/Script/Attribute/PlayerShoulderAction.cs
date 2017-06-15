@@ -31,7 +31,7 @@ public class PlayerShoulderAction : Shoulder {
 		shoulderAnimator.SetBool ("IsOnStair", parentAnimator.GetBool("IsOnStair"));
 
 		if (Input.GetKeyDown (KeyCode.R) ||
-			((Rifle)nowEquiptWeapon).ammo <= 0)
+			(((Rifle)nowEquiptWeapon).ammo <= 0 && ((Rifle)nowEquiptWeapon).magazine != 0))
 		{
 			shoulderAnimator.SetTrigger ("TriggerReload");
 		}

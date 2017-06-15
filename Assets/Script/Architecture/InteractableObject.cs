@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class InteractableObject : MonoBehaviour {
 	public bool isInteracted;
+	public InteractableObjectType objectType;
 	public List<GameObject> willBeAffectedObjectList;
 
 	public delegate void DoInteractActions();

@@ -23,7 +23,8 @@ public class EquiptInfo : MonoBehaviour {
 
 	public void AddWeapon (int weaponId)
 	{
-		weapons.Add(WeaponFactory.Instance.GetWeapon<Weapon>(weaponId));
+		var savedWeapon = WeaponFactory.Instance.GetWeapon<Weapon> (weaponId);
+		weapons.Add(savedWeapon);
 	}
 
 	public void DeleteWeapon (Weapon weapon)

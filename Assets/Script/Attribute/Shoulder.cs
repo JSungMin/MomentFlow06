@@ -27,7 +27,7 @@ public class Shoulder : MonoBehaviour {
 		if (((Rifle)nowEquiptWeapon).ammo - 1 >= 0) {
 			((Rifle)nowEquiptWeapon).ammo -= 1;
 			var usingBullet = ((Rifle)nowEquiptWeapon).usingBullet;
-			var borrowedBullet = BulletPool.Instance.BorrowBullet (usingBullet);
+			var borrowedBullet = BulletPool.Instance.BorrowBullet (usingBullet, this.gameObject);
 			borrowedBullet.transform.position = shotPosition.position;
 			borrowedBullet.GetComponent<Bullet> ().originVelocity = (shotPosition.position - transform.position).normalized * borrowedBullet.maxSpeed;
 		}

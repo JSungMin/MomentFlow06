@@ -30,6 +30,13 @@ public enum RifleType
 	Grenade
 }
 
+public enum InteractableObjectType
+{
+	Door,
+	Chest,
+	Potion
+}
+
 public enum BodyStateType
 {
     Die = 0,
