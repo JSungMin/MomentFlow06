@@ -1,9 +1,13 @@
 fileFormatVersion: 2
 guid: 62437c45c5e589743bb558054dcdaedd
-timeCreated: 1496747497
+timeCreated: 1497554795
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Scene01_0
+    21300002: Scene01_1
+    21300004: Scene01_2
+    21300006: Scene01_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -74,9 +78,69 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Tizen
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Scene01_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 206
+        width: 639
+        height: 213
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Scene01_1
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 205
+        width: 281
+        height: 457
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Scene01_2
+      rect:
+        serializedVersion: 2
+        x: 1275
+        y: 206
+        width: 1999
+        height: 969
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Scene01_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 3595
+        height: 1288
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 
