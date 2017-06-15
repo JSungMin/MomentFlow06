@@ -32,4 +32,14 @@ public class ConditionChecker : MonoBehaviour
     {
         return AnimatorStateController.GetCurrentStateName(EnumType.ShoulderStateEnum, shoulderAnimator);
     }
+
+    protected BodyStateType GetCurrentBodyState()
+    {
+        return AnimatorStateController.GetCurrentBodyState(animator);
+    }
+
+    protected ShoulderStateType GetCurrentShoulderState()
+    {
+        return AnimatorStateController.GetCurrentShoulderState(animator);
+    }
 }

@@ -13,9 +13,14 @@ public class InteractConditionChecker : ConditionChecker
         base.Awake();
     }
 
-    public void Damage(int quantity)
+    public void DoBulletDamage(int power)
     {
-        enemyInfo.Hp -= quantity;
+        if (GetCurrentBodyState() == BodyStateType.Die)
+        {
+            return;
+        }
+        
+        enemyInfo.Hp -= power;
         StartCoroutine(DamageEffectCo());
     }
 
