@@ -6,6 +6,8 @@ public class EquiptInfo : MonoBehaviour {
 	public List<Weapon> weapons;
 	public Weapon nowEquiptWeapon;
 
+	public List<GameObject> itemPocketList;
+
 	public int defaultEquiptWeaponId;
 
 	public void Awake()

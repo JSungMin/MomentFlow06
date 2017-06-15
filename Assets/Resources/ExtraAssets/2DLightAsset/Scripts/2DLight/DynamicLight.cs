@@ -45,7 +45,8 @@ namespace DynamicLight2D
 		// Public variables
 		
 		public string version = "1.0.5"; //release date 09/01/2017
-		
+
+		public Color lightColor;
 		public Material lightMaterial;
 		
 		[HideInInspector]public PolygonCollider2D[] allMeshes;									// Array for all of the meshes in our scene
@@ -81,7 +82,10 @@ namespace DynamicLight2D
 			MeshFilter meshFilter = (MeshFilter)gameObject.AddComponent(typeof(MeshFilter));				// Add a Mesh Filter component to the light game object so it can take on a form
 			MeshRenderer renderer = gameObject.AddComponent(typeof(MeshRenderer)) as MeshRenderer;		// Add a Mesh Renderer component to the light game object so the form can become visible
 			//gameObject.name = "2DLight";
-			//renderer.material.shader = Shader.Find ("Transparent/Diffuse");							// Find the specified type of material shader
+			lightMaterial = new Material(Shader.Find ("Custom/Light"));
+			lightMaterial.SetColor ("_Color",lightColor);
+			lightMaterial.SetVector ("_DistanceOffset", new Vector4 (0.5f, 0.5f, 0f, 0f));
+			// Find the specified type of material shader
 			renderer.sharedMaterial = lightMaterial;														// Add this texture
 			lightMesh = new Mesh();																	// create a new mesh for our light mesh
 			meshFilter.mesh = lightMesh;															// Set this newly created mesh to the mesh filter
@@ -128,7 +132,7 @@ namespace DynamicLight2D
 			bool sortAngles = false;
 			
 			allVertices.Clear();// Since these lists are populated every frame, clear them first to prevent overpopulation
-			
+			lightMaterial.SetColor ("_Color",lightColor);
 			
 			//layer = 1 << 8;
 			

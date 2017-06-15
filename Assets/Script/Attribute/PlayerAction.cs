@@ -32,6 +32,7 @@ public class PlayerAction : MonoBehaviour {
     private int skillNum;
 
 	Vector2 input;
+	bool inputF = false;
     private AimTarget aimTarget;
 
     public Mana mana { private set; get; }
@@ -79,6 +80,7 @@ public class PlayerAction : MonoBehaviour {
 		}
         
 		input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
+		inputF = Input.GetKeyDown (KeyCode.F);
 
 		var nearestObstacle = outsideInfo.GetNearestObstacleObject ();
 		nearestStair = outsideInfo.GetNearestStairObject ();
@@ -90,6 +92,18 @@ public class PlayerAction : MonoBehaviour {
 		CheckCrossObstacle (nearestObstacle);
 
 		CheckOnStair (nearestStair);
+
+		if (inputF)
+		{
+			for (int i = 0 ; i < outsideInfo.doorList.Count; i++)
+			{
+				var door = outsideInfo.doorList [i].GetComponentInParent<Door>();
+				if (door.isInteracted)
+					door.cancelInteractActions.Invoke ();
+				else
+					door.TryInteract (gameObject);
+			}
+		}
 
 		TriggerActions ();
 
@@ -137,7 +151,7 @@ public class PlayerAction : MonoBehaviour {
 	void CheckCrossObstacle (GameObject nearestObstacle)
 	{
 		if (nearestObstacle != null) {
-			if (Input.GetKeyDown (KeyCode.F)) {
+			if (inputF) {
 				playerAnimator.SetTrigger ("TriggerCross");
 			}
 		}

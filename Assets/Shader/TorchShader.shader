@@ -13,6 +13,7 @@ Shader "Custom/Light"
         _IntensityFactor ("Intensity Variation Factor", Float) = 0.5
         _ParticleFactor ("Particle Factor", Float) = 1.0
         _DistanceOffset ("Offset", Vector) = (0,0,0,0)
+        _Radius ("Light Radius", Float) = 1.5
     }
      
     SubShader
@@ -42,6 +43,7 @@ Shader "Custom/Light"
             uniform float _ContrastFactor;
             uniform float _IntensityFactor;
             fixed4 _DistanceOffset;
+            fixed _Radius;
 
             struct VertexInput
             {
@@ -81,8 +83,8 @@ Shader "Custom/Light"
                 diffuseColor.rgb = diffuseColor.rgb * _Color.rgb * input.color.rgb;
                 diffuseColor.rgb *= diffuseColor.a * _Color.a * input.color.a;
                 diffuseColor *= input.intensity;
-    			diffuseColor *= pow ((2 - dis),1.5);
-    			if (dis > 2 )
+    			diffuseColor *= pow ((_Radius - dis), 1.5);
+    			if (dis > _Radius )
     			{
     			diffuseColor = float4(0,0,0,0);
     			}
