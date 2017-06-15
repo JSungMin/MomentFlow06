@@ -59,7 +59,9 @@ public class Bullet : MonoBehaviour {
 
 	public void ProcessHitCollider(ref Collision col)
 	{
-		
+		if (owner == null) {
+			return;
+		}
 		if (owner.CompareTag ("Player")) {
 			if (col.collider.CompareTag ("Enemy"))
 			{
@@ -67,7 +69,7 @@ public class Bullet : MonoBehaviour {
 			}
 			else if (col.collider.CompareTag ("Player"))
 			{
-				return;
+				
 			}
 		} 
 		else if (owner.CompareTag ("Enemy"))
@@ -83,7 +85,7 @@ public class Bullet : MonoBehaviour {
 					DamageToEnemy (col);
 				}
 				else {
-					Physics.IgnoreCollision (col.collider, GetComponent<Collider> ());
+					Physics.IgnoreCollision (enemy, GetComponent<Collider> ());
 					return;
 				}
 			}
