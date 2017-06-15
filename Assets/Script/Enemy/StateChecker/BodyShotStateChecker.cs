@@ -12,7 +12,7 @@ public class BodyShotStateChecker : StateCheckerBase
 
     public override bool IsSatisfied()
     {
-        if (Vector3.Distance(EnemyInfo.player.transform.position, enemyInfo.transform.position) < enemyInfo.attackRange)
+        if (Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) < enemyInfo.attackRange)
         {
             if (enemyInfo.AttackDelayTimer >= enemyInfo.attackDelay)
                 return true;

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DieState : StateMachineBehaviour {
+public class DieState : IStateBehaviour
+{
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		animator.transform.GetChild (0).GetComponent<SpriteRenderer> ().enabled = false;
+        shoulderSpriteRenderer.enabled = false;
         animator.transform.GetChild(0).GetComponent<Animator>().enabled = false;
         //animator.transform.GetComponentInParent<BoxCollider>().enabled = false;
 	}

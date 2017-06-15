@@ -12,15 +12,14 @@ public class EnemyInfo : MonoBehaviour
     private float attackDelayTimer;
     public float attackDelay { private set; get; }
     public float attackRange { private set; get; }
-
-    public static GameObject player { private set; get; }
+    public float findRange { private set; get; }
 
     private void Awake()
     {
         hp = 100;
-        player = GameObject.FindWithTag("Player");
         attackDelay = 0.5f;
-        attackRange = 5.0f;
+        attackRange = 3.0f;
+        findRange = attackRange + 3.0f;
     }
 
     public Vector3 AimPos

@@ -17,14 +17,16 @@ public class SelfConditionChecker : ConditionChecker
         {
 			new BodyDeadStateChecker(enemyInfo, BodyStateType.Die),
 			new BodyShotStateChecker(enemyInfo, BodyStateType.Shot),
+            new BodyRunStateChecker(enemyInfo, BodyStateType.Run),
 			new BodyIdleStateChecker(enemyInfo, BodyStateType.Idle)
         };
 
 		shoulderStateCheckers = new StateCheckerBase[]
         {
-            new ShoulderDieStateChecker(enemyInfo, ShoulderStateType.Aim, bodyStateCheckers[0].IsSatisfied),
+            new ShoulderDieStateChecker(enemyInfo, ShoulderStateType.Aim, bodyStateCheckers[(int)BodyStateType.Die].IsSatisfied),
 			new ShoulderReloadStateChecker (enemyInfo, ShoulderStateType.Reload),
-            new ShoulderShotStateChecker (enemyInfo, ShoulderStateType.Shot),
+            new ShoulderShotStateChecker (enemyInfo, ShoulderStateType.Shot, bodyStateCheckers[(int)BodyStateType.Shot].IsSatisfied),
+            new ShoulderRunStateChecker (enemyInfo, ShoulderStateType.Run, bodyStateCheckers[(int)BodyStateType.Run].IsSatisfied),
             new ShoulderAimStateChecker (enemyInfo, ShoulderStateType.Aim),
             new ShoulderIdleStateChecker (enemyInfo, ShoulderStateType.Idle)
 		};

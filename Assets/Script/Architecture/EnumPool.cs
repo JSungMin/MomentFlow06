@@ -41,13 +41,15 @@ public enum BodyStateType
 {
     Die = 0,
     Shot = 1,
-    Idle = 2
+    Run = 2,
+    Idle = 3
 }
 
 public enum ShoulderStateType
 {
 	Reload = 0,
 	Shot,
+    Run,
     Aim,
     Idle
 }

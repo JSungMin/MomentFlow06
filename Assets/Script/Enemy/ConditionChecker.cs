@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
+// TODO 이름을 바꿔야 할거 같다
 public class ConditionChecker : MonoBehaviour
 {
 	private int bodyStateTypeNum;
@@ -21,6 +22,18 @@ public class ConditionChecker : MonoBehaviour
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 		bodyStateTypeNum = Enum.GetNames(typeof(BodyStateType)).Length;
 		shoulderStateTypeNum = Enum.GetNames (typeof(ShoulderStateType)).Length;
+
+        IStateBehaviour[] stateBehaviours = animator.GetBehaviours<IStateBehaviour>();
+        for (int i = 0; i < stateBehaviours.Length; i++)
+        {
+            stateBehaviours[i].LoadData(transform.GetChild(0).GetComponent<SpriteRenderer>(), enemyInfo);
+        }
+
+        stateBehaviours = shoulderAnimator.GetBehaviours<IStateBehaviour>();
+        for (int i = 0; i < stateBehaviours.Length; i++)
+        {
+            stateBehaviours[i].LoadData(transform.GetChild(0).GetComponent<SpriteRenderer>(), enemyInfo);
+        }
     }
 
     protected string GetCurrentBodyStateName()
