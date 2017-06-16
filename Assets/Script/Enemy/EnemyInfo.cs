@@ -11,6 +11,8 @@ public class EnemyInfo : HumanInfo
     public BoxCollider boxCollider;
     [HideInInspector]
     public BoxCollider viewCollider;
+    [HideInInspector]
+    public Rigidbody rigidBody;
     private Obstacle[] obstacles;
     public List<Obstacle> sameRawObstacles { private set; get; }
     // attack 하기 전 aim을 하고 있는 시간
@@ -26,6 +28,7 @@ public class EnemyInfo : HumanInfo
         attackDelay = 0.5f;
         attackRange = 3.0f;
         findRange = attackRange + 3.0f;
+        rigidBody = GetComponent<Rigidbody>();
         viewCollider = GetComponent<BoxCollider>();
         boxCollider = GetComponentInChildren<BoxCollider>();
 

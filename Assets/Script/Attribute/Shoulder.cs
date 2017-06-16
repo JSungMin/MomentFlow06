@@ -13,14 +13,14 @@ public class Shoulder : MonoBehaviour {
 	protected Weapon nowEquiptWeapon = null;
 
 	public Transform shotPosition;
-    
-	protected void Start ()
-	{
-		parentAnimator = transform.parent.GetComponent<Animator> ();
-		shoulderAnimator = GetComponent<Animator> ();
 
-		nowEquiptWeapon = GetComponentInParent<EquiptInfo> ().nowEquiptWeapon;
-	}
+    protected void Start()
+    {
+        parentAnimator = transform.parent.GetComponent<Animator>();
+        shoulderAnimator = GetComponent<Animator>();
+
+        nowEquiptWeapon = GetComponentInParent<EquiptInfo>().nowEquiptWeapon;
+    }
 
 	public void Shot ()
 	{
