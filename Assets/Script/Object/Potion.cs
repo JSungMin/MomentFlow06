@@ -21,6 +21,27 @@ public class Potion : InteractableObject {
 		potionRigidbody = GetComponent<Rigidbody> ();
 	}
 
+	public bool DrinkUp()
+	{
+		if (!isDrinked) {
+			isDrinked = true;
+			owner.GetComponent<HumanInfo> ().hp += recoveryAmount;
+			return true;
+		}
+		return false;
+	}
+
+	public bool Refill()
+	{
+		if (isDrinked) {
+			isDrinked = false;
+			return true;
+		}
+		return false;
+	}
+
+	//Potion의 TryInteract는 떨어져있는 Potion 또는 드랍된 포션을 줍는 과정이다.
+	//isDrinked와 혼동되지 않게 주의 할 것
 	public override bool TryInteract (GameObject challenger)
 	{
 		if (!isInteracted)
@@ -30,17 +51,6 @@ public class Potion : InteractableObject {
 			return true;
 		}
 		return false;
-	}
-
-	public void DrinkUp()
-	{
-		isDrinked = true;
-		owner.GetComponent<HumanInfo> ().hp += recoveryAmount;
-	}
-
-	public void Refill()
-	{
-		isDrinked = false;
 	}
 
 	public void PickUp()
