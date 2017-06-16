@@ -9,6 +9,8 @@ public class Potion : InteractableObject {
 	private Collider potionCollider;
 	public Rigidbody potionRigidbody;
 
+	public bool isDrinked = false;
+
 	// Use this for initialization
 	void Start () {
 		doInteractActions = new DoInteractActions (PickUp);
@@ -16,11 +18,6 @@ public class Potion : InteractableObject {
 		originParent = transform.parent;
 		potionCollider = GetComponent<Collider> ();
 		potionRigidbody = GetComponent<Rigidbody> ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
 	public override bool TryInteract (GameObject challenger)
@@ -32,6 +29,16 @@ public class Potion : InteractableObject {
 			return true;
 		}
 		return false;
+	}
+
+	public void DrinkUp()
+	{
+		isDrinked = true;
+	}
+
+	public void Refill()
+	{
+		isDrinked = false;
 	}
 
 	public void PickUp()
