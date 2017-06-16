@@ -5,6 +5,7 @@ using UnityEngine;
 public class Chest : InteractableObject, ILockable {
 
 	private Animator chestAnimator;
+	private GameObject challenger;
 
 	// Use this for initialization
 	void Start () {
@@ -19,7 +20,7 @@ public class Chest : InteractableObject, ILockable {
 		chestAnimator.SetTrigger ("TriggerOpen");
 		for (int i = 0; i < willBeAffectedObjectList.Count; i++)
 		{
-			willBeAffectedObjectList [i].GetComponentInParent<InteractableObject> ().doInteractActions.Invoke ();
+			willBeAffectedObjectList [i].GetComponentInParent<InteractableObject> ().TryInteract (challenger);
 		}
 	}
 
@@ -33,7 +34,8 @@ public class Chest : InteractableObject, ILockable {
 	{
 		IsLocked = TryToReleaseLock (ref challenger.GetComponent<EquiptInfo>().itemPocketList);
 
-		if (!IsLocked) {
+		if (!IsLocked){
+			this.challenger = challenger;
 			doInteractActions.Invoke ();
 			return true;
 		}
