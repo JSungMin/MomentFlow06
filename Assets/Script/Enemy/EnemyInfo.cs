@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyInfo : MonoBehaviour
+public class EnemyInfo : HumanInfo
 {
 	public int teamId;
 	[SerializeField]
-    private int hp;
     private Vector3 aimPos;
     // attack 하기 전 aim을 하고 있는 시간
     private float attackDelayTimer;

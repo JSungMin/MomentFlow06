@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInfo : MonoBehaviour {
+public class PlayerInfo : HumanInfo {
 
-	public float hp;
 	public OutsideInfo outsideInfo;
 	public EquiptInfo equiptInfo;
 
