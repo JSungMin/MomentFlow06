@@ -12,15 +12,13 @@ public class BodyCrossStateChecker : StateCheckerBase
 
     public override bool IsSatisfied()
     {
-        return false;
-
         if (enemyInfo.isHaveToHide() && enemyInfo.IsObstacleCloseToHide())
         {
             // 적 케릭터가 숨는 곳과 플레이어 사이에 있다면
-            if ((enemyInfo.FindNearestObstacle().transform.position.x < transform.position.x &&
-                transform.position.x > GameSceneData.player.transform.position.x) ||
-                (enemyInfo.FindNearestObstacle().transform.position.x > transform.position.x &&
-                transform.position.x < GameSceneData.player.transform.position.x))
+            if ((enemyInfo.FindNearestObstacle().transform.position.x > enemyInfo.transform.position.x &&
+                enemyInfo.transform.position.x > GameSceneData.player.transform.position.x) ||
+                (enemyInfo.FindNearestObstacle().transform.position.x < enemyInfo.transform.position.x &&
+                enemyInfo.transform.position.x < GameSceneData.player.transform.position.x))
                 return true;
             else
                 return false;

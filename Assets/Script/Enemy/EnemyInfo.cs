@@ -51,7 +51,7 @@ public class EnemyInfo : HumanInfo
         get { return aimPos; }
     }
 
-    public int Hp
+    public float Hp
     {
         set
         {
