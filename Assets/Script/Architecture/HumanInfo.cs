@@ -5,4 +5,6 @@ using UnityEngine;
 public class HumanInfo : MonoBehaviour {
 
 	public float hp;
+	public int maxPocketCapacity;
+	public int nowPocketCapacity;
 }
