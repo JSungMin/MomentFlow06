@@ -42,10 +42,12 @@ public class TimePause : SkillBase
         playerAction.mana.ConsumeMana(manaCost);
         TimeManager.GetInstance().SetTimeScale(0.0f);
 
+		GameObject.Find ("PauseEffect").GetComponent<ParticleSystem> ().Play ();
 		var animators = GameObject.FindObjectsOfType<Animator> ();
 		for (int i = 0; i < animators.Length; i++)
 		{
-			if (!animators[i].CompareTag("Player"))
+			if (!animators[i].CompareTag("Player") &&
+				!animators[i].CompareTag("InteractableObject"))
 				animators [i].speed = TimeManager.GetInstance ().customTimeScale;
 		}
     }
@@ -61,4 +63,9 @@ public class TimePause : SkillBase
 			animators [i].speed = TimeManager.GetInstance ().customTimeScale;
 		}
     }
+
+	void Update()
+	{
+		
+	}
 }

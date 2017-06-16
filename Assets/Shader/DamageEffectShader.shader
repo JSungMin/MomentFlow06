@@ -2,9 +2,8 @@
 {
 	Properties
 	{
-		_OutsideColor ("OutsideColor", Color) = (0,0,0,0)
+		_MainTex ("Main Tex(RGB)", 2D) = "white" {}
 		_InsideColor ("AmbientColor", Color) = (0,0,0,0)
-		_Radius ("Radius", Float) = 1
 	}
 	SubShader
 	{
@@ -14,8 +13,6 @@
 			"Queue" = "Transparent+1"
 		}
 		LOD 100
-
-		GrabPass{}
 
 		Pass
 		{
@@ -43,11 +40,8 @@
 				float4 uvgrab : TEXCOORD1;
 			};
 
-			sampler2D _GrabTexture;
-
-			fixed4 _OutsideColor;
+			sampler2D _MainTex;
 			fixed4 _InsideColor;
-			fixed _Radius;
 
 			v2f vert (appdata v)
 			{
@@ -55,42 +49,20 @@
 				o.uv = v.uv;
 				o.vertex = UnityObjectToClipPos(v.vertex);
 
-
-				#if UNITY_UV_STARTS_AT_TOP
-                 	float scale = -1.0;
-            	#else
-                 	float scale = 1.0;
-             	#endif        
-					o.uvgrab.xy = (float2(o.vertex.x, (o.vertex.y)* scale) + o.vertex.w) * 0.5;
-                	o.uvgrab.zw = o.vertex.zw;
-
 				return o;
 			}
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
 				// sample the texture
-				fixed4 col = _OutsideColor;
-				fixed4 insideCol = _InsideColor;
-				fixed dis = distance(float2(0.5,0.5),i.uv) * _Radius;
+				fixed4 col = tex2D (_MainTex, i.uv);
+			
+				col.rgb = _InsideColor.rgb;
+				if (col.a < 0.5)
+					col.a = 0;
+				col.rgb *= col.a;
 
-				//col = Overlay (col, grabColor);
-
-				fixed4 grabColor = tex2D(_GrabTexture,i.uvgrab);
-
-				if (dis < 0.7)
-				{
-					grabColor = Overlay(insideCol, grabColor);
-					grabColor.a = lerp (grabColor.a,0, dis/0.7);
-				}
-				else if(dis >= 0.7)
-				{
-					grabColor = Overlay (col, grabColor);
-					grabColor.a = lerp (0,0.9,min(dis - 0.7,0.9));
-				}
-
-
-				return grabColor;
+				return col;
 			}
 			ENDCG
 		}

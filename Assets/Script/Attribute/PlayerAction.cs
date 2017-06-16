@@ -39,6 +39,9 @@ public class PlayerAction : MonoBehaviour {
     public Mana mana { private set; get; }
     private Coroutine RecoveryManaCo; 
     
+	private UnityStandardAssets.ImageEffects.BloomAndFlares bloomEffect;
+	private ParticleSystem timePauseEffect;
+
     private void Awake()
     {
         skills = new SkillBase[] { new TimePause(KeyCode.Z, 15.0f), new TimeRecall(KeyCode.X, 10.0f) };
@@ -52,6 +55,9 @@ public class PlayerAction : MonoBehaviour {
 
 	public void Start()
 	{
+		bloomEffect = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.BloomAndFlares> ();
+		timePauseEffect = GameObject.Find ("PauseEffect").GetComponent<ParticleSystem>();
+
 		Physics.gravity = Vector3.down * 9.8f;
 		playerAnimator = transform.GetComponentInChildren<Animator> ();
 		pBody = GetComponent<Rigidbody> ();
@@ -80,6 +86,22 @@ public class PlayerAction : MonoBehaviour {
 				skills[i].TryCancelSkill();
 		}
         
+		if (GetSkill<TimePause>().isTimePaused) {
+			if (input.x != 0)
+			{
+				if (!timePauseEffect.isPlaying)
+					timePauseEffect.Play ();
+				GetComponent<GhostingEffect> ().SetEnabled (true);
+			}
+			else
+				GetComponent<GhostingEffect> ().SetEnabled (false);
+			bloomEffect.bloomIntensity = Mathf.Clamp (bloomEffect.bloomIntensity + Time.deltaTime * 5, 0, 1.5f);
+		} else {
+			timePauseEffect.Stop ();
+			GetComponent<GhostingEffect> ().SetEnabled (false);
+			bloomEffect.bloomIntensity = Mathf.Clamp (bloomEffect.bloomIntensity - Time.deltaTime * 5, 0, 1.5f);
+		}
+
 		input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
 		inputF = Input.GetKeyDown (KeyCode.F);
 		inputQ = Input.GetKeyDown (KeyCode.Q);
