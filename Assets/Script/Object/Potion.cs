@@ -10,7 +10,7 @@ public class Potion : InteractableObject {
 	public Rigidbody potionRigidbody;
 
 	public float recoveryAmount;
-	public bool isDrinked = false;
+	private bool isDrinked = false;
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +25,10 @@ public class Potion : InteractableObject {
 	{
 		if (!isDrinked) {
 			isDrinked = true;
+			transform.parent = originParent;
+			transform.localPosition = Vector3.zero;
 			owner.GetComponent<HumanInfo> ().hp += recoveryAmount;
+			gameObject.SetActive (false);
 			return true;
 		}
 		return false;
@@ -72,6 +75,5 @@ public class Potion : InteractableObject {
 		pocket.Remove (this.gameObject);
 
 		potionCollider.isTrigger = false;
-		potionRigidbody.isKinematic = false;
 	}
 }

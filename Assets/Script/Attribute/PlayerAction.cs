@@ -33,6 +33,7 @@ public class PlayerAction : MonoBehaviour {
 
 	Vector2 input;
 	bool inputF = false;
+	bool inputQ = false;
     private AimTarget aimTarget;
 
     public Mana mana { private set; get; }
@@ -81,6 +82,7 @@ public class PlayerAction : MonoBehaviour {
         
 		input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
 		inputF = Input.GetKeyDown (KeyCode.F);
+		inputQ = Input.GetKeyDown (KeyCode.Q);
 
 		var nearestObstacle = outsideInfo.GetNearestObstacleObject ();
 		nearestStair = outsideInfo.GetNearestStairObject ();
@@ -94,6 +96,8 @@ public class PlayerAction : MonoBehaviour {
 		CheckOnStair (nearestStair);
 
 		CheckInteractWithObject ();
+
+		CheckDrinkUpPotion ();
 
 		TriggerActions ();
 
@@ -176,6 +180,20 @@ public class PlayerAction : MonoBehaviour {
 					interactableObject.cancelInteractActions.Invoke ();
 				else
 					interactableObject.TryInteract (gameObject);
+			}
+		}
+	}
+
+	void CheckDrinkUpPotion ()
+	{
+		if (inputQ) {
+			if (equiptInfo.itemPocketList.Count != 0) {
+				for (int i = 0; i < equiptInfo.itemPocketList.Count; i++) {
+					if (null != equiptInfo.itemPocketList [i].GetComponent<Potion> ()) {
+						var potion = equiptInfo.itemPocketList [i].GetComponent<Potion> ();
+						potion.DrinkUp ();
+					}
+				}
 			}
 		}
 	}
