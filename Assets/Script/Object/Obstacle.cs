@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrossState : IStateBehaviour
+public class Obstacle : MonoBehaviour
 {
-
 }

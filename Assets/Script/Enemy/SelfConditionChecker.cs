@@ -17,7 +17,9 @@ public class SelfConditionChecker : ConditionChecker
         {
 			new BodyDeadStateChecker(enemyInfo, BodyStateType.Die),
 			new BodyShotStateChecker(enemyInfo, BodyStateType.Shot),
+            new BodyCrossStateChecker(enemyInfo, BodyStateType.Cross),
             new BodyRunStateChecker(enemyInfo, BodyStateType.Run),
+            new BodyCrouchStateChecker(enemyInfo, BodyStateType.Crouch),
 			new BodyIdleStateChecker(enemyInfo, BodyStateType.Idle)
         };
 

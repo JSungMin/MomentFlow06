@@ -12,36 +12,25 @@ public class BodyRunStateChecker : StateCheckerBase
 
     public override bool IsSatisfied()
     {
-        if (Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) > enemyInfo.attackRange &&
-            Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) < enemyInfo.findRange)
+        if (enemyInfo.isHaveToHide())
         {
-            if (IsInView())
+            if (!enemyInfo.IsObstacleCloseToHide())
                 return true;
             else
                 return false;
         }
         else
-            return false;
-    }
-
-    private bool IsInView()
-    {
-        Debug.DrawRay(enemyInfo.transform.position + Vector3.up * 0.1f, Vector3.left);
-        RaycastHit rayCastHit;
-        if (Physics.Raycast(
-            enemyInfo.transform.position + Vector3.up * 0.1f,
-            Vector3.Normalize(Vector3.left),
-            out rayCastHit,
-            10.0f,
-            (1 << LayerMask.NameToLayer("Collision")) | (1 << LayerMask.NameToLayer("Player"))
-            ))
         {
-            if (rayCastHit.collider.CompareTag("Player"))
-                return true;
+            if (Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) > enemyInfo.attackRange &&
+                Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) < enemyInfo.findRange)
+            {
+                if (enemyInfo.IsPlayerInView())
+                    return true;
+                else
+                    return false;
+            }
             else
                 return false;
         }
-        else
-            return false;
     }
 }
