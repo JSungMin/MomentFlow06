@@ -9,6 +9,7 @@ public class Potion : InteractableObject {
 	private Collider potionCollider;
 	public Rigidbody potionRigidbody;
 
+	public float recoveryAmount;
 	public bool isDrinked = false;
 
 	// Use this for initialization
@@ -34,6 +35,7 @@ public class Potion : InteractableObject {
 	public void DrinkUp()
 	{
 		isDrinked = true;
+		owner.GetComponent<HumanInfo> ().hp += recoveryAmount;
 	}
 
 	public void Refill()
