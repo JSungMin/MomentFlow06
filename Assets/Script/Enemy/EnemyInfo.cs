@@ -17,16 +17,15 @@ public class EnemyInfo : HumanInfo
     public List<GameObject> sameRawObstacles { private set; get; }
     // attack 하기 전 aim을 하고 있는 시간
     private float attackDelayTimer;
-    private float alertTimer;
+
     //private 
     public float attackDelay { private set; get; }
     public float attackRange { private set; get; }
     public float alertDelay { private set; get; }
     public float findRange { private set; get; }
-
-    // 일어서서 attack 하기 전 숨어있는 동안의 시간
-    private float standAttackDelayTimer;
-    public float standAttackDelay { private set; get; }
+    
+    private float crouchDelayTimer;
+    public float crouchDelay { private set; get; }
 
     private AimTarget aimTarget;
 
@@ -40,7 +39,9 @@ public class EnemyInfo : HumanInfo
         hp = 100;
         attackDelay = 0.5f;
         attackRange = 3.0f;
-        standAttackDelay = 2.0f;
+        crouchDelay = 2.0f;
+
+
         findRange = attackRange + 3.0f;
         rigidBody = GetComponent<Rigidbody>();
         viewCollider = GetComponent<BoxCollider>();
@@ -99,10 +100,10 @@ public class EnemyInfo : HumanInfo
         get { return standAttackDelayTimer; }
     }
 
-    public float AlertTimer
+    public float CrouchDelayTimer
     {
-        set { alertTimer = value; }
-        get { return alertTimer; }
+        set { crouchDelayTimer = value; }
+        get { return crouchDelayTimer; }
     }
 
     public bool IsPlayerInView()
@@ -217,28 +218,67 @@ public class EnemyInfo : HumanInfo
         return false;
     }
 
+    public bool IsNearestObstacleBetweenPlayer()
+    {
+        if ((transform.position.x < FindNearestObstaclePosX() &&
+            FindNearestObstaclePosX() < GameSceneData.player.transform.position.x) ||
+            (transform.position.x > FindNearestObstaclePosX() &&
+            FindNearestObstaclePosX() > GameSceneData.player.transform.position.x))
+            return true;
+        else
+            return false;
+    }
+    
+    private float alertTimer = 0.0f;
     private Coroutine AlertingDecreaseCo = null;
     public bool IsAlerting()
     {
-        return AlertTimer > 0.0f;
+        return alertTimer > 0.0f;
     }
 
     public void DeceaseAlerting(float from)
     {
         if (AlertingDecreaseCo != null)
             StopCoroutine(AlertingDecreaseCo);
-        AlertTimer = from;
+        alertTimer = from;
         AlertingDecreaseCo = StartCoroutine(DecreaseAlertingCo());
     }
 
     private IEnumerator DecreaseAlertingCo()
     {
         float deltaTm = 0.02f;
-        while (AlertTimer > 0)
+        while (alertTimer > 0)
         {
-            AlertTimer -= deltaTm;
+            alertTimer -= deltaTm;
             yield return new WaitForSeconds(deltaTm);
         }
-        AlertTimer = 0;
+        alertTimer = 0;
+    }
+
+    // 일어서서 attack 하기 전 숨어있는 동안의 시간
+    private float standAttackDelayTimer = 0.0f;
+    private Coroutine BegindObstacleDecreaseCo = null;
+    public bool IsBehindObstacleShoting()
+    {
+        return standAttackDelayTimer > 0.0f;
+    }
+
+    public void DeceaseBehindObstacleShoting(float from)
+    {
+        if (BegindObstacleDecreaseCo != null)
+            StopCoroutine(BegindObstacleDecreaseCo);
+        standAttackDelayTimer = from;
+        BegindObstacleDecreaseCo = StartCoroutine(DecreaseBegindObstacleCo());
+    }
+
+    private IEnumerator DecreaseBegindObstacleCo()
+    {
+        float deltaTm = 0.02f;
+        while (standAttackDelayTimer > 0)
+        {
+            standAttackDelayTimer -= deltaTm;
+            yield return new WaitForSeconds(deltaTm);
+        }
+        standAttackDelayTimer = 0.0f;
     }
 }
