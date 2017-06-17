@@ -30,7 +30,7 @@ public class OutsideInfo : MonoBehaviour {
 		if (col.CompareTag ("CutSceneTrigger"))
 		{
 			cutSceneTrigger = col;
-
+			cutSceneTrigger.GetComponent<CutSceneEventTrigger> ().StartTrigger ();
 		}
 	}
 
