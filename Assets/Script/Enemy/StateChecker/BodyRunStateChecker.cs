@@ -22,12 +22,10 @@ public class BodyRunStateChecker : StateCheckerBase
         else
         {
             if (Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) > enemyInfo.attackRange &&
-                Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) < enemyInfo.findRange)
+                Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) < enemyInfo.findRange &&
+                enemyInfo.IsPlayerInView())
             {
-                if (enemyInfo.IsPlayerInView())
-                    return true;
-                else
-                    return false;
+                return true;
             }
             else
                 return false;

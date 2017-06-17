@@ -14,7 +14,8 @@ public class BodyCrouchStateChecker : StateCheckerBase
     {
         if (enemyInfo.isHaveToHide() &&
             enemyInfo.IsObstacleClose() &&
-            enemyInfo.StandAttackDelayTimer < enemyInfo.standAttackDelay)
+            enemyInfo.CrouchDelayTimer < enemyInfo.crouchDelay &&
+            !enemyInfo.IsBehindObstacleShoting())
         {
             return true;
         }

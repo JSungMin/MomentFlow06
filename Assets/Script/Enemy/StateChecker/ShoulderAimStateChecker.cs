@@ -13,14 +13,10 @@ public class ShoulderAimStateChecker : StateCheckerBase
     public override bool IsSatisfied()
     {
 		if (Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) < enemyInfo.attackRange &&
-            enemyInfo.IsPlayerInView())
+            enemyInfo.IsPlayerInView() &&
+            enemyInfo.AttackDelayTimer<enemyInfo.attackDelay)
         {
-            if (enemyInfo.AttackDelayTimer < enemyInfo.attackDelay)
-            {
-                return true;
-            }
-            else
-                return false;
+            return true;
         }
         else
             return false;
