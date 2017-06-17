@@ -14,6 +14,7 @@ public class Mana
     {
         while(true)
         {
+            yield return TimeManager.GetInstance().StartCoroutine(TimeManager.GetInstance().IsTimePausedCo());
             yield return new WaitForSeconds(incDeltaTm);
             ManaPoint += perIncManaPoint;
         }

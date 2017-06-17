@@ -179,6 +179,11 @@ public class EnemyInfo : HumanInfo
         }
     }
 
+    public void SetDirectionTowardPlayer()
+    {
+        SetDirection(GameSceneData.player.transform.position.x < transform.position.x);
+    }
+
     // 체력이 3할 이하일 경우
     public bool isHaveToHide()
     {

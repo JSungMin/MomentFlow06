@@ -76,7 +76,7 @@ public class Bullet : MonoBehaviour {
 		{
 			if (col.collider.CompareTag ("Player"))
 			{
-				Debug.Log ("DamageTo Player");
+                col.collider.GetComponentInParent<HumanInfo>().hp -= damage;
 			}
 			if (col.collider.CompareTag ("Enemy"))
 			{

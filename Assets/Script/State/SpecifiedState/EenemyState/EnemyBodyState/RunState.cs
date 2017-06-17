@@ -29,12 +29,12 @@ public class RunState : IStateBehaviour
             if (enemyInfo.transform.position.x < GameSceneData.player.transform.position.x)
             {
                 enemyInfo.transform.Translate(Vector3.right * TimeManager.GetInstance().customDeltaTime * speed);
-                enemyInfo.SetDirection(false);
+                enemyInfo.SetDirectionTowardPlayer();
             }
             else
             {
                 enemyInfo.transform.Translate(Vector3.left * TimeManager.GetInstance().customDeltaTime * speed);
-                enemyInfo.SetDirection(true);
+                enemyInfo.SetDirectionTowardPlayer();
             }
         }
     }

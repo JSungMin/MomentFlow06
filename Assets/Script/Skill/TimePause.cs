@@ -16,12 +16,14 @@ public class TimePause : SkillBase
 
     public override bool IsTryUseSKill()
     {
+        //return Input.GetKeyDown(keyCode) && !isTimePaused;
         return Input.GetKeyDown(keyCode) && !isTimePaused;
     }
 
     public override bool IsTryCancelSkill()
     {
-        return Input.GetKeyUp(keyCode) && isTimePaused;
+        //return Input.GetKeyDown(keyCode) && isTimePaused;
+        return Input.GetKeyDown(keyCode) && isTimePaused;
     }
 
     protected override bool CanUseSkill()

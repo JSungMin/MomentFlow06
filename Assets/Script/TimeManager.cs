@@ -17,6 +17,17 @@ public class TimeManager : MonoBehaviour
         customTimeScale = scale;
     }
 
+    public bool IsTimePaused()
+    {
+        return customTimeScale == 0.0f;
+    }
+
+    public IEnumerator IsTimePausedCo()
+    {
+        while (IsTimePaused())
+            yield return new WaitForSeconds(0.02f);
+    }
+
     /// single ton /////////////////////////////
     private static TimeManager instance;
     private static GameObject container;
