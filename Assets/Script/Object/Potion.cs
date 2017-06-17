@@ -8,6 +8,7 @@ public class Potion : InteractableObject {
 	private Transform originParent;
 	private Collider potionCollider;
 	public Rigidbody potionRigidbody;
+	public SpriteRenderer potionRenderer;
 
 	public float recoveryAmount;
 	private bool isDrinked = false;
@@ -19,6 +20,7 @@ public class Potion : InteractableObject {
 		originParent = transform.parent;
 		potionCollider = GetComponent<Collider> ();
 		potionRigidbody = GetComponent<Rigidbody> ();
+		potionRenderer = GetComponent<SpriteRenderer> ();
 	}
 
 	public bool DrinkUp()
@@ -47,13 +49,16 @@ public class Potion : InteractableObject {
 	//isDrinked와 혼동되지 않게 주의 할 것
 	public override bool TryInteract (GameObject challenger)
 	{
-		if (!isInteracted)
+		if (!isInteracted && !isConnected)
 		{
-			if (challenger.GetComponent<HumanInfo> ().CanStoreItem ()) {
+			if (challenger.GetComponent<HumanInfo> ().CanStoreItem ()) 
+			{
+				Debug.Log ("Try To Pick UP");
 				owner = challenger;
 				doInteractActions.Invoke ();
 				return true;
-			} else {
+			} 
+			else {
 				owner = challenger;
 				cancelInteractActions.Invoke ();
 			}
@@ -63,22 +68,26 @@ public class Potion : InteractableObject {
 
 	public void PickUp()
 	{
+		Debug.Log ("띠용 : " + transform.name);
 		isInteracted = true;
 		transform.parent = owner.transform;
 		var pocket = owner.GetComponent<EquiptInfo> ().itemPocketList;
 		pocket.Add (this.gameObject);
 
+		potionRenderer.enabled = false;
 		potionCollider.isTrigger = true;
 		potionRigidbody.isKinematic = true;
 	}
 
 	public void Drop()
 	{
+		Debug.Log ("Dropped : " + transform.name);
 		isInteracted = false;
 		transform.parent = originParent;
 		var pocket = owner.GetComponent<EquiptInfo> ().itemPocketList;
 		pocket.Remove (this.gameObject);
 
+		potionRenderer.enabled = true;
 		potionCollider.isTrigger = false;
 		potionRigidbody.isKinematic = false;
 	}

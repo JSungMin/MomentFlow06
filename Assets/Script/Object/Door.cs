@@ -51,15 +51,19 @@ public class Door : InteractableObject, ILockable {
 		IsLocked = TryToReleaseLock (ref challenger.GetComponent<EquiptInfo>().itemPocketList);
 
 		if (!IsLocked) {
-			Debug.Log ("C : " + challenger.transform.position.x + "  D : " + transform.position.x);
-			if (challenger.transform.position.x > transform.position.x) {
-				doInteractActions = new DoInteractActions(OpenDoorToLeft);
+			if (!isInteracted) {
+				Debug.Log ("C : " + challenger.transform.position.x + "  D : " + transform.position.x);
+				if (challenger.transform.position.x > transform.position.x) {
+					doInteractActions = new DoInteractActions (OpenDoorToLeft);
+				} else {
+					doInteractActions = new DoInteractActions (OpenDoorToRight);
+				}
+				doInteractActions.Invoke ();
+				return true;
 			}
 			else {
-				doInteractActions = new DoInteractActions(OpenDoorToRight);
+				cancelInteractActions.Invoke ();
 			}
-			doInteractActions.Invoke ();
-			return true;
 		}
 
 		return false;

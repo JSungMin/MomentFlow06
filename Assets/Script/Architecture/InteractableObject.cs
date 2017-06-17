@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class InteractableObject : MonoBehaviour {
 	public bool isInteracted;
+	[HideInInspector]
+	public bool isConnected = false;
 	public InteractableObjectType objectType;
 	public List<GameObject> willBeAffectedObjectList;
 
