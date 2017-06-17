@@ -45,7 +45,7 @@ public class PlayerAction : MonoBehaviour {
 
     private void Awake()
     {
-        skills = new SkillBase[] { new TimePause(KeyCode.Z, 15.0f), new TimeRecall(KeyCode.X, 10.0f) };
+        skills = new SkillBase[] { new TimePause(KeyCode.E, 15.0f), new TimeRecall(KeyCode.X, 10.0f) };
         skillNum = skills.Length;
 
         aimTarget = GetComponent<AimTarget>();

@@ -19,6 +19,9 @@ public class AimState : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (TimeManager.GetInstance().IsTimePaused())
+            return;
+
         aimTarget.AimToObject(targetPos = GameObject.FindObjectOfType<PlayerAction>().transform.GetChild(0).GetComponent<Collider>().bounds.center);
         animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer += TimeManager.GetInstance().customDeltaTime;
     }
