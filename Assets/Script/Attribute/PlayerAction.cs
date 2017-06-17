@@ -197,11 +197,7 @@ public class PlayerAction : MonoBehaviour {
 		if (inputF) {
 			for (int i = 0; i < outsideInfo.interactableObject.Count; i++) {
 				var interactableObject = outsideInfo.interactableObject [i].GetComponentInParent<InteractableObject>();
-
-				if (interactableObject.isInteracted)
-					interactableObject.cancelInteractActions.Invoke ();
-				else
-					interactableObject.TryInteract (gameObject);
+				interactableObject.TryInteract (gameObject);
 			}
 		}
 	}

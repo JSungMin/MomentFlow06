@@ -12,6 +12,11 @@ public class Chest : InteractableObject, ILockable {
 		chestAnimator = GetComponent<Animator> ();
 		doInteractActions = new DoInteractActions(OpenChest);
 		cancelInteractActions = new CancelInteractActions (CloseChest);
+
+		for (int i = 0; i < willBeAffectedObjectList.Count; i++)
+		{
+			willBeAffectedObjectList [i].GetComponentInParent<InteractableObject> ().isConnected = true;
+		}
 	}
 
 	private void OpenChest()
@@ -20,7 +25,9 @@ public class Chest : InteractableObject, ILockable {
 		chestAnimator.SetTrigger ("TriggerOpen");
 		for (int i = 0; i < willBeAffectedObjectList.Count; i++)
 		{
-			willBeAffectedObjectList [i].GetComponentInParent<InteractableObject> ().TryInteract (challenger);
+			willBeAffectedObjectList [i].GetComponentInParent<InteractableObject> ().isConnected = false;
+			var result = willBeAffectedObjectList [i].GetComponentInParent<InteractableObject> ().TryInteract (challenger);
+			willBeAffectedObjectList.Remove (willBeAffectedObjectList [i]);
 		}
 	}
 
@@ -36,8 +43,14 @@ public class Chest : InteractableObject, ILockable {
 
 		if (!IsLocked){
 			this.challenger = challenger;
-			doInteractActions.Invoke ();
-			return true;
+			if (!isInteracted) 
+			{
+				doInteractActions.Invoke ();
+				return true;
+			}
+			else {
+				cancelInteractActions.Invoke ();
+			}
 		}
 
 		return false;
