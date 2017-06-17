@@ -30,8 +30,7 @@ public class BodyCrossStateChecker : StateCheckerBase
         }
         else
         {
-            return false;
-            if (enemyInfo.IsObstacleClose())
+            if (enemyInfo.IsObstacleClose() && enemyInfo.IsAlerting())
                 return true;
             else
                 return false;
