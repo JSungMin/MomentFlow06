@@ -6,6 +6,7 @@ public class OutsideInfo : MonoBehaviour {
 
 	public List<GameObject> obstacleList;
 	public List<GameObject> stairList;
+	public Collider cutSceneTrigger;
 	public List<GameObject> interactableObject;
 
 	public static GameObject nearestStair = null;
@@ -25,6 +26,11 @@ public class OutsideInfo : MonoBehaviour {
 		{
 			if (!interactableObject.Contains (col.gameObject))
 				interactableObject.Add (col.gameObject);
+		}
+		if (col.CompareTag ("CutSceneTrigger"))
+		{
+			cutSceneTrigger = col;
+
 		}
 	}
 

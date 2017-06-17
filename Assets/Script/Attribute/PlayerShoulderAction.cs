@@ -13,6 +13,9 @@ public class PlayerShoulderAction : Shoulder {
 
 	protected void Update()
 	{
+//		if (CutSceneManager.isCutScenePlaing)
+//			return;
+		
 		if (!parentAnimator.GetBool("HoldOnWeapon"))
 			return;
 
