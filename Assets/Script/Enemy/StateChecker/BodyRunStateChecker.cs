@@ -14,7 +14,7 @@ public class BodyRunStateChecker : StateCheckerBase
     {
         if (enemyInfo.isHaveToHide())
         {
-            if (!enemyInfo.IsObstacleCloseToHide())
+            if (!enemyInfo.IsObstacleClose())
                 return true;
             else
                 return false;

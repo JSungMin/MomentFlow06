@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class EnemyShoulderAction : Shoulder
 {
+    private AimTarget enemyAimTarget;
+
     void Start()
     {
         base.Start();
+        enemyAimTarget = GetComponentInParent<AimTarget>();
     }
 
-    void Update()
+    public void HideArm()
     {
+        enemyAimTarget.hideShoulder = true;
+        shoulderAnimator.enabled = false;
+    }
+
+    public void ActiveArm()
+    {
+        enemyAimTarget.hideShoulder = false;
+        shoulderAnimator.enabled = true;
     }
 }

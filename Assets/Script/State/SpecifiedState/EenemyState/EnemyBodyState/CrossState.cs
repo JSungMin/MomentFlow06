@@ -24,15 +24,18 @@ public class CrossState : IStateBehaviour
         obstacle = enemyInfo.FindNearestObstacle().GetComponent<Collider>();
         obstacleHeight = obstacle.bounds.size.y;
         direction = new Vector3(obstacle.transform.position.x - animator.transform.position.x, 0).normalized;
-
+        
         rigid.transform.localScale = new Vector3(-direction.x * Mathf.Abs(rigid.transform.localScale.x), rigid.transform.localScale.y);
+        animator.GetComponentInChildren<EnemyShoulderAction>().HideArm();
+
         rigid.isKinematic = true;
         distance = Vector3.Distance(obstacle.bounds.center, animator.transform.position) * 2;
+        shoulderSpriteRenderer.enabled = false;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        rigid.transform.Translate(direction * (distance / 0.66f) * Time.deltaTime);
+        rigid.transform.Translate(direction * (distance / 0.66f) * TimeManager.GetInstance().customDeltaTime);
         rigid.transform.position = new Vector3(
             rigid.transform.position.x,
             originY + heightCurve.Evaluate(stateInfo.normalizedTime) * obstacleHeight,
@@ -42,5 +45,7 @@ public class CrossState : IStateBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         rigid.isKinematic = false;
+        animator.GetComponentInChildren<EnemyShoulderAction>().ActiveArm();
+        shoulderSpriteRenderer.enabled = true;
     }
 }

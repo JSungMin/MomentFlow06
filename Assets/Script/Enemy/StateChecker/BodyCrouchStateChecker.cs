@@ -12,8 +12,12 @@ public class BodyCrouchStateChecker : StateCheckerBase
 
     public override bool IsSatisfied()
     {
-        if (enemyInfo.isHaveToHide() && enemyInfo.IsObstacleCloseToHide())
+        if (enemyInfo.isHaveToHide() &&
+            enemyInfo.IsObstacleClose() &&
+            enemyInfo.StandAttackDelayTimer < enemyInfo.standAttackDelay)
+        {
             return true;
+        }
         else
             return false;
     }
