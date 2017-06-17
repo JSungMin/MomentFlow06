@@ -36,7 +36,7 @@ public class TimeRecall : SkillBase
 
     protected override bool CanUseSkill()
     {
-        if (playerAction.mana.ManaPoint >= manaCost)
+        if (playerInfo.mana.ManaPoint >= manaCost)
             return true;
         return false;
     }
@@ -60,7 +60,7 @@ public class TimeRecall : SkillBase
     // 키가 떼어졌을 때
     protected override void CancelSkill()
     {
-        playerAction.mana.ConsumeMana(manaCost);
+        playerInfo.mana.ConsumeMana(manaCost);
         RevertObjs(timeRevertables);
 
         isInTimeRevertPhase = false;

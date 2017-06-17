@@ -28,7 +28,7 @@ public class TimePause : SkillBase
 
     protected override bool CanUseSkill()
     {
-        if (playerAction.mana.ManaPoint >= manaCost)
+        if (playerInfo.mana.ManaPoint >= manaCost)
             return true;
         return false;
     }
@@ -41,7 +41,7 @@ public class TimePause : SkillBase
     protected override void UseSkill()
     {
         isTimePaused = true;
-        playerAction.mana.ConsumeMana(manaCost);
+        playerInfo.mana.ConsumeMana(manaCost);
         TimeManager.GetInstance().SetTimeScale(0.0f);
 
 		GameObject.Find ("PauseEffect").GetComponent<ParticleSystem> ().Play ();

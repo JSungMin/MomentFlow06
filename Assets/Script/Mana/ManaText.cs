@@ -11,7 +11,7 @@ public class ManaText : MonoBehaviour
     
     private void Start()
     {
-        mana = GameObject.FindObjectOfType<PlayerAction>().mana;
+        mana = GameObject.FindObjectOfType<PlayerInfo>().mana;
         textComponent = GetComponent<Text>();
     }
 

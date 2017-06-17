@@ -64,8 +64,7 @@ public class EnemyInfo : HumanInfo
 
     private void Update()
     {
-		if (null != aimTarget)
-        	aimTarget.CheckCanVisibleShoulder();
+        aimTarget.CheckCanVisibleShoulder();
     }
 
     public Vector3 AimPos
@@ -180,9 +179,14 @@ public class EnemyInfo : HumanInfo
         }
     }
 
-    public void SetDirectionTowardPlayer()
+    public void SetDirectionToPlayer()
     {
         SetDirection(GameSceneData.player.transform.position.x < transform.position.x);
+    }
+
+    public void SetDirectionOppositeToPlayer()
+    {
+        SetDirection(GameSceneData.player.transform.position.x > transform.position.x);
     }
 
     // 체력이 3할 이하일 경우
@@ -256,6 +260,7 @@ public class EnemyInfo : HumanInfo
         {
             alertTimer -= deltaTm;
             yield return new WaitForSeconds(deltaTm);
+            yield return StartCoroutine(TimeManager.GetInstance().IsTimePausedCo());
         }
         alertTimer = 0;
     }
@@ -283,6 +288,7 @@ public class EnemyInfo : HumanInfo
         {
             standAttackDelayTimer -= deltaTm;
             yield return new WaitForSeconds(deltaTm);
+            yield return StartCoroutine(TimeManager.GetInstance().IsTimePausedCo());
         }
         standAttackDelayTimer = 0.0f;
     }

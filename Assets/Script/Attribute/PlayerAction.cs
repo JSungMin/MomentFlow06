@@ -36,9 +36,6 @@ public class PlayerAction : MonoBehaviour {
 	bool inputF = false;
 	bool inputQ = false;
     private AimTarget aimTarget;
-
-    public Mana mana { private set; get; }
-    private Coroutine RecoveryManaCo; 
     
 	private UnityStandardAssets.ImageEffects.BloomAndFlares bloomEffect;
 	private ParticleSystem timePauseEffect;
@@ -49,9 +46,6 @@ public class PlayerAction : MonoBehaviour {
         skillNum = skills.Length;
 
         aimTarget = GetComponent<AimTarget>();
-
-        mana = new Mana(100.0f);
-        RecoveryManaCo = StartCoroutine(mana.RecoveryMana(1.0f, 0.5f));
     }
 
 	public void Start()

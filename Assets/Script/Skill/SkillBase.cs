@@ -14,7 +14,7 @@ public abstract class SkillBase : MonoBehaviour
     public int id;
     public KeyCode keyCode { protected set; get; }
 
-	protected PlayerAction playerAction = GameObject.FindObjectOfType<PlayerAction>();
+	protected PlayerInfo playerInfo = GameObject.FindObjectOfType<PlayerInfo>();
     protected float manaCost;
     
     // 알아서 자식의 CanUseSkill을 호출 함
