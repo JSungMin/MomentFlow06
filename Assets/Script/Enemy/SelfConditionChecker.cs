@@ -25,18 +25,19 @@ public class SelfConditionChecker : ConditionChecker
 
 		shoulderStateCheckers = new StateCheckerBase[]
         {
-            new ShoulderDieStateChecker(enemyInfo, ShoulderStateType.Aim, bodyStateCheckers[(int)BodyStateType.Die].IsSatisfied),
 			new ShoulderReloadStateChecker (enemyInfo, ShoulderStateType.Reload),
             new ShoulderShotStateChecker (enemyInfo, ShoulderStateType.Shot, bodyStateCheckers[(int)BodyStateType.Shot].IsSatisfied),
-            new ShoulderRunStateChecker (enemyInfo, ShoulderStateType.Run, bodyStateCheckers[(int)BodyStateType.Run].IsSatisfied),
             new ShoulderAimStateChecker (enemyInfo, ShoulderStateType.Aim),
+            new ShoulderRunStateChecker (enemyInfo, ShoulderStateType.Run, bodyStateCheckers[(int)BodyStateType.Run].IsSatisfied),
             new ShoulderIdleStateChecker (enemyInfo, ShoulderStateType.Idle)
 		};
-
     }
 
     private void Update()
     {
+        if (!enemyInfo.isUpdatable)
+            return;
+
         for (int i = 0; i < bodyStateCheckers.Length; i++)
         {
             if (bodyStateCheckers[i].IsSatisfied())

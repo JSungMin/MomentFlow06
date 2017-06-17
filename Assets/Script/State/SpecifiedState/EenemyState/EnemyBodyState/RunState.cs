@@ -14,12 +14,12 @@ public class RunState : IStateBehaviour
             // 엄폐물이 오른쪽에 있다면
             if (enemyInfo.transform.position.x < enemyInfo.FindNearestObstacle().transform.position.x)
             {
-                enemyInfo.transform.Translate(Vector3.right * Time.deltaTime * speed);
+                enemyInfo.transform.Translate(Vector3.right * TimeManager.GetInstance().customDeltaTime * speed);
                 enemyInfo.SetDirection(false);
             }
             else
             {
-                enemyInfo.transform.Translate(Vector3.left * Time.deltaTime * speed);
+                enemyInfo.transform.Translate(Vector3.left * TimeManager.GetInstance().customDeltaTime * speed);
                 enemyInfo.SetDirection(true);
             }
         }
@@ -28,12 +28,12 @@ public class RunState : IStateBehaviour
         {
             if (enemyInfo.transform.position.x < GameSceneData.player.transform.position.x)
             {
-                enemyInfo.transform.Translate(Vector3.right * Time.deltaTime * speed);
+                enemyInfo.transform.Translate(Vector3.right * TimeManager.GetInstance().customDeltaTime * speed);
                 enemyInfo.SetDirection(false);
             }
             else
             {
-                enemyInfo.transform.Translate(Vector3.left * Time.deltaTime * speed);
+                enemyInfo.transform.Translate(Vector3.left * TimeManager.GetInstance().customDeltaTime * speed);
                 enemyInfo.SetDirection(true);
             }
         }
