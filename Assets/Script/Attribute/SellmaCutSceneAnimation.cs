@@ -11,6 +11,7 @@ public class SellmaCutSceneAnimation : MonoBehaviour {
 	{
 		playerAction.SetActive (false);
 		playerAction.GetComponentInParent<AimTarget> ().enabled = false;
+		playerAction.GetComponentInParent<Rigidbody> ().isKinematic = true;
 		bodyAnimator.gameObject.SetActive (true);
 	}
 
@@ -18,6 +19,7 @@ public class SellmaCutSceneAnimation : MonoBehaviour {
 	{
 		playerAction.SetActive (true);
 		playerAction.GetComponentInParent<AimTarget> ().enabled = true;
+		playerAction.GetComponentInParent<Rigidbody> ().isKinematic = false;
 		bodyAnimator.gameObject.SetActive (false);
 	}
 
@@ -25,25 +27,30 @@ public class SellmaCutSceneAnimation : MonoBehaviour {
 	{
 		if (holdValue) {
 			bodyAnimator.SetBool ("HoldOnWeapon", true);
+			shoulderAnimator.enabled = true;
+			shoulderAnimator.GetComponent<SpriteRenderer> ().enabled = true;
 		}
 		else {
 			bodyAnimator.SetBool ("HoldOnWeapon", false);
+			shoulderAnimator.enabled = false;
+			shoulderAnimator.GetComponent<SpriteRenderer> ().enabled = false;
 		}
 	}
 
 	public void SellmaSetDirection (bool isLeft)
 	{
 		if (isLeft) {
-			bodyAnimator.transform.localScale = new Vector3 (1, 1, 1);
+			bodyAnimator.transform.parent.localScale = new Vector3 (1, 1, 1);
 		} else {
-			bodyAnimator.transform.localScale = new Vector3 (-1, 1, 1);
+			bodyAnimator.transform.parent.localScale = new Vector3 (-1, 1, 1);
 		}
 	}
 
 	public void SellmaWalk ()
 	{
-		bodyAnimator.Play ("Walk");
-		shoulderAnimator.Play ("Walk");
+		Debug.Log ("SellmaWalk");
+		bodyAnimator.SetTrigger ("TriggerWalk");
+		shoulderAnimator.SetTrigger ("TriggerWalk");
 	}
 
 	public void SellmaRun ()

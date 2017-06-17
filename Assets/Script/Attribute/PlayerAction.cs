@@ -8,6 +8,7 @@ public class PlayerAction : MonoBehaviour {
 	public Animator playerAnimator;
 	public Animator gunAnimator;
 
+	private PlayerInfo playerInfo;
 	private EquiptInfo equiptInfo;
 	private OutsideInfo outsideInfo;
 	private Shoulder shoulderAction;
@@ -59,6 +60,7 @@ public class PlayerAction : MonoBehaviour {
 		timePauseEffect = GameObject.Find ("PauseEffect").GetComponent<ParticleSystem>();
 
 		Physics.gravity = Vector3.down * 9.8f;
+		playerInfo = GetComponent<PlayerInfo> ();
 		playerAnimator = transform.GetComponentInChildren<Animator> ();
 		pBody = GetComponent<Rigidbody> ();
 		pCollider = GetComponentInChildren<BoxCollider> ();
@@ -218,6 +220,12 @@ public class PlayerAction : MonoBehaviour {
 
 	void TriggerActions ()
 	{
+		if (playerInfo.hp <= 0)
+		{
+			playerAnimator.Play ("Die");
+			((PlayerShoulderAction)shoulderAction).HideArm ();
+		}
+
 		if (input.x == 0)
 		{
 			playerAnimator.SetTrigger ("TriggerIdle");
