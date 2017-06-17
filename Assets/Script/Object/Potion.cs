@@ -49,9 +49,14 @@ public class Potion : InteractableObject {
 	{
 		if (!isInteracted)
 		{
-			owner = challenger;
-			doInteractActions.Invoke ();
-			return true;
+			if (challenger.GetComponent<HumanInfo> ().CanStoreItem ()) {
+				owner = challenger;
+				doInteractActions.Invoke ();
+				return true;
+			} else {
+				owner = challenger;
+				cancelInteractActions.Invoke ();
+			}
 		}
 		return false;
 	}
@@ -75,5 +80,6 @@ public class Potion : InteractableObject {
 		pocket.Remove (this.gameObject);
 
 		potionCollider.isTrigger = false;
+		potionRigidbody.isKinematic = false;
 	}
 }
