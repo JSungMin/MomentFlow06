@@ -17,9 +17,11 @@ public class EnemyInfo : HumanInfo
     public List<GameObject> sameRawObstacles { private set; get; }
     // attack 하기 전 aim을 하고 있는 시간
     private float attackDelayTimer;
+    private float alertTimer;
     //private 
     public float attackDelay { private set; get; }
     public float attackRange { private set; get; }
+    public float alertDelay { private set; get; }
     public float findRange { private set; get; }
 
     // 일어서서 attack 하기 전 숨어있는 동안의 시간
@@ -28,6 +30,7 @@ public class EnemyInfo : HumanInfo
 
     private AimTarget aimTarget;
 
+    [HideInInspector]
     public float viewHeightScale = 1.0f;
 
     public bool isUpdatable = true;
@@ -60,6 +63,7 @@ public class EnemyInfo : HumanInfo
 
     private void Update()
     {
+        aimTarget.CheckCanVisibleShoulder();
     }
 
     public Vector3 AimPos
@@ -92,6 +96,12 @@ public class EnemyInfo : HumanInfo
     {
         set { standAttackDelayTimer = value; }
         get { return standAttackDelayTimer; }
+    }
+
+    public float AlertTimer
+    {
+        set { alertTimer = value; }
+        get { return alertTimer; }
     }
 
     public bool IsPlayerInView()
@@ -204,5 +214,30 @@ public class EnemyInfo : HumanInfo
         if (Mathf.Abs(transform.position.x - FindNearestObstaclePosX()) < nearObstacleDist)
             return true;
         return false;
+    }
+
+    private Coroutine AlertingDecreaseCo = null;
+    public bool IsAlerting()
+    {
+        return AlertTimer > 0.0f;
+    }
+
+    public void DeceaseAlerting(float from)
+    {
+        if (AlertingDecreaseCo != null)
+            StopCoroutine(AlertingDecreaseCo);
+        AlertTimer = from;
+        AlertingDecreaseCo = StartCoroutine(DecreaseAlertingCo());
+    }
+
+    private IEnumerator DecreaseAlertingCo()
+    {
+        float deltaTm = 0.02f;
+        while (AlertTimer > 0)
+        {
+            AlertTimer -= deltaTm;
+            yield return new WaitForSeconds(deltaTm);
+        }
+        AlertTimer = 0;
     }
 }

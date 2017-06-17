@@ -36,7 +36,7 @@ public class Shoulder : MonoBehaviour {
 	public void Reload()
 	{
 		int emptyAmount = ((Rifle)nowEquiptWeapon).maxAmmo - ((Rifle)nowEquiptWeapon).ammo;
-		Debug.Log ("Empty : " + emptyAmount + " Magazine : " + ((Rifle)nowEquiptWeapon).magazine);
+
 		if (((Rifle)nowEquiptWeapon).magazine - emptyAmount >= 0)
 		{
 			((Rifle)nowEquiptWeapon).ammo = ((Rifle)nowEquiptWeapon).maxAmmo;

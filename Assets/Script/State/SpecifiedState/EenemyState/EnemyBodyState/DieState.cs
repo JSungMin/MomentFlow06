@@ -6,7 +6,7 @@ public class DieState : IStateBehaviour
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        shoulderSpriteRenderer.enabled = false;
+        animator.GetComponentInChildren<EnemyShoulderAction>().HideArm();
         enemyInfo.boxCollider.center = new Vector3(enemyInfo.boxCollider.center.x, 0.0f, 0.0f);
         enemyInfo.boxCollider.size = new Vector3(enemyInfo.boxCollider.size.x, 0.1f, 0.0f);
         animator.transform.GetChild(0).GetComponent<Animator>().enabled = false;

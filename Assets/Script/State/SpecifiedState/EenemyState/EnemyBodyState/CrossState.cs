@@ -16,6 +16,8 @@ public class CrossState : IStateBehaviour
 
     private float distance;
 
+    float selectedDirection;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         rigid = enemyInfo.rigidBody;
@@ -23,14 +25,13 @@ public class CrossState : IStateBehaviour
 
         obstacle = enemyInfo.FindNearestObstacle().GetComponent<Collider>();
         obstacleHeight = obstacle.bounds.size.y;
-        direction = new Vector3(obstacle.transform.position.x - animator.transform.position.x, 0).normalized;
-        
-        rigid.transform.localScale = new Vector3(-direction.x * Mathf.Abs(rigid.transform.localScale.x), rigid.transform.localScale.y);
+        direction = new Vector3(obstacle.transform.position.x - enemyInfo.transform.position.x, 0).normalized;
+        selectedDirection = Mathf.Sign(enemyInfo.transform.position.x - obstacle.transform.position.x);
+
         animator.GetComponentInChildren<EnemyShoulderAction>().HideArm();
 
         rigid.isKinematic = true;
         distance = Vector3.Distance(obstacle.bounds.center, animator.transform.position) * 2;
-        shoulderSpriteRenderer.enabled = false;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -40,12 +41,15 @@ public class CrossState : IStateBehaviour
             rigid.transform.position.x,
             originY + heightCurve.Evaluate(stateInfo.normalizedTime) * obstacleHeight,
             rigid.transform.position.z);
+        rigid.transform.localScale = new Vector3(
+            selectedDirection,
+            rigid.transform.localScale.y,
+            rigid.transform.localScale.z);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         rigid.isKinematic = false;
         animator.GetComponentInChildren<EnemyShoulderAction>().ActiveArm();
-        shoulderSpriteRenderer.enabled = true;
     }
 }
