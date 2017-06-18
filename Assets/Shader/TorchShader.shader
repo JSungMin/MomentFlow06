@@ -14,6 +14,7 @@ Shader "Custom/Light"
         _ParticleFactor ("Particle Factor", Float) = 1.0
         _DistanceOffset ("Offset", Vector) = (0,0,0,0)
         _Radius ("Light Radius", Float) = 1.5
+        _FlickerPeroid ("Flicker Peroid", Float) = 1
     }
      
     SubShader
@@ -44,6 +45,7 @@ Shader "Custom/Light"
             uniform float _IntensityFactor;
             fixed4 _DistanceOffset;
             fixed _Radius;
+            fixed _FlickerPeroid;
 
             struct VertexInput
             {
@@ -67,7 +69,7 @@ Shader "Custom/Light"
                 output.pos = UnityObjectToClipPos(input.vertex);
                 output.uv = input.uv;
                 output.color = input.color;
-                output.intensity = _IntensityFactor * _ContrastFactor * cos(_Time.z) * sin(_Time.w) * _CosTime.w
+                output.intensity = _IntensityFactor * _ContrastFactor * cos(_Time.z/_FlickerPeroid) * sin(_Time.w/_FlickerPeroid) * _CosTime.w
                                 + 1.0 * _ContrastFactor; 
                 return output;
             }

@@ -9,6 +9,8 @@ public class OutsideInfo : MonoBehaviour {
 	public Collider cutSceneTrigger;
 	public List<GameObject> interactableObject;
 
+	public List<GameObject> npcList;
+
 	public static GameObject nearestStair = null;
 
 	public void OnTriggerEnter(Collider col)
@@ -17,21 +19,26 @@ public class OutsideInfo : MonoBehaviour {
 		{
 			obstacleList.Add (col.gameObject);
 		}
-		if (col.CompareTag ("Stair"))
+		else if (col.CompareTag ("Stair"))
 		{
 			if (!stairList.Contains(col.gameObject))
 				stairList.Add (col.gameObject);
 		}
-		if (col.CompareTag ("InteractableObject"))
+		else if (col.CompareTag ("InteractableObject"))
 		{
 			if (!interactableObject.Contains (col.gameObject))
 				interactableObject.Add (col.gameObject);
 		}
-		if (col.CompareTag ("CutSceneTrigger"))
+		else if (col.CompareTag ("CutSceneTrigger"))
 		{
 			cutSceneTrigger = col;
 			cutSceneTrigger.GetComponent<CutSceneEventTrigger> ().StartTrigger ();
 		}
+		else if (col.CompareTag ("NPC"))
+		{
+			npcList.Add (col.gameObject);
+		}
+
 	}
 
 	public void OnTriggerStay (Collider col)
@@ -42,10 +49,17 @@ public class OutsideInfo : MonoBehaviour {
 				stairList.Add (col.gameObject);
 			}
 		}
-		if (col.CompareTag ("InteractableObject"))
+		else if (col.CompareTag ("InteractableObject"))
 		{
 			if (!interactableObject.Contains (col.gameObject))
 				interactableObject.Add (col.gameObject);
+		}
+		else if (col.CompareTag ("NPC"))
+		{
+			if (!npcList.Contains (col.gameObject))
+			{
+				npcList.Add (col.gameObject);
+			}
 		}
 	}
 
@@ -55,17 +69,23 @@ public class OutsideInfo : MonoBehaviour {
 		{
 			obstacleList.Remove (col.gameObject);
 		}
-
-		if (col.CompareTag("Stair"))
+		else if (col.CompareTag("Stair"))
 		{
 			if (stairList.Contains(col.gameObject))
 				stairList.Remove (col.gameObject);
 		}
-		if (col.CompareTag ("InteractableObject"))
+		else if (col.CompareTag ("InteractableObject"))
 		{
 			if (interactableObject.Contains (col.gameObject)) 
 			{
 				interactableObject.Remove (col.gameObject);
+			}
+		}
+		else if (col.CompareTag ("NPC"))
+		{
+			if (npcList.Contains (col.gameObject))
+			{
+				npcList.Remove (col.gameObject);
 			}
 		}
 	}
@@ -95,7 +115,7 @@ public class OutsideInfo : MonoBehaviour {
 		{
 			var tmpDis = Vector3.Distance (transform.position, stairList [0].transform.position);
 			var index = 0;
-			for (int i = 0 ; i < obstacleList.Count; i++)
+			for (int i = 0 ; i < stairList.Count; i++)
 			{
 				var prevDis = tmpDis;
 				tmpDis = Mathf.Min(tmpDis, Vector3.Distance (transform.position, stairList[i].transform.position));
@@ -105,6 +125,26 @@ public class OutsideInfo : MonoBehaviour {
 			}
 			nearestStair = stairList [index];
 			return stairList [index];
+		}
+		return null;
+	}
+
+	public GameObject GetNearestNPCObject()
+	{
+		if (npcList.Count != 0)
+		{
+			var tmpDis = Vector3.Distance (transform.position, npcList [0].transform.position);
+			var index = 0;
+			for (int i = 0 ; i < npcList.Count; i++)
+			{
+				var prevDis = tmpDis;
+				tmpDis = Mathf.Min(tmpDis, Vector3.Distance (transform.position, npcList[i].transform.position));
+
+				if (prevDis != tmpDis)
+					index = i;
+			}
+			nearestStair = npcList [index];
+			return npcList [index];
 		}
 		return null;
 	}

@@ -51,7 +51,7 @@ public class BulletPool : MonoBehaviour {
 		}
 	}
 
-	public void AddAmmoToPool (Rifle rifle, Transform pool)
+	public void AddAmmoToPool (Gun rifle, Transform pool)
 	{
 		for (int i = 0; i < rifle.maxAmmo; i++)
 		{
@@ -112,16 +112,16 @@ public class BulletPool : MonoBehaviour {
 		usedBullet.SetActive (false);
 	}
 
-	private List<Rifle> FindRifleWeapons()
+	private List<Gun> FindRifleWeapons()
 	{
 		var equiptments = GameObject.FindObjectsOfType<EquiptInfo> ();
-		List<Rifle> rifles = new List<Rifle> ();
+		List<Gun> rifles = new List<Gun> ();
 		foreach (EquiptInfo equiptment in equiptments) {
 			foreach (Weapon weapon in equiptment.weapons)
 			{
 				if (weapon.weaponType == WeaponType.Rifle)
 				{
-					rifles.Add (((Rifle)weapon));
+					rifles.Add (((Gun)weapon));
 				}
 			}
 		}

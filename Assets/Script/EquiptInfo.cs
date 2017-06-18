@@ -5,6 +5,7 @@ using UnityEngine;
 public class EquiptInfo : MonoBehaviour {
 	public List<Weapon> weapons;
 	public Weapon nowEquiptWeapon;
+	public int nowEquiptWeaponIndex;
 
 	public List<GameObject> itemPocketList;
 
@@ -12,7 +13,10 @@ public class EquiptInfo : MonoBehaviour {
 
 	public void Awake()
 	{
-		AddWeapon (defaultEquiptWeaponId);
+		var savedWeapon = WeaponFactory.Instance.GetWeapon<Weapon> (defaultEquiptWeaponId);
+		weapons [0] = savedWeapon;
+		weapons [1] = new Gun ();
+		weapons [2] = new Gun ();
 		EquiptWeapon (0);
 	}
 
@@ -31,14 +35,41 @@ public class EquiptInfo : MonoBehaviour {
 	{
 		weapons.Remove (weapon);
 	}
-	public void DeleteWeapon (int index)
+	public void DeleteWeapon (int id)
 	{
-		if (index < weapons.Count && index >= 0)
-			weapons.RemoveAt (index);
+		for (int i = 0; i < weapons.Count; i++)
+		{
+			if (weapons[i].id == id)
+			{
+				weapons.RemoveAt (i);
+			}
+		}
+	}
+
+	public void EquiptNextIndexWeapon ()
+	{
+		EquiptWeapon (nowEquiptWeaponIndex + 1);
+	}
+
+	public void EquiptPrevIndexWeapon ()
+	{
+		EquiptWeapon (nowEquiptWeaponIndex - 1);
 	}
 
 	public void EquiptWeapon (int index)
 	{
-		nowEquiptWeapon = weapons [index];		
+		if (index < weapons.Count && index >= 0) {
+			nowEquiptWeapon = weapons [index];		
+			nowEquiptWeaponIndex = index;
+		}
+		else if (index >= weapons.Count)
+		{
+			nowEquiptWeapon = weapons [0];
+			nowEquiptWeaponIndex = 0;
+		}
+		else if (index < 0)
+		{
+			nowEquiptWeaponIndex = weapons.Count - 1;
+		}
 	}
 }

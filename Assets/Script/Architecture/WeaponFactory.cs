@@ -50,12 +50,13 @@ public class WeaponFactory : MonoBehaviour {
 
 			if (weapon.weaponType == WeaponType.Rifle)
 			{
-				weapon = new Rifle ();
+				weapon = new Gun ();
 				SetGeneralWeaponInfo (weapon, node);
-				((Rifle)weapon).maxAmmo = int.Parse(node.SelectSingleNode ("MaxAmmo").InnerText);
-				((Rifle)weapon).ammo = ((Rifle)weapon).maxAmmo;
-				((Rifle)weapon).magazine = int.Parse(node.SelectSingleNode ("Magazine").InnerText);
-				((Rifle)weapon).usingBullet = Resources.Load ("Prefabs/Bullets/" + node.SelectSingleNode ("UsingBullet").InnerText) as GameObject;
+				((Gun)weapon).rifleType = (GunType)int.Parse (node.SelectSingleNode("RifleType").InnerText);
+				((Gun)weapon).maxAmmo = int.Parse(node.SelectSingleNode ("MaxAmmo").InnerText);
+				((Gun)weapon).ammo = ((Gun)weapon).maxAmmo;
+				((Gun)weapon).magazine = int.Parse(node.SelectSingleNode ("Magazine").InnerText);
+				((Gun)weapon).usingBullet = Resources.Load ("Prefabs/Bullets/" + node.SelectSingleNode ("UsingBullet").InnerText) as GameObject;
 			} 
 			else if (weapon.weaponType == WeaponType.Sword)
 			{
@@ -73,18 +74,31 @@ public class WeaponFactory : MonoBehaviour {
 		var newWeapon = new Weapon ();
 		if (savedWeapon.weaponType == WeaponType.Rifle)
 		{
-			newWeapon = new Rifle ();
+			newWeapon = new Gun ();
 			newWeapon.id = savedWeapon.id;
 			newWeapon.name = savedWeapon.name;
 			newWeapon.weaponType = savedWeapon.weaponType;
 			newWeapon.damage = savedWeapon.damage;
 			newWeapon.attackDelay = savedWeapon.damage;
-			((Rifle)newWeapon).maxAmmo = ((Rifle)savedWeapon).maxAmmo;
-			((Rifle)newWeapon).ammo = ((Rifle)savedWeapon).ammo;
-			((Rifle)newWeapon).magazine = ((Rifle)savedWeapon).magazine;
-			((Rifle)newWeapon).rifleType = ((Rifle)savedWeapon).rifleType;
-			((Rifle)newWeapon).usingBullet = ((Rifle)savedWeapon).usingBullet;
+			((Gun)newWeapon).maxAmmo = ((Gun)savedWeapon).maxAmmo;
+			((Gun)newWeapon).rifleType = ((Gun)savedWeapon).rifleType;
+			((Gun)newWeapon).ammo = ((Gun)savedWeapon).ammo;
+			((Gun)newWeapon).magazine = ((Gun)savedWeapon).magazine;
+			((Gun)newWeapon).rifleType = ((Gun)savedWeapon).rifleType;
+			((Gun)newWeapon).usingBullet = ((Gun)savedWeapon).usingBullet;
 		}
 		return (T)(newWeapon);
+	}
+
+	public GunItem MakeNewGunItem (Gun rifle, Transform madeFromObject)
+	{
+		GameObject newItem = GameObject.Instantiate ((GameObject)Resources.Load("Prefabs/Props/GunItem"));
+		var item = newItem.GetComponent<GunItem> ();
+		item.gunId = rifle.id;
+		newItem.name = "PrevGun";
+		newItem.transform.position = madeFromObject.transform.position + Vector3.up * 0.3f;
+		item.owner = madeFromObject.gameObject;
+		item.Start ();
+		return item;
 	}
 }

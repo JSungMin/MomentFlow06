@@ -24,9 +24,9 @@ public class Shoulder : MonoBehaviour {
 
 	public void Shot ()
 	{
-		if (((Rifle)nowEquiptWeapon).ammo - 1 >= 0) {
-			((Rifle)nowEquiptWeapon).ammo -= 1;
-			var usingBullet = ((Rifle)nowEquiptWeapon).usingBullet;
+		if (((Gun)nowEquiptWeapon).ammo - 1 >= 0) {
+			((Gun)nowEquiptWeapon).ammo -= 1;
+			var usingBullet = ((Gun)nowEquiptWeapon).usingBullet;
 			var borrowedBullet = BulletPool.Instance.BorrowBullet (usingBullet, this.gameObject);
 			borrowedBullet.transform.position = shotPosition.position;
 			borrowedBullet.GetComponent<Bullet> ().originVelocity = (shotPosition.position - transform.position).normalized * borrowedBullet.maxSpeed;
@@ -35,17 +35,17 @@ public class Shoulder : MonoBehaviour {
 
 	public void Reload()
 	{
-		int emptyAmount = ((Rifle)nowEquiptWeapon).maxAmmo - ((Rifle)nowEquiptWeapon).ammo;
+		int emptyAmount = ((Gun)nowEquiptWeapon).maxAmmo - ((Gun)nowEquiptWeapon).ammo;
 
-		if (((Rifle)nowEquiptWeapon).magazine - emptyAmount >= 0)
+		if (((Gun)nowEquiptWeapon).magazine - emptyAmount >= 0)
 		{
-			((Rifle)nowEquiptWeapon).ammo = ((Rifle)nowEquiptWeapon).maxAmmo;
-			((Rifle)nowEquiptWeapon).magazine -= emptyAmount;
+			((Gun)nowEquiptWeapon).ammo = ((Gun)nowEquiptWeapon).maxAmmo;
+			((Gun)nowEquiptWeapon).magazine -= emptyAmount;
 		}
 		else 
 		{
-			((Rifle)nowEquiptWeapon).ammo += ((Rifle)nowEquiptWeapon).magazine;
-			((Rifle)nowEquiptWeapon).magazine = 0;
+			((Gun)nowEquiptWeapon).ammo += ((Gun)nowEquiptWeapon).magazine;
+			((Gun)nowEquiptWeapon).magazine = 0;
 		}
 	}
 }

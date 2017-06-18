@@ -22,7 +22,29 @@
             <Id>2</Id>
             <Name>돌격소총</Name>
 		<WeaponType>1</WeaponType>
-		<RifleType>0</RifleType>
+		<RifleType>1</RifleType>
+		<Damage>10</Damage>
+		<AttackDelay>0.25</AttackDelay>
+		<MaxAmmo>30</MaxAmmo>
+            <Magazine>150</Magazine>
+		<UsingBullet>0.45mm</UsingBullet>
+      </Weapon>
+      <Weapon>
+            <Id>3</Id>
+            <Name>테스트소총01</Name>
+		<WeaponType>1</WeaponType>
+		<RifleType>1</RifleType>
+		<Damage>10</Damage>
+		<AttackDelay>0.25</AttackDelay>
+		<MaxAmmo>30</MaxAmmo>
+            <Magazine>150</Magazine>
+		<UsingBullet>0.45mm</UsingBullet>
+      </Weapon>
+      <Weapon>
+            <Id>4</Id>
+            <Name>테스트소총02</Name>
+		<WeaponType>1</WeaponType>
+		<RifleType>1</RifleType>
 		<Damage>10</Damage>
 		<AttackDelay>0.25</AttackDelay>
 		<MaxAmmo>30</MaxAmmo>

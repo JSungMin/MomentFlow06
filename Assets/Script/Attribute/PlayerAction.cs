@@ -42,7 +42,7 @@ public class PlayerAction : MonoBehaviour {
 
     private void Awake()
     {
-        skills = new SkillBase[] { new TimePause(KeyCode.E, 15.0f), new TimeRecall(KeyCode.X, 10.0f) };
+		skills = new SkillBase[] { new TimePause(KeyCode.E, 15.0f), new TimeRecall(KeyCode.R, 10.0f) };
         skillNum = skills.Length;
 
         aimTarget = GetComponent<AimTarget>();
@@ -103,11 +103,16 @@ public class PlayerAction : MonoBehaviour {
 		inputQ = Input.GetKeyDown (KeyCode.Q);
 
 		var nearestObstacle = outsideInfo.GetNearestObstacleObject ();
+		var nearestNPC = outsideInfo.GetNearestNPCObject ();
 		nearestStair = outsideInfo.GetNearestStairObject ();
 
 		InitAnimatorParameters ();
 
 		SelectAnimatorLayer ();
+
+		CheckChangeWeapon ();
+
+		CheckInteractWithNPC (nearestNPC);
 
 		CheckCrossObstacle (nearestObstacle);
 
@@ -139,6 +144,24 @@ public class PlayerAction : MonoBehaviour {
 		}
 	}
 
+	void CheckChangeWeapon ()
+	{
+		var mouseWheel = Input.GetAxis ("Mouse ScrollWheel");
+		if (mouseWheel < 0) {
+			equiptInfo.EquiptPrevIndexWeapon ();
+		}
+		else
+			if (mouseWheel > 0) {
+				equiptInfo.EquiptNextIndexWeapon ();
+			}
+		int inputNumeric = 0;
+		if (int.TryParse (Input.inputString, out inputNumeric)) {
+			if (Input.GetKeyDown (((KeyCode)(inputNumeric + 48)))) {
+				equiptInfo.EquiptWeapon (inputNumeric - 1);
+			}
+		}
+	}
+
 	void InitAnimatorParameters ()
 	{
 		playerAnimator.SetFloat ("HorizontalInput", input.x);
@@ -158,6 +181,15 @@ public class PlayerAction : MonoBehaviour {
 	{
 		playerAnimator.SetLayerWeight (1, 1);
 		playerAnimator.SetLayerWeight (2, 0);
+	}
+
+	void CheckInteractWithNPC (GameObject nearestNPC)
+	{
+		if (null != nearestNPC) {
+			if (inputF) {
+				nearestNPC.GetComponentInParent<NPC> ().Interact (gameObject);
+			}
+		}
 	}
 
 	void CheckCrossObstacle (GameObject nearestObstacle)

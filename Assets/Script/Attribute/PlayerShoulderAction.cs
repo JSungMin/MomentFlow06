@@ -22,7 +22,7 @@ public class PlayerShoulderAction : Shoulder {
         isShooting = Input.GetMouseButton(0);
 		isAimming = Input.GetMouseButton(1);
 
-		if (((Rifle)nowEquiptWeapon).ammo <= 0)
+		if (((Gun)nowEquiptWeapon).ammo <= 0)
 			isShooting = false;
 
 		parentAnimator.SetBool("IsShooting", isShooting);
@@ -34,7 +34,7 @@ public class PlayerShoulderAction : Shoulder {
 		shoulderAnimator.SetBool ("IsOnStair", parentAnimator.GetBool("IsOnStair"));
 
 		if (Input.GetKeyDown (KeyCode.R) ||
-			(((Rifle)nowEquiptWeapon).ammo <= 0 && ((Rifle)nowEquiptWeapon).magazine != 0))
+			(((Gun)nowEquiptWeapon).ammo <= 0 && ((Gun)nowEquiptWeapon).magazine != 0))
 		{
 			shoulderAnimator.SetTrigger ("TriggerReload");
 		}

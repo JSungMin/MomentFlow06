@@ -64,7 +64,8 @@ public class EnemyInfo : HumanInfo
 
     private void Update()
     {
-        aimTarget.CheckCanVisibleShoulder();
+		if (null != aimTarget)
+        	aimTarget.CheckCanVisibleShoulder();
     }
 
     public Vector3 AimPos

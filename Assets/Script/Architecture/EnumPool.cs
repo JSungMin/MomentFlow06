@@ -23,11 +23,12 @@ public enum SworldType
 	DoubleHandSworld
 }
 
-public enum RifleType
+public enum GunType
 {
 	Pistol,
-	MachineGun,
-	Grenade
+	Rifle,
+	Shotgun,
+	GrenadeLauncher
 }
 
 public enum InteractableObjectType

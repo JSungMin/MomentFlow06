@@ -1,6 +1,6 @@
 ﻿//----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2016 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEditor;
@@ -20,7 +20,7 @@ public class UICameraTool : EditorWindow
 	/// http://answers.unity3d.com/questions/60959/mask-field-in-the-editor.html
 	/// </summary>
 
-	public static int LayerMaskField (string label, int mask, params GUILayoutOption[] options)
+	static public int LayerMaskField (string label, int mask, params GUILayoutOption[] options)
 	{
 		List<string> layers = new List<string>();
 		List<int> layerNumbers = new List<int>();
@@ -137,7 +137,7 @@ public class UICameraTool : EditorWindow
 		return mask;
 	}
 
-	public static int LayerMaskField (int mask, params GUILayoutOption[] options)
+	static public int LayerMaskField (int mask, params GUILayoutOption[] options)
 	{
 		return LayerMaskField(null, mask, options);
 	}
@@ -154,9 +154,9 @@ public class UICameraTool : EditorWindow
 
 	void OnGUI ()
 	{
-		EditorGUIUtility.LookLikeControls(80f);
+		NGUIEditorTools.SetLabelWidth(80f);
 
-		List<Camera> list = NGUIEditorTools.FindInScene<Camera>();
+		List<Camera> list = NGUIEditorTools.FindAll<Camera>();
 
 		if (list.Count > 0)
 		{

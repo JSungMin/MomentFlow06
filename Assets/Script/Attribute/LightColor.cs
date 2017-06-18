@@ -9,6 +9,7 @@ public class LightColor : MonoBehaviour {
 	public float colorFactor = 0;
 	public float intencityVariationFactor = 0.5f;
 	public float particleFactor = 0;
+	public float flickerPeroid = 1;
 
 	// Update is called once per frame
 	void Update () {
@@ -18,5 +19,6 @@ public class LightColor : MonoBehaviour {
 		GetComponent<DynamicLight2D.DynamicLight> ().lightMaterial.SetFloat ("_ColorFactor",colorFactor);
 		GetComponent<DynamicLight2D.DynamicLight> ().lightMaterial.SetFloat ("_IntensityFactor",intencityVariationFactor);
 		GetComponent<DynamicLight2D.DynamicLight> ().lightMaterial.SetFloat ("_ParticleFactor",particleFactor);
+		GetComponent<DynamicLight2D.DynamicLight> ().lightMaterial.SetFloat ("_FlickerPeroid",flickerPeroid);
 	}
 }

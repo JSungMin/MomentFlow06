@@ -45,10 +45,10 @@ public class AnimatorStateController : MonoBehaviour
                 break;
 
             case EnumType.RifleEnum:
-                stateTypeNum = Enum.GetNames(typeof(RifleType)).Length;
+                stateTypeNum = Enum.GetNames(typeof(GunType)).Length;
                 for (int i = 0; i < stateTypeNum; i++)
-                    if (Animator.StringToHash(((RifleType)i).ToString()) == animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
-                        return ((RifleType)(i)).ToString();
+                    if (Animator.StringToHash(((GunType)i).ToString()) == animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
+                        return ((GunType)(i)).ToString();
                 break;
 
             case EnumType.BodyStateEnum:

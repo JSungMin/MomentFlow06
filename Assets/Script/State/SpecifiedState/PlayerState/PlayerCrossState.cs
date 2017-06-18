@@ -43,7 +43,8 @@ public class PlayerCrossState : StateMachineBehaviour
     
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.GetComponentInChildren<PlayerShoulderAction>().ActiveArm();
+		if (animator.GetBool("HoldOnWeapon"))
+        	animator.GetComponentInChildren<PlayerShoulderAction>().ActiveArm();
         pRigid.isKinematic = false;
 
         animator.ResetTrigger("TriggerCross");

@@ -71,6 +71,21 @@ public class ChatFactory : MonoBehaviour {
 		}
 	}
 
+	public List<Chat> GetEqualTitlePages (string title)
+	{
+		Debug.Log ("GetEqual");
+		List<Chat> chats = new List<Chat> ();
+
+		chatList.ForEach (delegate(Chat chat) {
+			Debug.Log(chat.title);
+			if (chat.title == title)
+			{
+				chats.Add(chat);
+			}
+		});
+		return chats;
+	}
+
 	public Chat GetPage(int page)
 	{
 		Chat returnChat = null;

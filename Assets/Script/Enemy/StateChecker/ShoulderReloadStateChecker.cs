@@ -12,7 +12,7 @@ public class ShoulderReloadStateChecker : StateCheckerBase
 
     public override bool IsSatisfied()
     {
-		if (((Rifle)enemyInfo.GetComponent<EquiptInfo>().nowEquiptWeapon).ammo <= 0)
+		if (((Gun)enemyInfo.GetComponent<EquiptInfo>().nowEquiptWeapon).ammo <= 0)
 		{
 			return true;
 		}
