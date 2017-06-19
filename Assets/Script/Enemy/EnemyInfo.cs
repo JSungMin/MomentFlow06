@@ -143,7 +143,7 @@ public class EnemyInfo : HumanInfo
             {
                 if (rayCastHits[i].collider.CompareTag("Player"))
                 {
-                    if (rayCastHits[i].collider.name == "PlayerAnimator")
+                    if (rayCastHits[i].collider.name == "PlayerAction")
                     {
                         IsPlayerInRay = true;
                         collisionPointDist = Vector3.Distance(rayCastHits[i].collider.ClosestPoint(origin), origin);
@@ -269,6 +269,7 @@ public class EnemyInfo : HumanInfo
     // 일어서서 attack 하기 전 숨어있는 동안의 시간
     private float standAttackDelayTimer = 0.0f;
     private Coroutine BegindObstacleDecreaseCo = null;
+
     public bool IsBehindObstacleShoting()
     {
         return standAttackDelayTimer > 0.0f;
@@ -292,5 +293,33 @@ public class EnemyInfo : HumanInfo
             yield return StartCoroutine(TimeManager.GetInstance().IsTimePausedCo());
         }
         standAttackDelayTimer = 0.0f;
+    }
+
+    // 스턴이 걸려있는 상황
+    private float stunTimer = 0.0f;
+    private Coroutine StunDecreaseCo = null;
+    public bool IsStun()
+    {
+        return stunTimer > 0.0f;
+    }
+
+    public void Stun(float sturnfor)
+    {
+        if (StunDecreaseCo != null)
+            StopCoroutine(StunDecreaseCo);
+        stunTimer = sturnfor;
+        StunDecreaseCo = StartCoroutine(DecreaseStunCo());
+    }
+
+    private IEnumerator DecreaseStunCo()
+    {
+        float deltaTm = 0.02f;
+        while (stunTimer > 0)
+        {
+            stunTimer -= deltaTm;
+            yield return new WaitForSeconds(deltaTm);
+            yield return StartCoroutine(TimeManager.GetInstance().IsTimePausedCo());
+        }
+        stunTimer = 0.0f;
     }
 }

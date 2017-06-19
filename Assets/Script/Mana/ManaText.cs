@@ -17,6 +17,6 @@ public class ManaText : MonoBehaviour
 
     private void Update()
     {
-        textComponent.text = mana.ManaPoint.ToString();
+        textComponent.text = "mp:" + mana.ManaPoint.ToString();
     }
 }

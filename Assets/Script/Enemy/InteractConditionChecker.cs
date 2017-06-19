@@ -16,9 +16,7 @@ public class InteractConditionChecker : ConditionChecker
     public void DoBulletDamage(int power)
     {
         if (GetCurrentBodyState() == BodyStateType.Die)
-        {
             return;
-        }
         
         enemyInfo.Hp -= power;
         StartCoroutine(DamageEffectCo());
@@ -33,5 +31,13 @@ public class InteractConditionChecker : ConditionChecker
 
         for (int i = 0; i < spriteRenderers.Length; i++)
             spriteRenderers[i].color = Color.white;
+    }
+
+    public void DoExtinguisherStun()
+    {
+        if (GetCurrentBodyState() == BodyStateType.Die)
+            return;
+
+        enemyInfo.Stun(3.0f);
     }
 }

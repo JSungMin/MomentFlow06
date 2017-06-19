@@ -16,6 +16,7 @@ public class SelfConditionChecker : ConditionChecker
         bodyStateCheckers = new StateCheckerBase[] 
         {
 			new BodyDeadStateChecker(enemyInfo, BodyStateType.Die),
+            new BodyStunStateChecker(enemyInfo, BodyStateType.Stun),
 			new BodyShotStateChecker(enemyInfo, BodyStateType.Shot),
             new BodyCrossStateChecker(enemyInfo, BodyStateType.Cross),
             new BodyRunStateChecker(enemyInfo, BodyStateType.Run),
@@ -37,6 +38,8 @@ public class SelfConditionChecker : ConditionChecker
     {
         if (!enemyInfo.isUpdatable)
             return;
+
+        Debug.Log(GetCurrentBodyStateName());
 
         for (int i = 0; i < bodyStateCheckers.Length; i++)
         {
