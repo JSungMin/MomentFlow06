@@ -41,11 +41,12 @@ public enum InteractableObjectType
 public enum BodyStateType
 {
     Die = 0,
-    Shot = 1,
-    Cross = 2,
-    Run = 3,
-    Crouch = 4,
-    Idle = 5
+    Stun = 1,
+    Shot = 2,
+    Cross = 3,
+    Run = 4,
+    Crouch = 5,
+    Idle = 6
 }
 
 public enum ShoulderStateType
