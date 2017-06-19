@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TimeRecall : SkillBase
 {
+    // 시간을 돌리기 위해 시간이 천천히 흐르고 있는 상태인지를 나타내는 변수
+    // 오브젝트의 시간이 되돌아가고 있는지를 체크하는 변수는 각 오브젝트마다 있음
     public static bool isInTimeRevertPhase { private set; get; }
 
     private List<TimeRecallable> timeRevertables = new List<TimeRecallable>();

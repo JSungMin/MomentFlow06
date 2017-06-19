@@ -20,6 +20,7 @@ public class CrouchState : IStateBehaviour
     {
         enemyInfo.CrouchDelayTimer = 0.0f;
         enemyInfo.viewHeightScale = 1.0f;
-        enemyInfo.DeceaseBehindObstacleShoting(1.0f);
+        //enemyInfo.DeceaseBehindObstacleShoting(1.0f);
+        enemyInfo.behindObstacleShotingSituation.GetInSituation(1.0f);
     }
 }

@@ -35,6 +35,9 @@ public class Extinguisher : MonoBehaviour
             return;
         }
 
+        if (TimeRecall.isInTimeRevertPhase)
+            return;
+
         if (Input.GetKeyDown(KeyCode.T))
             isExplosing = true;
 

@@ -21,7 +21,6 @@ public class EnemyInfo : HumanInfo
     //private 
     public float attackDelay { private set; get; }
     public float attackRange { private set; get; }
-    public float alertDelay { private set; get; }
     public float findRange { private set; get; }
     
     private float crouchDelayTimer;
@@ -33,29 +32,30 @@ public class EnemyInfo : HumanInfo
     public float viewHeightScale = 1.0f;
 
     public bool isUpdatable = true;
+    float sameRawDis = 0.6f;
 
     private void Awake()
     {
+        alertSituation = new SituationTimer(this);
+        behindObstacleShotingSituation = new SituationTimer(this);
+
         hp = 100;
         attackDelay = 0.5f;
         attackRange = 3.0f;
         crouchDelay = 2.0f;
-
-
+        
         findRange = attackRange + 3.0f;
         rigidBody = GetComponent<Rigidbody>();
         viewCollider = GetComponent<BoxCollider>();
         boxCollider = GetComponentInChildren<BoxCollider>();
 
-        float sameRawDis = 1.0f;
         obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         sameRawObstacles = new List<GameObject>();
         aimTarget = GetComponent<AimTarget>();
 
         for (int i = 0; i < obstacles.Length; i++)
         {
-            if (obstacles[i].transform.position.y < transform.position.y + sameRawDis &&
-                obstacles[i].transform.position.y > transform.position.y - sameRawDis)
+            if (isInSameRow(obstacles[i], gameObject))
             {
                 sameRawObstacles.Add(obstacles[i]);
             }
@@ -94,12 +94,6 @@ public class EnemyInfo : HumanInfo
         get { return attackDelayTimer; }
     }
 
-    public float StandAttackDelayTimer
-    {
-        set { standAttackDelayTimer = value; }
-        get { return standAttackDelayTimer; }
-    }
-
     public float CrouchDelayTimer
     {
         set { crouchDelayTimer = value; }
@@ -108,8 +102,12 @@ public class EnemyInfo : HumanInfo
 
     public bool IsPlayerInView()
     {
+
         if (Vector3.Distance(GameSceneData.player.transform.position, transform.position) < 1.0f)
-            return true;
+        {
+            if (Mathf.Abs(GameSceneData.player.transform.position.y - transform.position.y) < sameRawDis)
+                return true;
+        }
 
         Vector3 origin = transform.position + Vector3.up * boxCollider.size.y * viewHeightScale;
         Vector3 direction = new Vector3(Mathf.Sign(GameSceneData.player.transform.position.x - transform.position.x), 0.0f, 0.0f);
@@ -238,62 +236,9 @@ public class EnemyInfo : HumanInfo
         else
             return false;
     }
-    
-    private float alertTimer = 0.0f;
-    private Coroutine AlertingDecreaseCo = null;
-    public bool IsAlerting()
-    {
-        return alertTimer > 0.0f;
-    }
 
-    public void DeceaseAlerting(float from)
-    {
-        if (AlertingDecreaseCo != null)
-            StopCoroutine(AlertingDecreaseCo);
-        alertTimer = from;
-        AlertingDecreaseCo = StartCoroutine(DecreaseAlertingCo());
-    }
-
-    private IEnumerator DecreaseAlertingCo()
-    {
-        float deltaTm = 0.02f;
-        while (alertTimer > 0)
-        {
-            alertTimer -= deltaTm;
-            yield return new WaitForSeconds(deltaTm);
-            yield return StartCoroutine(TimeManager.GetInstance().IsTimePausedCo());
-        }
-        alertTimer = 0;
-    }
-
-    // 일어서서 attack 하기 전 숨어있는 동안의 시간
-    private float standAttackDelayTimer = 0.0f;
-    private Coroutine BegindObstacleDecreaseCo = null;
-
-    public bool IsBehindObstacleShoting()
-    {
-        return standAttackDelayTimer > 0.0f;
-    }
-
-    public void DeceaseBehindObstacleShoting(float from)
-    {
-        if (BegindObstacleDecreaseCo != null)
-            StopCoroutine(BegindObstacleDecreaseCo);
-        standAttackDelayTimer = from;
-        BegindObstacleDecreaseCo = StartCoroutine(DecreaseBegindObstacleCo());
-    }
-
-    private IEnumerator DecreaseBegindObstacleCo()
-    {
-        float deltaTm = 0.02f;
-        while (standAttackDelayTimer > 0)
-        {
-            standAttackDelayTimer -= deltaTm;
-            yield return new WaitForSeconds(deltaTm);
-            yield return StartCoroutine(TimeManager.GetInstance().IsTimePausedCo());
-        }
-        standAttackDelayTimer = 0.0f;
-    }
+    public SituationTimer alertSituation { private set; get; }
+    public SituationTimer behindObstacleShotingSituation { private set; get; }
 
     // 스턴이 걸려있는 상황
     private float stunTimer = 0.0f;
@@ -321,5 +266,15 @@ public class EnemyInfo : HumanInfo
             yield return StartCoroutine(TimeManager.GetInstance().IsTimePausedCo());
         }
         stunTimer = 0.0f;
+    }
+
+    public bool isInSameRow(GameObject a, GameObject b)
+    {
+        return isInSameRow(a.GetComponent<Collider>(), b.GetComponent<Collider>());
+    }
+
+    public bool isInSameRow(Collider a, Collider b)
+    {
+        return a.bounds.max.y > b.bounds.min.y && a.bounds.min.y < b.bounds.max.y;
     }
 }
