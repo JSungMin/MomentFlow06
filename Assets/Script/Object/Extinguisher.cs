@@ -17,8 +17,8 @@ public class Extinguisher : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
         explosionPos = transform.position + relativeExplosionPos;
     }
-
-    private bool isExplosing = false;
+	[HideInInspector]
+	public bool isExplosing = false;
     private int exploseCount = 0;
     private const int exploseMaxCount = 10;
 

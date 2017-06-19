@@ -9,10 +9,10 @@ public class TimeRecallable : MonoBehaviour
 
     private const int listSize = 120;
     // 이게 느리다면 직접 자료구조를 만들어야 할 듯
-    private LinkedList<TimeRecallNode> nodes = new LinkedList<TimeRecallNode>();
+	private LinkedList<TimeRecallNode> nodes = new LinkedList<TimeRecallNode>();
     private LinkedListNode<TimeRecallNode> lastNode;
-
-    private bool isReverting;
+	[HideInInspector]
+	public bool isReverting;
     private bool isRevertable;
 
     private TimeRecallNode lastFrameNode;
