@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExtinguisherParticles : MonoBehaviour {
 	private ParticleSystem thisParticleSystem;
-	private ParticleSystem.Particle[] emittedParticle;
+	public ParticleSystem.Particle[] emittedParticle;
 
 	public Extinguisher extinguisher;
 	private TimeRecallable extinguisherTimeRecallInfo;
@@ -29,8 +29,9 @@ public class ExtinguisherParticles : MonoBehaviour {
 
 			if (!extinguisherTimeRecallInfo.isReverting && !revertStart) {
 				timer = 0;
-				if (!thisParticleSystem.isPlaying)
+				if (!thisParticleSystem.isPlaying) {
 					thisParticleSystem.Play ();
+				}
 				EditParticles ();
 			} 
 			else {

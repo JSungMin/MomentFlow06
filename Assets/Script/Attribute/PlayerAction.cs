@@ -41,12 +41,12 @@ public class PlayerAction : MonoBehaviour {
 	private ParticleSystem timePauseEffect;
 
     private void Awake()
-    {
-		skills = new SkillBase[] { new TimePause(KeyCode.E, 15.0f), new TimeRecall(KeyCode.R, 10.0f) };
-        skillNum = skills.Length;
+	{
+		skills = new SkillBase[] { new TimePause (KeyCode.E, 15.0f), new TimeRecall (KeyCode.R, 10.0f) };
+		skillNum = skills.Length;
 
-        aimTarget = GetComponent<AimTarget>();
-    }
+		aimTarget = GetComponent<AimTarget> ();
+	}
 
 	public void Start()
 	{
@@ -117,6 +117,11 @@ public class PlayerAction : MonoBehaviour {
 		var nearestObstacle = outsideInfo.GetNearestObstacleObject ();
 		var nearestNPC = outsideInfo.GetNearestNPCObject ();
 		nearestStair = outsideInfo.GetNearestStairObject ();
+
+		if (Input.GetKeyDown(KeyCode.P))
+		{
+			SavePoint.LoadData ();
+		}
 
 		InitAnimatorParameters ();
 

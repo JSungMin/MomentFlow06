@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemBase : InteractableObject
 {
+	public int itemId;
 	public GameObject owner;
 
 	protected Transform originParent;
@@ -11,7 +12,7 @@ public class ItemBase : InteractableObject
 	public Rigidbody itemRigidbody;
 	public SpriteRenderer itemRenderer;
 
-	protected bool isUsed = false;
+	public bool isUsed = false;
 
 	// Use this for initialization
 	protected void Start () {
