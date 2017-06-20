@@ -1,48 +1,7 @@
 fileFormatVersion: 2
-guid: e2916f7a3e9f049f6adaf85539c80dea
-labels:
-- Save
-- Load
-- Serialize
-- Serialization
-- Delete
-- Upload
-- Download
-- File
-- IO
-- Write
-- Read
-- AudioClip
-- Image
-- MySQL
-- Database
-- Query
-- Mesh
-- Import
-- Export
-- Folder
-- Binary
-- JSON
-- XML
-- Encrypt
-- Encryption
-- Obfuscate
-- Obfuscation
-- Playmaker
-- PHP
-- Web
-- Store
-- Storage
-- Cloud
-- Files
-- Windows
-- Mac
-- WebPlayer
-- WP8
-- Mobile
-- iOS
-- Android
-- Crossplatform
+guid: de72a6d2da64d114d95e3c5a01cfaec5
+timeCreated: 1428085126
+licenseType: Store
 PluginImporter:
   serializedVersion: 2
   iconMap: {}
@@ -52,15 +11,18 @@ PluginImporter:
   platformData:
     data:
       first:
-        '': BlackBerry
+        '': WP8
       second:
         enabled: 1
-        settings: {}
+        settings:
+          CPU: AnyCPU
+          DontProcess: False
+          PlaceholderPath: 
     data:
       first:
         Android: Android
       second:
-        enabled: 1
+        enabled: 0
         settings:
           CPU: AnyCPU
     data:
@@ -73,112 +35,67 @@ PluginImporter:
       first:
         Editor: Editor
       second:
-        enabled: 1
+        enabled: 0
         settings:
           CPU: AnyCPU
           DefaultValueInitialized: true
           OS: AnyOS
     data:
       first:
-        Facebook: WebGL
-      second:
-        enabled: 1
-        settings: {}
-    data:
-      first:
         Facebook: Win
       second:
-        enabled: 1
+        enabled: 0
         settings:
           CPU: AnyCPU
     data:
       first:
         Facebook: Win64
       second:
-        enabled: 1
+        enabled: 0
         settings:
           CPU: AnyCPU
     data:
       first:
-        Samsung TV: SamsungTV
-      second:
-        enabled: 1
-        settings:
-          STV_MODEL: STANDARD_13
-    data:
-      first:
         Standalone: Linux
       second:
-        enabled: 1
+        enabled: 0
         settings:
           CPU: x86
     data:
       first:
         Standalone: Linux64
       second:
-        enabled: 1
+        enabled: 0
         settings:
           CPU: x86_64
     data:
       first:
-        Standalone: LinuxUniversal
-      second:
-        enabled: 1
-        settings:
-          CPU: AnyCPU
-    data:
-      first:
         Standalone: OSXIntel
       second:
-        enabled: 1
+        enabled: 0
         settings:
           CPU: AnyCPU
     data:
       first:
         Standalone: OSXIntel64
       second:
-        enabled: 1
-        settings:
-          CPU: AnyCPU
-    data:
-      first:
-        Standalone: OSXUniversal
-      second:
-        enabled: 1
+        enabled: 0
         settings:
           CPU: AnyCPU
     data:
       first:
         Standalone: Win
       second:
-        enabled: 1
+        enabled: 0
         settings:
           CPU: AnyCPU
     data:
       first:
         Standalone: Win64
       second:
-        enabled: 1
+        enabled: 0
         settings:
           CPU: AnyCPU
-    data:
-      first:
-        Web: Web
-      second:
-        enabled: 1
-        settings: {}
-    data:
-      first:
-        Web: WebStreamed
-      second:
-        enabled: 1
-        settings: {}
-    data:
-      first:
-        WebGL: WebGL
-      second:
-        enabled: 1
-        settings: {}
     data:
       first:
         Windows Store Apps: WindowsStoreApps
@@ -186,11 +103,14 @@ PluginImporter:
         enabled: 0
         settings:
           CPU: AnyCPU
+          DontProcess: False
+          PlaceholderPath: 
+          SDK: AnySDK
     data:
       first:
         iPhone: iOS
       second:
-        enabled: 1
+        enabled: 0
         settings:
           CompileFlags: 
           FrameworkDependencies: 
