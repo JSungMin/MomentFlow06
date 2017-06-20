@@ -16,11 +16,13 @@ public class EnemyShoulderAction : Shoulder
     {
         enemyAimTarget.hideShoulder = true;
         shoulderAnimator.enabled = false;
+		shoulderAnimator.GetComponent<SpriteRenderer> ().enabled = false;
     }
 
     public void ActiveArm()
     {
         enemyAimTarget.hideShoulder = false;
         shoulderAnimator.enabled = true;
+		shoulderAnimator.GetComponent<SpriteRenderer> ().enabled = true;
     }
 }

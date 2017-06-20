@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 [ExecuteInEditMode]
 public class HierarchySystem : MonoBehaviour {
-	[HideInInspector]
 	public CutSceneUnit unit;
 	public PositionPool positionPool;
 	private Transform parent;

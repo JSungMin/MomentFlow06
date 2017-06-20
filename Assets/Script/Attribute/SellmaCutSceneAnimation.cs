@@ -46,9 +46,13 @@ public class SellmaCutSceneAnimation : MonoBehaviour {
 		}
 	}
 
+	public void SellmaMeleeAttack()
+	{
+		bodyAnimator.Play ("MeleeAttack");
+	}
+
 	public void SellmaWalk ()
 	{
-		Debug.Log ("SellmaWalk");
 		bodyAnimator.SetTrigger ("TriggerWalk");
 		shoulderAnimator.SetTrigger ("TriggerWalk");
 	}

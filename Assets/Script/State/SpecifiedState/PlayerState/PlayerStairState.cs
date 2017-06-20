@@ -22,8 +22,11 @@ public class PlayerStairState : StateMachineBehaviour {
 		
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		animator.ResetTrigger ("TriggerCrouch");
-		animator.SetBool ("IsCrouching", false);
+		if (playerCol.GetComponentInParent<OutsideInfo>().stairList.Count == 0)
+		{
+			animator.ResetTrigger ("TriggerStair");
+			animator.SetBool ("IsOnStair", false);
+		}
 	}
 
 	// OnStateExit is called before OnStateExit is called on any state inside this state machine

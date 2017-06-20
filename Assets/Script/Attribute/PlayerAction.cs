@@ -71,6 +71,18 @@ public class PlayerAction : MonoBehaviour {
         return child;
     }
 
+	public void HoldOnWeapon ()
+	{
+		holdOnWeapon = true;
+		aimTarget.hideShoulder = false;
+	}
+
+	public void ReleaseWeapon ()
+	{
+		holdOnWeapon = false;
+		aimTarget.hideShoulder = true;
+	}
+
 	public void Update()
 	{		
 		// 오브젝트 하나 만들고 update 계속 돌리는 것이 좋을 거 같다

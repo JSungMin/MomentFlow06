@@ -39,8 +39,6 @@ public class SelfConditionChecker : ConditionChecker
         if (!enemyInfo.isUpdatable)
             return;
 
-        Debug.Log(GetCurrentBodyStateName());
-
         for (int i = 0; i < bodyStateCheckers.Length; i++)
         {
             if (bodyStateCheckers[i].IsSatisfied())

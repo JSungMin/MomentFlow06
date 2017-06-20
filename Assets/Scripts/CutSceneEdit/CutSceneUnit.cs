@@ -210,6 +210,12 @@ public class CutSceneUnit : MonoBehaviour {
 		}
 	}
 
+	public void ChangeTrack (int index)
+	{
+		StopAction ();
+		nowTrackIndex = index;
+	}
+
 	public void AddFlatPoint(){
 		tracks[nowTrackIndex].size+=1;
 	}
