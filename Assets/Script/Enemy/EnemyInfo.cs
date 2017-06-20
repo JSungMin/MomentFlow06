@@ -38,6 +38,7 @@ public class EnemyInfo : HumanInfo
     {
         alertSituation = new SituationTimer(this);
         behindObstacleShotingSituation = new SituationTimer(this);
+        stunSituation = new SituationTimer(this);
 
         hp = 100;
         attackDelay = 0.5f;
@@ -102,6 +103,8 @@ public class EnemyInfo : HumanInfo
 
     public bool IsPlayerInView()
     {
+        if (!isInSameRow(GameSceneData.player, gameObject))
+            return false;
 
         if (Vector3.Distance(GameSceneData.player.transform.position, transform.position) < 1.0f)
         {
@@ -110,17 +113,15 @@ public class EnemyInfo : HumanInfo
         }
 
         Vector3 origin = transform.position + Vector3.up * boxCollider.size.y * viewHeightScale;
-        Vector3 direction = new Vector3(Mathf.Sign(GameSceneData.player.transform.position.x - transform.position.x), 0.0f, 0.0f);
+        Vector3 direction = GetDirection();
 
         int layermask = (1 << LayerMask.NameToLayer("Collision")) | (1 << LayerMask.NameToLayer("Player"));
 
         bool isViewPlayer = IsPlayerInViewWithoutObstacle(origin, Vector3.Normalize(direction + Vector3.up * 0.05f), findRange, layermask) |
             IsPlayerInViewWithoutObstacle(origin, Vector3.Normalize(direction + Vector3.up * -0.05f), findRange, layermask);
 
-        Debug.DrawRay(origin,
-            Vector3.Normalize(direction + Vector3.up * 0.05f) * 10.0f);
-        Debug.DrawRay(origin,
-            Vector3.Normalize(direction + Vector3.up * (-0.05f)) * 10.0f);
+        Debug.DrawRay(origin, Vector3.Normalize(direction + Vector3.up * 0.05f) * 10.0f);
+        Debug.DrawRay(origin, Vector3.Normalize(direction + Vector3.up * (-0.05f)) * 10.0f);
 
         if (isViewPlayer)
             return true;
@@ -164,6 +165,16 @@ public class EnemyInfo : HumanInfo
         }
         
         return true;
+    }
+
+    public bool GetDirectionIsLeft()
+    {
+        return transform.localScale == new Vector3(1, 1, 1);
+    }
+
+    public Vector3 GetDirection()
+    {
+        return GetDirectionIsLeft() == true ? Vector3.left : Vector3.right;
     }
 
     public void SetDirection(bool toLeft)
@@ -210,6 +221,25 @@ public class EnemyInfo : HumanInfo
         return nearestObj;
     }
 
+    public GameObject FindNearestObstacleAtDirection()
+    {
+        GameObject nearestObj = null;
+        float nearestDist = float.MaxValue;
+        for (int i = 0; i < sameRawObstacles.Count; i++)
+        {
+            if (GetDirection().x * (sameRawObstacles[i].transform.position.x - transform.position.x) < 0.0f)
+                continue;
+
+            float distX = Mathf.Abs(transform.position.x - sameRawObstacles[i].transform.position.x);
+            if (distX < nearestDist)
+            {
+                nearestDist = distX;
+                nearestObj = sameRawObstacles[i];
+            }
+        }
+        return nearestObj;
+    }
+
     public float FindNearestObstaclePosX()
     {
         if (FindNearestObstacle() == null)
@@ -239,34 +269,7 @@ public class EnemyInfo : HumanInfo
 
     public SituationTimer alertSituation { private set; get; }
     public SituationTimer behindObstacleShotingSituation { private set; get; }
-
-    // 스턴이 걸려있는 상황
-    private float stunTimer = 0.0f;
-    private Coroutine StunDecreaseCo = null;
-    public bool IsStun()
-    {
-        return stunTimer > 0.0f;
-    }
-
-    public void Stun(float sturnfor)
-    {
-        if (StunDecreaseCo != null)
-            StopCoroutine(StunDecreaseCo);
-        stunTimer = sturnfor;
-        StunDecreaseCo = StartCoroutine(DecreaseStunCo());
-    }
-
-    private IEnumerator DecreaseStunCo()
-    {
-        float deltaTm = 0.02f;
-        while (stunTimer > 0)
-        {
-            stunTimer -= deltaTm;
-            yield return new WaitForSeconds(deltaTm);
-            yield return StartCoroutine(TimeManager.GetInstance().IsTimePausedCo());
-        }
-        stunTimer = 0.0f;
-    }
+    public SituationTimer stunSituation { private set; get; }
 
     public bool isInSameRow(GameObject a, GameObject b)
     {

@@ -12,6 +12,6 @@ public class BodyStunStateChecker : StateCheckerBase
 
     public override bool IsSatisfied()
     {
-        return enemyInfo.IsStun();
+        return enemyInfo.stunSituation.IsInSituation();
     }
 }

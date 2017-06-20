@@ -17,7 +17,10 @@ public class InteractConditionChecker : ConditionChecker
     {
         if (GetCurrentBodyState() == BodyStateType.Die)
             return;
-        
+
+        if (!enemyInfo.isHaveToHide())
+            enemyInfo.SetDirectionToPlayer();
+
         enemyInfo.Hp -= power;
         StartCoroutine(DamageEffectCo());
     }
@@ -38,6 +41,6 @@ public class InteractConditionChecker : ConditionChecker
         if (GetCurrentBodyState() == BodyStateType.Die)
             return;
 
-        enemyInfo.Stun(3.0f);
+        enemyInfo.stunSituation.GetInSituation(3.0f);
     }
 }

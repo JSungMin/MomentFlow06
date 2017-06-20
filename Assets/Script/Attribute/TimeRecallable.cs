@@ -11,8 +11,9 @@ public class TimeRecallable : MonoBehaviour
     // 이게 느리다면 직접 자료구조를 만들어야 할 듯
 	private LinkedList<TimeRecallNode> nodes = new LinkedList<TimeRecallNode>();
     private LinkedListNode<TimeRecallNode> lastNode;
-	[HideInInspector]
-	public bool isReverting;
+    // 지금 시간이 되돌아가고 있는 상황인가
+	public bool isReverting { private set; get; }
+    // 지금 시간을 되돌릴 수 있는 상황인가(여러가지 이유로 인해 불가능할 수도 있음)
     private bool isRevertable;
 
     private TimeRecallNode lastFrameNode;

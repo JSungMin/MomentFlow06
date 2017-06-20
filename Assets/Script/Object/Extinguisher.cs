@@ -12,11 +12,15 @@ public class Extinguisher : MonoBehaviour
     public float explosionRadius;
     public float explosionForce;
 
+    private TimeRecallable extinguisherTimeRecallInfo;
+
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
+        extinguisherTimeRecallInfo = GetComponent<TimeRecallable>();
         explosionPos = transform.position + relativeExplosionPos;
     }
+
 	[HideInInspector]
 	public bool isExplosing = false;
     private int exploseCount = 0;
@@ -34,10 +38,7 @@ public class Extinguisher : MonoBehaviour
             rigidBody.centerOfMass = Vector3.zero;
             return;
         }
-
-        if (TimeRecall.isInTimeRevertPhase)
-            return;
-
+        
         if (Input.GetKeyDown(KeyCode.T))
             isExplosing = true;
 
@@ -56,9 +57,15 @@ public class Extinguisher : MonoBehaviour
                 isToLeft = !isToLeft;
                 exploseCount++;
 
-                EmitPowders();
+                //EmitPowders();
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (extinguisherTimeRecallInfo.isReverting)
+            EmitPowders();
     }
 
     private const float radius = 3.0f;
@@ -66,8 +73,7 @@ public class Extinguisher : MonoBehaviour
     private const float radianDelta = 2 * Mathf.PI / (float)rayNum;
     private void EmitPowders()
     {
-        // TODO particle system
-
+        Debug.Log("reverting");
         for (int i = 0; i < rayNum; i++)
         {
             Vector3 direction = Vector3.right * (radius * Mathf.Cos(i * radianDelta)) +
@@ -87,10 +93,10 @@ public class Extinguisher : MonoBehaviour
                 {
                     if (raycastHit.collider != null)
                     {
-                        if (raycastHit.collider.GetComponentInChildren<EnemyInfo>() != null)
-                            raycastHit.collider.GetComponentInChildren<EnemyInfo>().Stun(3.0f);
-                        if (raycastHit.collider.GetComponent<EnemyInfo>() != null)
-                            raycastHit.collider.GetComponent<EnemyInfo>().Stun(3.0f);
+                        if (raycastHit.collider.GetComponentInChildren<InteractConditionChecker>() != null)
+                            raycastHit.collider.GetComponentInChildren<InteractConditionChecker>().DoExtinguisherStun();
+                        if (raycastHit.collider.GetComponent<InteractConditionChecker>() != null)
+                            raycastHit.collider.GetComponent<InteractConditionChecker>().DoExtinguisherStun();
                     }
                 }
             }

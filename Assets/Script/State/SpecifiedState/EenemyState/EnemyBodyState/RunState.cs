@@ -11,29 +11,15 @@ public class RunState : IStateBehaviour
         // hide
         if (enemyInfo.isHaveToHide())
         {
-            // 엄폐물이 오른쪽에 있다면
-            if (enemyInfo.transform.position.x < enemyInfo.FindNearestObstacle().transform.position.x)
-            {
-                enemyInfo.transform.Translate(Vector3.right * TimeManager.GetInstance().customDeltaTime * speed);
-            }
-            else
-            {
-                enemyInfo.transform.Translate(Vector3.left * TimeManager.GetInstance().customDeltaTime * speed);
-            }
             enemyInfo.SetDirectionOppositeToPlayer();
+            // enemyInfo.FindNearestObstacleAtDirection();
         }
         // chase player
         else
         {
-            if (enemyInfo.transform.position.x < GameSceneData.player.transform.position.x)
-            {
-                enemyInfo.transform.Translate(Vector3.right * TimeManager.GetInstance().customDeltaTime * speed);
-            }
-            else
-            {
-                enemyInfo.transform.Translate(Vector3.left * TimeManager.GetInstance().customDeltaTime * speed);
-            }
             enemyInfo.SetDirectionToPlayer();
         }
+
+        enemyInfo.transform.Translate(enemyInfo.GetDirection() * TimeManager.GetInstance().customDeltaTime * speed);
     }
 }
