@@ -273,7 +273,18 @@ public class EnemyInfo : HumanInfo
 
     public bool isInSameRow(GameObject a, GameObject b)
     {
-        return isInSameRow(a.GetComponent<Collider>(), b.GetComponent<Collider>());
+        Collider aCol = a.GetComponent<Collider>();
+        if (aCol == null)
+            aCol = a.GetComponentInParent<Collider>();
+        if (aCol == null)
+            aCol = a.GetComponentInChildren<Collider>();
+
+        Collider bCol = b.GetComponent<Collider>();
+        if (bCol == null)
+            bCol = b.GetComponentInParent<Collider>();
+        if (bCol == null)
+            bCol = b.GetComponentInChildren<Collider>();
+        return isInSameRow(aCol, bCol);
     }
 
     public bool isInSameRow(Collider a, Collider b)
