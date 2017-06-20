@@ -210,10 +210,11 @@ public class CutSceneUnit : MonoBehaviour {
 		}
 	}
 
-	public void ChangeTrack (int index)
+	public void ChangeTrack (int trackIndex)
 	{
+		nowTrackIndex = trackIndex;
+		pp = tracks[trackIndex].positionItemList[0].transform.position;
 		StopAction ();
-		nowTrackIndex = index;
 	}
 
 	public void AddFlatPoint(){
@@ -339,7 +340,14 @@ public class CutSceneUnit : MonoBehaviour {
 
 	public void StartAction(){
 		isAction = true;
+		pp = Vector3.zero;
 	}
+
+	public void ResumeAction ()
+	{
+		isAction = true;
+	}
+
 	public void PasueAction(){
 		isAction = false;
 	}

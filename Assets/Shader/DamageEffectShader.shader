@@ -57,9 +57,6 @@
 				// sample the texture
 				fixed4 col = tex2D (_MainTex, i.uv);
 			
-				col.rgb = _InsideColor.rgb;
-				if (col.a < 0.5)
-					col.a = 0;
 				col.rgb *= col.a;
 
 				return col;
