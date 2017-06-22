@@ -57,7 +57,8 @@ public enum BodyStateType
 
 public enum ShoulderStateType
 {
-	Reload = 0,
+    Stun = 0,
+	Reload,
 	Shot,
     Run,
     Aim,

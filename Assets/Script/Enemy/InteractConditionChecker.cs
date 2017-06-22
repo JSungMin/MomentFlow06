@@ -22,9 +22,9 @@ public class InteractConditionChecker : ConditionChecker
         {
             if (enemyInfo.isEnemyAttackableEnemy)
             {
-                enemyInfo.SetDirectionTo(bulletOwner);
                 enemyInfo.SetAttackTarget(bulletOwner.transform.parent.gameObject);
             }
+            enemyInfo.SetDirectionTo(bulletOwner);
         }
 
         enemyInfo.Hp -= power;

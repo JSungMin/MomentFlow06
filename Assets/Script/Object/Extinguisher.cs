@@ -73,7 +73,6 @@ public class Extinguisher : MonoBehaviour
     private const float radianDelta = 2 * Mathf.PI / (float)rayNum;
     private void EmitPowders()
     {
-        Debug.Log("reverting");
         for (int i = 0; i < rayNum; i++)
         {
             Vector3 direction = Vector3.right * (radius * Mathf.Cos(i * radianDelta)) +

@@ -79,13 +79,15 @@ public class TimeRecallable : MonoBehaviour
     private void FinishRevert()
     {
         isReverting = false;
-        rigidbody.isKinematic = false;
+        if (rigidbody)
+            rigidbody.isKinematic = false;
     }
 
     public void StartRevert()
     {
         isReverting = true;
-        rigidbody.isKinematic = true;
+        if (rigidbody)
+            rigidbody.isKinematic = true;
         NotIndicateRevert();
     }
 
@@ -95,6 +97,7 @@ public class TimeRecallable : MonoBehaviour
         {
             animator.Play(animationName, 0, 1.0f);
             animator.SetFloat("rewindMult", -1f);
+            
         }
 
         NotIndicateRevert();

@@ -45,6 +45,9 @@ public class EnemyInfo : HumanInfo
 
     private void Awake()
     {
+        if (attackTarget == null)
+            attackTarget = GameSceneData.playerAction;
+
         alertSituation = new SituationTimer(this);
         behindObstacleShotingSituation = new SituationTimer(this);
         stunSituation = new SituationTimer(this);
@@ -183,7 +186,6 @@ public class EnemyInfo : HumanInfo
                     obstacles.Add(rayCastHits[i].collider);
                 }
             }
-            Debug.Log(rayCastHits[i].collider.name);
         }
 
         if (!IsPlayerInRay)
@@ -274,6 +276,9 @@ public class EnemyInfo : HumanInfo
     private const float nearObstacleDist = 0.6f;
     public bool IsCloseToOneOf(List<GameObject> objs)
     {
+        if (objs.Count == 0)
+            return false;
+
         if (Mathf.Abs(transform.position.x - FindNearest(objs).transform.position.x) < nearObstacleDist)
             return true;
         return false;

@@ -26,6 +26,7 @@ public class SelfConditionChecker : ConditionChecker
 
 		shoulderStateCheckers = new StateCheckerBase[]
         {
+            new ShoulderStunStateChecker (enemyInfo, ShoulderStateType.Stun,  bodyStateCheckers[(int)BodyStateType.Stun].IsSatisfied),
 			new ShoulderReloadStateChecker (enemyInfo, ShoulderStateType.Reload),
             new ShoulderRunStateChecker (enemyInfo, ShoulderStateType.Run, bodyStateCheckers[(int)BodyStateType.Run].IsSatisfied),
             new ShoulderShotStateChecker (enemyInfo, ShoulderStateType.Shot, bodyStateCheckers[(int)BodyStateType.Shot].IsSatisfied),

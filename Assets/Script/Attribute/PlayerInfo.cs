@@ -22,7 +22,7 @@ public class PlayerInfo : HumanInfo {
     }
 
     void Start () {
-		hp = 100;
+		//hp = 100;
 		outsideInfo = GetComponent<OutsideInfo> ();
 		equiptInfo = GetComponent<EquiptInfo> ();
 		playerTransform = transform;
