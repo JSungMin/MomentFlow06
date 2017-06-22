@@ -43,6 +43,7 @@ public class ChatFactory : MonoBehaviour {
 			var chat = new Chat ();
 			chat.title = (node.SelectSingleNode ("Title").InnerText);
 			chat.page = int.Parse(node.SelectSingleNode("Page").InnerText);
+			chat.option = node.SelectSingleNode ("Option").InnerText;
 			chat.nextPage = int.Parse(node.SelectSingleNode("NextPage").InnerText);
 			chat.content = (node.SelectSingleNode("Content").InnerText);
 
