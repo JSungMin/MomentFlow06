@@ -39,7 +39,7 @@ public class Chest : InteractableObject, ILockable {
 
 	public override bool TryInteract (GameObject challenger)
 	{
-		IsLocked = TryToReleaseLock (ref challenger.GetComponent<EquiptInfo>().itemPocketList);
+		IsLocked = TryToReleaseLock (ref challenger.GetComponent<EquiptInfo>().itemInfoList);
 
 		if (!IsLocked){
 			this.challenger = challenger;
@@ -56,14 +56,14 @@ public class Chest : InteractableObject, ILockable {
 		return false;
 	}
 
-	public bool TryToReleaseLock(ref List<GameObject> pocketItems)
+	public bool TryToReleaseLock(ref List<ItemInfoStruct> pocketItems)
 	{
 		if (null == KeyObject)
 			return false;
 
 		foreach(var item in pocketItems)
 		{
-			if (item == KeyObject || null == KeyObject)
+			if (item.itemType == KeyObject.itemType && item.itemId == KeyObject.itemId || null == KeyObject)
 			{
 				pocketItems.Remove (item);
 				return false;
@@ -73,7 +73,7 @@ public class Chest : InteractableObject, ILockable {
 	}
 
 	public bool isLocked;
-	public GameObject keyObject;
+	public ItemBase keyObject;
 
 	public bool IsLocked {
 		get {
@@ -83,7 +83,7 @@ public class Chest : InteractableObject, ILockable {
 			isLocked = value;
 		}
 	}
-	public GameObject KeyObject {
+	public ItemBase KeyObject {
 		get {
 			return keyObject;
 		}

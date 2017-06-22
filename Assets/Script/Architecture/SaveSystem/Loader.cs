@@ -45,7 +45,7 @@ public class Loader {
 
 
 		equiptInfo.weapons.RemoveRange (0, weaponCount);
-		equiptInfo.itemPocketList.RemoveRange (0, itemCount);
+		equiptInfo.itemInfoList.RemoveRange (0, itemCount);
 
 
 		for (int i = 0; i < weaponCount; i++)
@@ -56,8 +56,8 @@ public class Loader {
 
 		for (int i = 0; i < itemCount; i++)
 		{
-			equiptInfo.itemPocketList.Add (null);
-			LoadItem (name, i, equiptInfo.itemPocketList[i]);
+			equiptInfo.itemInfoList.Add (new ItemInfoStruct());
+			equiptInfo.itemInfoList[i] = LoadItemInfo (name, i);
 		}
 
 		return equiptInfo;
@@ -91,17 +91,12 @@ public class Loader {
 		return LoadInt (name, "WeaponCount");
 	}
 
-	private static GameObject LoadItem (string name, int equiptIndex, GameObject item)
+	private static ItemInfoStruct LoadItemInfo (string name, int equiptIndex)
 	{
-		var itemBase = item.GetComponent<ItemBase> ();
-		var data = PlayerPrefs.GetString (GetSaveKey(name,itemBase.itemId.ToString()));
-		var splitedDatas = data.Split ("," [0]);
-
-		bool.TryParse(splitedDatas [0],out itemBase.isConnected);
-		bool.TryParse(splitedDatas [1],out itemBase.isInteracted);
-		bool.TryParse(splitedDatas [2],out itemBase.isUsed);
-
-		return item;
+		var itemType = ((ItemType)LoadInt (name, "ItemType : " + equiptIndex));
+		var itemId = LoadInt (name, "ItemId : " + equiptIndex);
+		var itemInfo = new ItemInfoStruct (itemType, itemId);
+		return itemInfo;
 	}
 
 	private static int LoadItemCount (string name)

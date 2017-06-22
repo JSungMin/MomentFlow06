@@ -92,7 +92,7 @@ public class WeaponFactory : MonoBehaviour {
 
 	public GunItem MakeNewGunItem (Gun rifle, Transform madeFromObject)
 	{
-		GameObject newItem = GameObject.Instantiate ((GameObject)Resources.Load("Prefabs/Props/GunItem"));
+		GameObject newItem = GameObject.Instantiate ((GameObject)Resources.Load("Prefabs/Items/GunItem"));
 		var item = newItem.GetComponent<GunItem> ();
 		item.gunId = rifle.id;
 		newItem.name = "PrevGun";

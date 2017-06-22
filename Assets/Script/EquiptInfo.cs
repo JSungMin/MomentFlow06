@@ -7,7 +7,7 @@ public class EquiptInfo : MonoBehaviour {
 	public Weapon nowEquiptWeapon;
 	public int nowEquiptWeaponIndex;
 
-	public List<GameObject> itemPocketList;
+	public List<ItemInfoStruct> itemInfoList = new List<ItemInfoStruct>();
 
 	public int defaultEquiptWeaponId;
 

@@ -41,12 +41,12 @@ public class Saver {
 
 		SaveWeaponCount (name, eInfo.weapons.Count);
 
-		for (int i = 0; i < eInfo.itemPocketList.Count; i++)
+		for (int i = 0; i < eInfo.itemInfoList.Count; i++)
 		{
-			SaveItem (name, eInfo.itemPocketList[i], i);
+			SaveItemInfo (name, eInfo.itemInfoList[i], i);
 		}
 
-		SaveItemCount (name, eInfo.itemPocketList.Count);
+		SaveItemCount (name, eInfo.itemInfoList.Count);
 	}
 
 	private static void SaveNowEquiptWeaponIndex(string name, int index)
@@ -56,6 +56,8 @@ public class Saver {
 
 	private static void SaveWeapon (string name, Weapon weapon, int equiptIndex)
 	{
+		if (weapon == null)
+			return;
 		if (weapon.name != null) {
 			SaveInt (name, "WeaponID : " + equiptIndex, weapon.id);
 		}
@@ -77,10 +79,10 @@ public class Saver {
 		SaveInt (name, "WeaponCount", count);
 	}
 
-	private static void SaveItem (string name, GameObject itemObj, int equiptIndex)
+	private static void SaveItemInfo (string name, ItemInfoStruct itemInfo, int equiptIndex)
 	{
-		var item = itemObj.GetComponent<ItemBase> ();
-		PlayerPrefs.SetString (GetSaveKey(name,item.itemId.ToString()), item.isConnected + ","+ item.isInteracted +","+item.isUsed);
+		SaveInt (name, "ItemType : " + equiptIndex, (int)itemInfo.itemType);
+		SaveInt (name, "ItemId : " + equiptIndex, itemInfo.itemId);
 	}
 
 	private static void SaveItemCount (string name, int count)

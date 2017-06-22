@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class Potion : ItemBase {
 
-	public float recoveryAmount;
-
+	public float hpHealAmount;
+	public float mpHealAmount;
 	// Use this for initialization
 	public void Start () {
 		base.Start ();
 	}
 
-	public bool DrinkUp()
+	public bool DrinkUp(HumanInfo human)
 	{
 		if (!isUsed) {
 			isUsed = true;
-			transform.parent = originParent;
-			transform.localPosition = Vector3.zero;
-			owner.GetComponent<HumanInfo> ().hp += recoveryAmount;
-			gameObject.SetActive (false);
+			human.hp += hpHealAmount;
+			//owner.GetComponent<Mana> ().ManaPoint += mpHealAmount;
+			human.GetComponent<EquiptInfo>().itemInfoList.Remove(itemInfo);
 			return true;
 		}
 		return false;
