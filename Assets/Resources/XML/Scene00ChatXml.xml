@@ -232,4 +232,20 @@
 		<Content>알릭 : . . .</Content>
 		<AutoFlipTime>0</AutoFlipTime>
 	</Chat>
+      <Chat>
+		<Title>AlikWithRay04</Title>
+		<Page>0</Page>
+            <NextPage>-1</NextPage>
+            <Option>Normal</Option>
+		<Content>알릭 : 시작됐나 . . </Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay05</Title>
+		<Page>0</Page>
+            <NextPage>-1</NextPage>
+            <Option>Normal</Option>
+		<Content>알릭 : 모든 게 바뀔 시간이군.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
 </ChatSet>
