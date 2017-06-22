@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ChatSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Chat>
+		<Title>Broadcast01</Title>
+		<Page>0</Page>
+            <NextPage>1</NextPage>
+		<Content>세계 각지에서 미확인 에너지 반응이 발생했습니다.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+	<Chat>
+		<Title>Broadcast02</Title>
+		<Page>0</Page>
+            <NextPage>1</NextPage>
+		<Content>에너지 내부에 있는 사람들과 연락이 되지않아 내부 상태를 파악하는데 어려움을 겪고 있습니다.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+	<Chat>
+		<Title>Broadcast03</Title>
+		<Page>0</Page>
+            <NextPage>1</NextPage>
+		<Content>특보입니다. 도심지에 원일을 알 수 없는 에너지 반응이 나타났습니다.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+	<Chat>
+		<Title>Broadcast04</Title>
+		<Page>0</Page>
+            <NextPage>1</NextPage>
+		<Content>타이바 산맥 뒤에서 큰 에너지 반응이 관측되고 있습니다.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      
+</ChatSet>

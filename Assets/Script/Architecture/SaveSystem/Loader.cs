@@ -43,10 +43,7 @@ public class Loader {
 		int weaponCount = LoadWeaponCount (name);
 		int itemCount = LoadItemCount (name);
 
-
 		equiptInfo.weapons.RemoveRange (0, weaponCount);
-		equiptInfo.itemInfoList.RemoveRange (0, itemCount);
-
 
 		for (int i = 0; i < weaponCount; i++)
 		{
@@ -54,9 +51,11 @@ public class Loader {
 			equiptInfo.weapons[i] = LoadWeapon (name, i);
 		}
 
+		equiptInfo.itemInfoList.Clear ();
+
 		for (int i = 0; i < itemCount; i++)
 		{
-			equiptInfo.itemInfoList.Add (new ItemInfoStruct());
+			equiptInfo.itemInfoList.Add (new ItemInfoStruct ());
 			equiptInfo.itemInfoList[i] = LoadItemInfo (name, i);
 		}
 

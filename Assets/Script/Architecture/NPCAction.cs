@@ -9,6 +9,7 @@ public abstract class NPCAction : MonoBehaviour {
 	public int maxActionCircle = 1;
 	protected int actionCirlce = 0;
 
+	public UnityEvent startEvent;
 	public UnityEvent finishEvent;
 
 	protected bool IsActionFinished {
@@ -17,6 +18,7 @@ public abstract class NPCAction : MonoBehaviour {
 	}
 
 	public abstract void TryAction (ref int tryCount);
+	public abstract void ForceAction ();
 	protected abstract bool IsSatisfied (ref int tryCount);
 	protected abstract void DoAction ();
 	public abstract void CancelAction ();
