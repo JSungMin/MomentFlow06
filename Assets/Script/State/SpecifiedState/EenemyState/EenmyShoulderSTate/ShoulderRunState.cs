@@ -11,9 +11,9 @@ public class ShoulderRunState : IStateBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (enemyInfo.isHaveToHide())
-            enemyInfo.SetDirectionOppositeToPlayer();
+            enemyInfo.SetDirectionOppositeTo(GameSceneData.player);
         else
-            enemyInfo.SetDirectionToPlayer();
+            enemyInfo.SetDirectionTo(GameSceneData.player);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

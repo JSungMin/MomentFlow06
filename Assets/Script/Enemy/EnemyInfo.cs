@@ -102,24 +102,25 @@ public class EnemyInfo : HumanInfo
         get { return crouchDelayTimer; }
     }
 
-    public bool IsPlayerInView()
+    public bool IsObjectInView(GameObject obj)
     {
-        if (!isInSameRow(GameSceneData.player, gameObject))
+        if (!isInSameRow(obj, gameObject))
             return false;
 
-        if (Vector3.Distance(GameSceneData.player.transform.position, transform.position) < 1.0f)
+        if (Vector3.Distance(obj.transform.position, transform.position) < 1.0f)
         {
-            if (Mathf.Abs(GameSceneData.player.transform.position.y - transform.position.y) < sameRawDis)
+            if (Mathf.Abs(obj.transform.position.y - transform.position.y) < sameRawDis)
                 return true;
         }
 
         Vector3 origin = transform.position + Vector3.up * boxCollider.size.y * viewHeightScale;
         Vector3 direction = GetDirection();
 
+        // TODO 이것도 바뀌어야함
         int layermask = (1 << LayerMask.NameToLayer("Collision")) | (1 << LayerMask.NameToLayer("Player"));
 
-        bool isViewPlayer = IsPlayerInViewWithoutObstacle(origin, Vector3.Normalize(direction + Vector3.up * 0.05f), findRange, layermask) |
-            IsPlayerInViewWithoutObstacle(origin, Vector3.Normalize(direction + Vector3.up * -0.05f), findRange, layermask);
+        bool isViewPlayer = IsObjectInViewWithoutObstacle(obj, origin, Vector3.Normalize(direction + Vector3.up * 0.05f), findRange, layermask) |
+            IsObjectInViewWithoutObstacle(obj, origin, Vector3.Normalize(direction + Vector3.up * -0.05f), findRange, layermask);
 
         Debug.DrawRay(origin, Vector3.Normalize(direction + Vector3.up * 0.05f) * 10.0f);
         Debug.DrawRay(origin, Vector3.Normalize(direction + Vector3.up * (-0.05f)) * 10.0f);
@@ -130,7 +131,7 @@ public class EnemyInfo : HumanInfo
             return false;
     }
 
-    private bool IsPlayerInViewWithoutObstacle(Vector3 origin, Vector3 direction, float length, int layermask)
+    private bool IsObjectInViewWithoutObstacle(GameObject obj, Vector3 origin, Vector3 direction, float length, int layermask)
     {
         RaycastHit[] rayCastHits = Physics.RaycastAll(origin, direction, length, layermask);
         List<Collider> obstacles = new List<Collider>();
@@ -141,6 +142,7 @@ public class EnemyInfo : HumanInfo
         {
             if (rayCastHits[i].collider != null)
             {
+                // TODO 태그 방식이 아니어야 할 것
                 if (rayCastHits[i].collider.CompareTag("Player"))
                 {
                     if (rayCastHits[i].collider.name == "PlayerAction")
@@ -190,14 +192,14 @@ public class EnemyInfo : HumanInfo
         }
     }
 
-    public void SetDirectionToPlayer()
+    public void SetDirectionTo(GameObject obj)
     {
-        SetDirection(GameSceneData.player.transform.position.x < transform.position.x);
+        SetDirection(obj.transform.position.x < transform.position.x);
     }
 
-    public void SetDirectionOppositeToPlayer()
+    public void SetDirectionOppositeTo(GameObject obj)
     {
-        SetDirection(GameSceneData.player.transform.position.x > transform.position.x);
+        SetDirection(obj.transform.position.x > transform.position.x);
     }
 
     // 체력이 3할 이하일 경우
@@ -257,12 +259,12 @@ public class EnemyInfo : HumanInfo
         return false;
     }
 
-    public bool IsNearestObstacleBetweenPlayer()
+    public bool IsNearestObstacleBetween(GameObject obj)
     {
         if ((transform.position.x < FindNearestObstaclePosX() &&
-            FindNearestObstaclePosX() < GameSceneData.player.transform.position.x) ||
+            FindNearestObstaclePosX() < obj.transform.position.x) ||
             (transform.position.x > FindNearestObstaclePosX() &&
-            FindNearestObstaclePosX() > GameSceneData.player.transform.position.x))
+            FindNearestObstaclePosX() > obj.transform.position.x))
             return true;
         else
             return false;

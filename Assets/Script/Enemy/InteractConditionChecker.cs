@@ -19,7 +19,7 @@ public class InteractConditionChecker : ConditionChecker
             return;
 
         if (!enemyInfo.isHaveToHide())
-            enemyInfo.SetDirectionToPlayer();
+            enemyInfo.SetDirectionTo(GameSceneData.player);
 
         enemyInfo.Hp -= power;
         StartCoroutine(DamageEffectCo());
