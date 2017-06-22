@@ -14,7 +14,7 @@ public class BodyRunStateChecker : StateCheckerBase
     {
         if (enemyInfo.isHaveToHide())
         {
-            if (!enemyInfo.IsNearestObstacleBetweenPlayer())
+            if (!enemyInfo.IsNearestObstacleBetween(GameSceneData.player))
                 return true;
 
             if (!enemyInfo.IsObstacleClose())
@@ -26,7 +26,7 @@ public class BodyRunStateChecker : StateCheckerBase
         {
             if (Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) > enemyInfo.attackRange &&
                 Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) < enemyInfo.findRange &&
-                enemyInfo.IsPlayerInView())
+                enemyInfo.IsObjectInView(GameSceneData.player))
             {
                 return true;
             }

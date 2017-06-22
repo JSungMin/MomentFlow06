@@ -11,13 +11,13 @@ public class RunState : IStateBehaviour
         // hide
         if (enemyInfo.isHaveToHide())
         {
-            enemyInfo.SetDirectionOppositeToPlayer();
+            enemyInfo.SetDirectionOppositeTo(GameSceneData.player);
             // enemyInfo.FindNearestObstacleAtDirection();
         }
         // chase player
         else
         {
-            enemyInfo.SetDirectionToPlayer();
+            enemyInfo.SetDirectionTo(GameSceneData.player);
         }
 
         enemyInfo.transform.Translate(enemyInfo.GetDirection() * TimeManager.GetInstance().customDeltaTime * speed);

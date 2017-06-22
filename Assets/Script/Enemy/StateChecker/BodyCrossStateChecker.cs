@@ -31,11 +31,11 @@ public class BodyCrossStateChecker : StateCheckerBase
         else
         {
             if (enemyInfo.IsObstacleClose() &&
-                enemyInfo.alertSituation.IsInSituation() &&
+                //enemyInfo.alertSituation.IsInSituation() &&
                 Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) > enemyInfo.attackRange &&
                 Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) < enemyInfo.findRange &&
-                enemyInfo.IsNearestObstacleBetweenPlayer() &&
-                enemyInfo.IsPlayerInView())
+                enemyInfo.IsNearestObstacleBetween(GameSceneData.player) &&
+                enemyInfo.IsObjectInView(GameSceneData.player))
                 return true;
             else
                 return false;
