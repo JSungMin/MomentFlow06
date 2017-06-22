@@ -4,7 +4,9 @@ using UnityEngine;
 
 [System.Serializable]
 public class CutSceneManager : MonoBehaviour {
-	
+
+	public bool isPause;
+
 	private static CutSceneManager instance;
 
 	public static CutSceneManager GetInstance{
@@ -36,6 +38,7 @@ public class CutSceneManager : MonoBehaviour {
 	}
 
 	public void PauseCutScene(){
+		isPause = true;
 		for(int i =0;i<sceneUnitsList.Count;i++){
 			sceneUnitsList [i].PasueAction ();
 		}
@@ -69,6 +72,9 @@ public class CutSceneManager : MonoBehaviour {
 		}*/
 	}
 	public void Update(){
-		playTime += Time.deltaTime;
+		if (!isPause)
+		{
+			playTime += Time.deltaTime;
+		}
 	}
 }

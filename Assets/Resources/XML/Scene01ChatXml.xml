@@ -4,6 +4,7 @@
 		<Title>대화02</Title>
 		<Page>0</Page>
             <NextPage>1</NextPage>
+            <Option>Normal</Option>
 		<Content>셀마가 말을 한다 홍 홍 홍</Content>
 		<AutoFlipTime>0</AutoFlipTime>
 	</Chat>
@@ -11,6 +12,7 @@
 		<Title>대화02</Title>
 		<Page>1</Page>
             <NextPage>-1</NextPage>
+            <Option>Normal</Option>
 		<Content>적이 말을 한다 홍 홍 홍</Content>
 		<AutoFlipTime>0</AutoFlipTime>
 	</Chat>
@@ -18,6 +20,7 @@
 		<Title>대화01</Title>
 		<Page>0</Page>
             <NextPage>1</NextPage>
+            <Option>Normal</Option>
 		<Content>셀마가 말을 한다 홍 홍 홍</Content>
 		<AutoFlipTime>0</AutoFlipTime>
 	</Chat>
@@ -25,6 +28,7 @@
 		<Title>대화01</Title>
 		<Page>1</Page>
             <NextPage>2</NextPage>
+            <Option>Normal</Option>
 		<Content>적이 말을 한다 홍 홍 홍</Content>
 		<AutoFlipTime>0</AutoFlipTime>
 	</Chat>
@@ -32,6 +36,7 @@
 		<Title>대화01</Title>
 		<Page>2</Page>
             <NextPage>3</NextPage>
+            <Option>Normal</Option>
 		<Content>적이 말을 한다 홍 홍 홍</Content>
 		<AutoFlipTime>0</AutoFlipTime>
 	</Chat>
@@ -39,6 +44,7 @@
 		<Title>대화01</Title>
 		<Page>3</Page>
             <NextPage>4</NextPage>
+            <Option>Normal</Option>
 		<Content>적이 말을 한다 홍 홍 홍</Content>
 		<AutoFlipTime>0</AutoFlipTime>
 	</Chat>
@@ -46,6 +52,7 @@
 		<Title>대화01</Title>
 		<Page>4</Page>
             <NextPage>-1</NextPage>
+            <Option>Normal</Option>
 		<Content>적이 말을 한다 홍 홍 홍</Content>
 		<AutoFlipTime>0</AutoFlipTime>
 	</Chat>

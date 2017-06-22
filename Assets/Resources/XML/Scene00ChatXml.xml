@@ -37,7 +37,199 @@
 		<Page>0</Page>
             <NextPage>1</NextPage>
             <Option>Normal</Option>
-		<Content>Alik : . . .</Content>
+		<Content>알릭 : . . .</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay00</Title>
+		<Page>0</Page>
+            <NextPage>1</NextPage>
+            <Option>Normal</Option>
+		<Content>알릭 : 레이, 하던 걸 멈춰.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay00</Title>
+		<Page>1</Page>
+            <NextPage>2</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : 경비원들은?</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay00</Title>
+		<Page>2</Page>
+            <NextPage>3</NextPage>
+            <Option>Normal</Option>
+		<Content>알릭 : 죽었다.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay00</Title>
+		<Page>3</Page>
+            <NextPage>4</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : . . .</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay01</Title>
+		<Page>0</Page>
+            <NextPage>1</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : 너는 이게 옳다고 생각하는 거냐?</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay01</Title>
+		<Page>1</Page>
+            <NextPage>2</NextPage>
+            <Option>Normal</Option>
+		<Content>알릭 : 무슨 말을 하고 싶은 거야?</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>2</Page>
+            <NextPage>3</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : 단 한 사람의 생각으로 돌아가는 세상이 옳다고 생각하냐는 거다.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>3</Page>
+            <NextPage>4</NextPage>
+            <Option>Normal</Option>
+		<Content>알릭 : . . . 글쎄</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>4</Page>
+            <NextPage>5</NextPage>
+            <Option>Normal</Option>
+		<Content>알릭 : 하지만 어떻게 되던 전 보다는 나을 거다.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>5</Page>
+            <NextPage>6</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : 그래! 그렇겠지. 결국 네놈도 똑같은 인간말종이야. 악마 같은 놈!</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>6</Page>
+            <NextPage>7</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : 크리스토프 그 놈은 대체 너에게 어떤 존재이길래 그 정도로 따르는거지?</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>7</Page>
+            <NextPage>8</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : 훔치라 한다고 훔치고 죽이라 한다고 죽여? 이 충직한 개 같은 놈아, 인간성이란 건 시궁창에 내다 버린거냐?</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>8</Page>
+            <NextPage>9</NextPage>
+            <Option>Normal</Option>
+		<Content>알릭 : . . .</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>9</Page>
+            <NextPage>10</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : 수 많은 사람들이 죽고, 수 많은 사람들이 자신이 변한지도 모른 채 살아가겠지.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>10</Page>
+            <NextPage>11</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : 어찌저찌 자신이 처한 상황을 깨닫는다 해도 그런 사람들은 어찌 될까? 결국은 너 같은 놈에게 죽게 될 거야. 크리스토프는 그런 놈이니까.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>11</Page>
+            <NextPage>12</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : 그래! 그렇겠지. 결국 네놈도 똑같은 인간말종이야. 악마 같은 놈!</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>12</Page>
+            <NextPage>13</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : 그래도 넌… 그게 옳다고 생각하는거냐?</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>13</Page>
+            <NextPage>14</NextPage>
+            <Option>Normal</Option>
+		<Content>알릭 : 닥쳐.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>14</Page>
+            <NextPage>15</NextPage>
+            <Option>Normal</Option>
+		<Content>알릭 : 그런다고 내 생각이 변하진 않아.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>15</Page>
+            <NextPage>16</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : . . .</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay02</Title>
+		<Page>16</Page>
+            <NextPage>17</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : 크리스토프 그 놈은 좋겠네. 너 같은 개를 키워서.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay03</Title>
+		<Page>0</Page>
+            <NextPage>1</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : 때론 생각을 좀 복잡하게 가져 보기를 바라. 짐승 마냥 한 곳만 바라보지 말고. </Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay03</Title>
+		<Page>1</Page>
+            <NextPage>2</NextPage>
+            <Option>Normal</Option>
+		<Content>박사 : . . .옛 정을 생각한 마지막 조언이다.</Content>
+		<AutoFlipTime>0</AutoFlipTime>
+	</Chat>
+      <Chat>
+		<Title>AlikWithRay03</Title>
+		<Page>2</Page>
+            <NextPage>3</NextPage>
+            <Option>Normal</Option>
+		<Content>알릭 : . . .</Content>
 		<AutoFlipTime>0</AutoFlipTime>
 	</Chat>
 </ChatSet>
