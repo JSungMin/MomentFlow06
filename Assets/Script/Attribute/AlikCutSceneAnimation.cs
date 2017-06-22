@@ -57,4 +57,9 @@ public class AlikCutSceneAnimation : MonoBehaviour {
 		bodyAnimator.SetTrigger ("TriggerWalk");
 		shoulderAnimator.SetTrigger ("TriggerWalk");
 	}
+
+	public void AlikShoot ()
+	{
+		bodyAnimator.Play ("Shoot");
+	}
 }
