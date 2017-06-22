@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class GunItem : ItemBase {
 	public int gunId;
-	public Gun rifle;
+	public Gun gun;
 
 	// Use this for initialization
 	public void Start () {
 		base.Start ();
 		doInteractActions = new DoInteractActions (PickUpItem);
-		rifle = ((Gun)(WeaponFactory.Instance.GetWeapon<Weapon> (gunId)));
+		gun = ((Gun)(WeaponFactory.Instance.GetWeapon<Weapon> (gunId)));
+		itemName = gun.name;
 	}
 
 	public void PickUpItem()
@@ -24,44 +25,44 @@ public class GunItem : ItemBase {
 		var pocketRifle02 = ((Gun)pocket.weapons [1]);
 		var pocketPistol = ((Gun)pocket.weapons [2]);
 
-		switch (rifle.rifleType) {
+		switch (gun.rifleType) {
 		case GunType.Pistol:
 			if (null == pocketPistol.usingBullet) {
-				pocket.weapons [2] = rifle;
+				pocket.weapons [2] = gun;
 				break;
 			}
 
-			if (pocketPistol.id != rifle.id) {
+			if (pocketPistol.id != gun.id) {
 				var prevPistol = WeaponFactory.Instance.MakeNewGunItem (((Gun)pocketPistol), transform);
 				prevPistol.DropItem ();
-				pocket.weapons[2] = rifle;
+				pocket.weapons[2] = gun;
 			} else{
-				((Gun)pocket.weapons [2]).magazine += rifle.ammo + rifle.magazine;
-				rifle.ammo = 0;
-				rifle.magazine = 0;
+				((Gun)pocket.weapons [2]).magazine += gun.ammo + gun.magazine;
+				gun.ammo = 0;
+				gun.magazine = 0;
 				Debug.Log ("Pistol : " + ((Gun)pocket.weapons [2]).magazine);
 			}
 			break;
 		default :
 			var nowEquipt = ((Gun)pocket.weapons [pocket.nowEquiptWeaponIndex]);
 
-			if (nowEquipt.id != rifle.id) {
+			if (nowEquipt.id != gun.id) {
 
 				if (null == pocketRifle01.usingBullet) {
-					pocket.weapons [0] = rifle;
+					pocket.weapons [0] = gun;
 					break;
 				} else if (null == pocketRifle02.usingBullet) {
-					pocket.weapons [1] = rifle;
+					pocket.weapons [1] = gun;
 					break;
 				}
 
 				var prevPistol = WeaponFactory.Instance.MakeNewGunItem (((Gun)nowEquipt), owner.transform);
 				prevPistol.DropItem ();
-				pocket.weapons[pocket.nowEquiptWeaponIndex] = rifle;
+				pocket.weapons[pocket.nowEquiptWeaponIndex] = gun;
 			} else {
-				nowEquipt.magazine += rifle.ammo + rifle.magazine;
-				rifle.ammo = 0;
-				rifle.magazine = 0;
+				nowEquipt.magazine += gun.ammo + gun.magazine;
+				gun.ammo = 0;
+				gun.magazine = 0;
 				Debug.Log ("Now Equipt : " + nowEquipt.magazine);
 			}
 			break;

@@ -34,8 +34,14 @@ public enum GunType
 public enum InteractableObjectType
 {
 	Door,
-	Chest,
-	Potion
+	Chest
+}
+
+public enum ItemType
+{
+	Potion = 0,
+	GunAmmoItem,
+	Gun
 }
 
 public enum BodyStateType

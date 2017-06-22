@@ -5,6 +5,7 @@ using UnityEngine;
 public class GunAmmoItem : ItemBase {
 
 	public int ammoAmount;
+	public string usingBulletName;
 
 	// Use this for initialization
 	public void Start () {

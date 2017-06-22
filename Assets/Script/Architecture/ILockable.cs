@@ -8,10 +8,10 @@ public interface ILockable {
 		set;
 	}
 
-	GameObject KeyObject {
+	ItemBase KeyObject {
 		get;
 		set;
 	}
 
-	bool TryToReleaseLock(ref List<GameObject> pocketItems);
+	bool TryToReleaseLock(ref List<ItemInfoStruct> pocketItems);
 }

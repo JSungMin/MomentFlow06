@@ -241,6 +241,11 @@ public class PlayerAction : MonoBehaviour {
 	{
 		if (inputF) {
 			for (int i = 0; i < outsideInfo.interactableObject.Count; i++) {
+				if (null == outsideInfo.interactableObject [i]) {
+					outsideInfo.interactableObject.RemoveAt (i);
+					i -= 1;
+					continue;
+				}
 				var interactableObject = outsideInfo.interactableObject [i].GetComponentInParent<InteractableObject>();
 				interactableObject.TryInteract (gameObject);
 			}
@@ -250,11 +255,12 @@ public class PlayerAction : MonoBehaviour {
 	void CheckDrinkUpPotion ()
 	{
 		if (inputQ) {
-			if (equiptInfo.itemPocketList.Count != 0) {
-				for (int i = 0; i < equiptInfo.itemPocketList.Count; i++) {
-					if (null != equiptInfo.itemPocketList [i].GetComponent<Potion> ()) {
-						var potion = equiptInfo.itemPocketList [i].GetComponent<Potion> ();
-						potion.DrinkUp ();
+			if (equiptInfo.itemInfoList.Count != 0) {
+				for (int i = 0; i < equiptInfo.itemInfoList.Count; i++) {
+					var itemInfo = equiptInfo.itemInfoList [i];
+					if (itemInfo.itemType == ItemType.Potion) {
+						var potion = ItemFactory.Instance.GetItemInfo<Potion>(itemInfo.itemId);
+						potion.DrinkUp (playerInfo);
 					}
 				}
 			}

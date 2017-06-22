@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class ItemBase : InteractableObject
 {
+	public ItemType itemType;
 	public int itemId;
+	public string itemName;
+
 	public GameObject owner;
+	public Sprite sprite;
 
 	protected Transform originParent;
 	protected Collider itemCollider;
@@ -13,6 +17,8 @@ public class ItemBase : InteractableObject
 	public SpriteRenderer itemRenderer;
 
 	public bool isUsed = false;
+	[HideInInspector]
+	public ItemInfoStruct itemInfo;
 
 	// Use this for initialization
 	protected void Start () {
@@ -21,8 +27,16 @@ public class ItemBase : InteractableObject
 		itemRigidbody = GetComponent<Rigidbody> ();
 		itemRenderer = GetComponent<SpriteRenderer> ();
 
+		if (null != sprite)
+			itemRenderer.sprite = sprite;
+
 		doInteractActions = new DoInteractActions (PickUpItem);
 		cancelInteractActions = new CancelInteractActions (DropItem);
+	}
+
+	public void SetOriginParent(Transform parent)
+	{
+		originParent = parent;
 	}
 
 	//Potion의 TryInteract는 떨어져있는 Potion 또는 드랍된 포션을 줍는 과정이다.
@@ -50,23 +64,24 @@ public class ItemBase : InteractableObject
 	{
 		isInteracted = true;
 		transform.parent = owner.transform;
-		var pocket = owner.GetComponentInParent<EquiptInfo> ().itemPocketList;
-		pocket.Add (this.gameObject);
+		var pocket = owner.GetComponentInParent<EquiptInfo> ().itemInfoList;
+		pocket.Add (itemInfo);
 
-		itemRenderer.enabled = false;
-		itemCollider.isTrigger = true;
-		itemRigidbody.isKinematic = true;
+		DestroyObject (this.gameObject);
 	}
 		
 	public void DropItem()
 	{
-		isInteracted = false;
-		transform.parent = originParent;
-		var pocket = owner.GetComponent<EquiptInfo> ().itemPocketList;
-		pocket.Remove (this.gameObject);
+		var pocket = owner.GetComponent<EquiptInfo> ().itemInfoList;
+		pocket.Remove (itemInfo);
 
-		itemRenderer.enabled = true;
-		itemCollider.isTrigger = false;
-		itemRigidbody.isKinematic = false;
+		if (itemRigidbody.isKinematic == true) {
+			itemRigidbody.isKinematic = false;
+			itemRenderer.enabled = true;
+			return;
+		}
+
+		var item = ItemFactory.Instance.MakePotion (itemId, owner.transform.position + Vector3.up * 0.3f);
+		DestroyObject (this.gameObject);
 	}
 }

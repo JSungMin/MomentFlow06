@@ -27,7 +27,7 @@ public class SavePoint : MonoBehaviour {
 		var enemies = GameObject.FindObjectsOfType<EnemyInfo> ();
 		for (int i = 0; i < enemies.Length; i++)
 		{
-			
+			Saver.SaveTransform (enemies [i].name, enemies [i].transform);
 		}
 		var interactables = GameObject.FindObjectsOfType<InteractableObject> ();
 		for (int i = 0; i < interactables.Length; i++)
@@ -42,6 +42,7 @@ public class SavePoint : MonoBehaviour {
 		var playerInfo = GameObject.FindObjectOfType<PlayerInfo> ();
 		Loader.LoadTransform (playerInfo.gameObject.name,playerInfo.transform);
 		playerInfo.hp = Loader.LoadFloat (playerInfo.gameObject.name, "HP");
+		playerInfo.equiptInfo = Loader.LoadEquiptInfo (playerInfo.name, playerInfo.equiptInfo);
 	}
 
 	void SavePlayerInfo (PlayerInfo playerInfo)
@@ -50,12 +51,5 @@ public class SavePoint : MonoBehaviour {
 		Saver.SaveFloat (playerInfo.gameObject.name, "HP", playerInfo.hp);
 		Saver.SaveEquiptInfo (playerInfo.gameObject.name, playerInfo.equiptInfo);
 	}
-
-	private void LoadWithParshing<T> (T data)
-	{
-		if (typeof(T) == typeof(PlayerInfo)) 
-		{
-
-		}
-	}
+		
 }

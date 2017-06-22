@@ -32,34 +32,61 @@ public class Saver {
 
 	public static void SaveEquiptInfo(string name, EquiptInfo eInfo)
 	{
+		SaveNowEquiptWeaponIndex (name, eInfo.nowEquiptWeaponIndex);
+
 		for (int i = 0; i < eInfo.weapons.Count; i++)
 		{
 			SaveWeapon (name, eInfo.weapons [i], i);
 		}
 
-		for (int i = 0; i < eInfo.itemPocketList.Count; i++)
+		SaveWeaponCount (name, eInfo.weapons.Count);
+
+		for (int i = 0; i < eInfo.itemInfoList.Count; i++)
 		{
-			SaveItem (name, eInfo.itemPocketList[i], i);
+			SaveItemInfo (name, eInfo.itemInfoList[i], i);
 		}
+
+		SaveItemCount (name, eInfo.itemInfoList.Count);
+	}
+
+	private static void SaveNowEquiptWeaponIndex(string name, int index)
+	{
+		SaveInt (name, "NowEquiptWeaponIndex", index);
 	}
 
 	private static void SaveWeapon (string name, Weapon weapon, int equiptIndex)
 	{
-		PlayerPrefs.SetString (GetSaveKey(name,"WeaponID"),equiptIndex+":"+weapon.id);
-
+		if (weapon == null)
+			return;
+		if (weapon.name != null) {
+			SaveInt (name, "WeaponID : " + equiptIndex, weapon.id);
+		}
+		else {
+			SaveInt (name, "WeaponID : " + equiptIndex, -1);
+		}
 		if (weapon.weaponType == WeaponType.Rifle)
 		{
 			var gun = ((Gun)weapon);
-			PlayerPrefs.SetString (GetSaveKey (name,"GunType"),equiptIndex + ":" + ((int)gun.rifleType));
-			PlayerPrefs.SetString (GetSaveKey (name,"GunAmmo"),equiptIndex + ":" + ((int)gun.ammo));
-			PlayerPrefs.SetString (GetSaveKey (name,"GunMagazine"),equiptIndex + ":" + ((int)gun.magazine));
+			SaveInt (name,"GunType : " + equiptIndex, ((int)gun.rifleType));
+			SaveInt (name,"GunAmmo : " +equiptIndex,((int)gun.ammo));
+			SaveInt (name,"GunMagazine : " + equiptIndex, ((int)gun.magazine));
 			//기제하지 않은 데이터는 Load 할 시 WeaponFactory에서 가져 올 것
 		}
 	}
 
-	private static void SaveItem (string name, GameObject itemObj, int equiptIndex)
+	private static void SaveWeaponCount (string name, int count)
 	{
-		var item = itemObj.GetComponent<ItemBase> ();
-		PlayerPrefs.SetString (GetSaveKey(name,item.itemId.ToString()), item.isConnected + ","+ item.isInteracted +","+item.isUsed);
+		SaveInt (name, "WeaponCount", count);
+	}
+
+	private static void SaveItemInfo (string name, ItemInfoStruct itemInfo, int equiptIndex)
+	{
+		SaveInt (name, "ItemType : " + equiptIndex, (int)itemInfo.itemType);
+		SaveInt (name, "ItemId : " + equiptIndex, itemInfo.itemId);
+	}
+
+	private static void SaveItemCount (string name, int count)
+	{
+		SaveInt (name, "ItemCount", count);
 	}
 }
