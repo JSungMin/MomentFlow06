@@ -47,6 +47,6 @@ public class InteractConditionChecker : ConditionChecker
         if (GetCurrentBodyState() == BodyStateType.Die)
             return;
 
-        enemyInfo.stunSituation.GetInSituation(3.0f);
+        enemyInfo.stunSituation.GetInSituation(1.0f);
     }
 }

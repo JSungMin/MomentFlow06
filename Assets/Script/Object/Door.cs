@@ -5,12 +5,15 @@ using UnityEngine;
 public class Door : InteractableObject, ILockable {
 
 	private Animator doorAnimator;
+    private AudioSource audioSource;
 
 	// Use this for initialization
 	void Start () {
 		doorAnimator = GetComponent<Animator> ();
 		cancelInteractActions += CloseDoor;
-	}
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+    }
 
 	public void OnCollisionStay(Collision col)
 	{
@@ -32,13 +35,15 @@ public class Door : InteractableObject, ILockable {
 	{
 		isInteracted = true;
 		doorAnimator.SetTrigger ("TriggerOpenToRight");
-	}
+        audioSource.Play();
+    }
 
 	private void OpenDoorToLeft()
 	{
 		isInteracted = true;
 		doorAnimator.SetTrigger ("TriggerOpenToLeft");
-	}
+        audioSource.Play();
+    }
 
 	private void CloseDoor()
 	{

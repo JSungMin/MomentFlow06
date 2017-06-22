@@ -6,14 +6,16 @@ public class Chest : InteractableObject, ILockable {
 
 	private Animator chestAnimator;
 	private GameObject challenger;
+    private AudioSource audioSource;
 
 	// Use this for initialization
 	void Start () {
 		chestAnimator = GetComponent<Animator> ();
 		doInteractActions = new DoInteractActions(OpenChest);
 		cancelInteractActions = new CancelInteractActions (CloseChest);
-
-		for (int i = 0; i < willBeAffectedObjectList.Count; i++)
+        audioSource = GetComponent<AudioSource>();
+        
+        for (int i = 0; i < willBeAffectedObjectList.Count; i++)
 		{
 			willBeAffectedObjectList [i].GetComponentInParent<InteractableObject> ().isConnected = true;
 		}
@@ -23,7 +25,9 @@ public class Chest : InteractableObject, ILockable {
 	{
 		isInteracted = true;
 		chestAnimator.SetTrigger ("TriggerOpen");
-		for (int i = 0; i < willBeAffectedObjectList.Count; i++)
+        audioSource.Play();
+
+        for (int i = 0; i < willBeAffectedObjectList.Count; i++)
 		{
 			willBeAffectedObjectList [i].GetComponentInParent<InteractableObject> ().isConnected = false;
 			var result = willBeAffectedObjectList [i].GetComponentInParent<InteractableObject> ().TryInteract (challenger);

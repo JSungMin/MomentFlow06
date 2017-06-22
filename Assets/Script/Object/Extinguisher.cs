@@ -68,7 +68,7 @@ public class Extinguisher : MonoBehaviour
             EmitPowders();
     }
 
-    private const float radius = 3.0f;
+    private const float radius = 0.5f;
     private const int rayNum = 12;
     private const float radianDelta = 2 * Mathf.PI / (float)rayNum;
     private void EmitPowders()

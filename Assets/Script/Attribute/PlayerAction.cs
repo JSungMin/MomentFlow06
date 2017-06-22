@@ -40,9 +40,18 @@ public class PlayerAction : MonoBehaviour {
 	private UnityStandardAssets.ImageEffects.BloomAndFlares bloomEffect;
 	private ParticleSystem timePauseEffect;
 
+    private AudioSource audioSource;
+    private AudioClip walkClip;
+    private AudioClip runClip;
+
     private void Awake()
 	{
-		skills = new SkillBase[] { new TimePause (KeyCode.E, 15.0f), new TimeRecall (KeyCode.R, 10.0f) };
+        audioSource = GetComponent<AudioSource>();
+
+        walkClip = Resources.Load("Sound/Effect/Walk") as AudioClip;
+        runClip = Resources.Load("Sound/Effect/Run") as AudioClip;
+
+        skills = new SkillBase[] { new TimePause (KeyCode.E, 15.0f), new TimeRecall (KeyCode.R, 10.0f) };
 		skillNum = skills.Length;
 
 		aimTarget = GetComponent<AimTarget> ();
@@ -273,27 +282,36 @@ public class PlayerAction : MonoBehaviour {
 		{
 			playerAnimator.Play ("Die");
 			((PlayerShoulderAction)shoulderAction).HideArm ();
-		}
+            audioSource.Stop();
+        }
 
 		if (input.x == 0)
 		{
 			playerAnimator.SetTrigger ("TriggerIdle");
 			gunAnimator.SetTrigger ("TriggerIdle");
-		}
+            audioSource.Stop();
+        }
 		if (!Input.GetKey (KeyCode.LeftShift) && input.x != 0)
 		{
 			playerAnimator.SetTrigger ("TriggerWalk");
 			gunAnimator.SetTrigger ("TriggerIdle");
-		}
+            audioSource.clip = walkClip;
+            if (!audioSource.isPlaying)
+                audioSource.Play();
+        }
 		if (Input.GetKey (KeyCode.LeftShift) && input.x != 0) 
 		{
 			playerAnimator.SetTrigger ("TriggerRun");
 			gunAnimator.SetTrigger ("TriggerRun");
-		}
+            audioSource.clip = runClip;
+            if (!audioSource.isPlaying)
+                audioSource.Play();
+        }
 		if (Input.GetKeyDown (KeyCode.Space)) 
 		{
 			playerAnimator.SetTrigger ("TriggerJump");
-		}
+            audioSource.Stop();
+        }
 
 		if (Input.GetKey (KeyCode.S)) 
 		{
