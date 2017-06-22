@@ -46,9 +46,12 @@ public class SellmaCutSceneAnimation : MonoBehaviour {
 		}
 	}
 
+    private AudioSource audioSource;
 	public void SellmaMeleeAttack()
 	{
-		bodyAnimator.Play ("MeleeAttack");
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayDelayed(0.1f);
+        bodyAnimator.Play ("MeleeAttack");
 	}
 
 	public void SellmaWalk ()

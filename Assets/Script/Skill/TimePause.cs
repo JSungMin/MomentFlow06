@@ -9,6 +9,7 @@ public class TimePause : SkillBase
 
     public TimePause(KeyCode keyCode,float manaCost)
     {
+        soundPlayer = GameObject.FindObjectOfType<SoundPlayer>();
         isTimePaused = false;
         this.keyCode = keyCode;
         this.manaCost = manaCost;
@@ -44,6 +45,8 @@ public class TimePause : SkillBase
         playerInfo.mana.ConsumeMana(manaCost);
         TimeManager.GetInstance().SetTimeScale(0.0f);
 
+        soundPlayer.StopBGM();
+
 		GameObject.Find ("PauseEffect").GetComponent<ParticleSystem> ().Play ();
 		var animators = GameObject.FindObjectsOfType<Animator> ();
 		for (int i = 0; i < animators.Length; i++)
@@ -59,7 +62,9 @@ public class TimePause : SkillBase
         isTimePaused = false;
         TimeManager.GetInstance().SetTimeScale(1.0f);
 
-		var animators = GameObject.FindObjectsOfType<Animator> ();
+        soundPlayer.PlayBGM();
+
+        var animators = GameObject.FindObjectsOfType<Animator> ();
 		for (int i = 0; i < animators.Length; i++)
 		{
 			animators [i].speed = TimeManager.GetInstance ().customTimeScale;

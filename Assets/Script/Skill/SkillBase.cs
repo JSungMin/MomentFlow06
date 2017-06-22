@@ -16,7 +16,8 @@ public abstract class SkillBase : MonoBehaviour
 
 	protected PlayerInfo playerInfo = GameObject.FindObjectOfType<PlayerInfo>();
     protected float manaCost;
-    
+    protected SoundPlayer soundPlayer;
+
     // 알아서 자식의 CanUseSkill을 호출 함
     // 외부에서는 UseSkill을 바로 호출할 수 없고 TryUseSkill을 호출해야 한다
     // TryUseSkill은 간단하게 CanUseSkill일 경우 UseSkill을 호출한다
