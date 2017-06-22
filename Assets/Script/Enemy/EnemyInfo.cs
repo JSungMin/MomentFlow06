@@ -16,6 +16,9 @@ public class EnemyInfo : HumanInfo
     public Rigidbody rigidBody;
     private GameObject[] obstacles;
     public List<GameObject> sameRawObstacles { private set; get; }
+
+    private GameObject[] walls;
+    public List<GameObject> sameRawWalls { private set; get; }
     // attack 하기 전 aim을 하고 있는 시간
     private float attackDelayTimer;
 
@@ -35,11 +38,17 @@ public class EnemyInfo : HumanInfo
     public bool isUpdatable = true;
     float sameRawDis = 0.6f;
 
+    // TODO 시연용으로 만들어진 것임 나중에 지우던가 할 것
+    public bool isEnemyAttackableEnemy = false;
+    // TODO 시연용으로 만들어진 것
+    public GameObject attackTarget;
+
     private void Awake()
     {
         alertSituation = new SituationTimer(this);
         behindObstacleShotingSituation = new SituationTimer(this);
         stunSituation = new SituationTimer(this);
+        attackDelaySituation = new SituationTimer(this);
 
         hp = 100;
         attackDelay = 0.5f;
@@ -50,18 +59,29 @@ public class EnemyInfo : HumanInfo
         rigidBody = GetComponent<Rigidbody>();
         viewCollider = GetComponent<BoxCollider>();
         boxCollider = GetComponentInChildren<BoxCollider>();
-
-        obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        sameRawObstacles = new List<GameObject>();
         aimTarget = GetComponent<AimTarget>();
+        
+        sameRawObstacles = AllocateSameRawObjectListByTag("Obstacle");
+        sameRawWalls = AllocateSameRawObjectListByTag("Wall");
+    }
 
-        for (int i = 0; i < obstacles.Length; i++)
+    public void SetAttackTarget(GameObject target)
+    {
+        this.attackTarget = target;
+    }
+
+    private List<GameObject> AllocateSameRawObjectListByTag(string tag)
+    {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag(tag);
+        List<GameObject> ret = new List<GameObject>();
+
+        for (int i = 0; i < objs.Length; i++)
         {
-            if (isInSameRow(obstacles[i], gameObject))
-            {
-                sameRawObstacles.Add(obstacles[i]);
-            }
+            if (IsInSameRow(objs[i], gameObject))
+                ret.Add(objs[i]);
         }
+
+        return ret;
     }
 
     private void Update()
@@ -90,6 +110,7 @@ public class EnemyInfo : HumanInfo
         get { return hp; }
     }
 
+
     public float AttackDelayTimer
     {
         set { attackDelayTimer = value; }
@@ -102,9 +123,19 @@ public class EnemyInfo : HumanInfo
         get { return crouchDelayTimer; }
     }
 
+    public bool IsInAttackRange(GameObject obj)
+    {
+        return Vector3.Distance(obj.transform.position, transform.position) < attackRange;
+    }
+
+    public bool IsInFindRange(GameObject obj)
+    {
+        return Vector3.Distance(obj.transform.position, transform.position) < findRange;
+    }
+
     public bool IsObjectInView(GameObject obj)
     {
-        if (!isInSameRow(obj, gameObject))
+        if (!IsInSameRow(obj, gameObject))
             return false;
 
         if (Vector3.Distance(obj.transform.position, transform.position) < 1.0f)
@@ -117,18 +148,18 @@ public class EnemyInfo : HumanInfo
         Vector3 direction = GetDirection();
 
         // TODO 이것도 바뀌어야함
-        int layermask = (1 << LayerMask.NameToLayer("Collision")) | (1 << LayerMask.NameToLayer("Player"));
+        int layermask = (1 << LayerMask.NameToLayer("Collision")) | (1 << LayerMask.NameToLayer("Enemy")) | (1 << LayerMask.NameToLayer("Player"));
+        
+        int rayNum = 5;
+        float deltaY = 0.03f;
+        float minY = -(rayNum / 2) * deltaY;
+        for (int i = 0; i < rayNum; i++)
+        {
+            if (IsObjectInViewWithoutObstacle(obj, origin, Vector3.Normalize(direction + Vector3.up * (minY + deltaY)), findRange, layermask))
+                return true;
+        }
 
-        bool isViewPlayer = IsObjectInViewWithoutObstacle(obj, origin, Vector3.Normalize(direction + Vector3.up * 0.05f), findRange, layermask) |
-            IsObjectInViewWithoutObstacle(obj, origin, Vector3.Normalize(direction + Vector3.up * -0.05f), findRange, layermask);
-
-        Debug.DrawRay(origin, Vector3.Normalize(direction + Vector3.up * 0.05f) * 10.0f);
-        Debug.DrawRay(origin, Vector3.Normalize(direction + Vector3.up * (-0.05f)) * 10.0f);
-
-        if (isViewPlayer)
-            return true;
-        else
-            return false;
+        return false;
     }
 
     private bool IsObjectInViewWithoutObstacle(GameObject obj, Vector3 origin, Vector3 direction, float length, int layermask)
@@ -142,20 +173,17 @@ public class EnemyInfo : HumanInfo
         {
             if (rayCastHits[i].collider != null)
             {
-                // TODO 태그 방식이 아니어야 할 것
-                if (rayCastHits[i].collider.CompareTag("Player"))
+                if (rayCastHits[i].collider.gameObject == obj)
                 {
-                    if (rayCastHits[i].collider.name == "PlayerAction")
-                    {
-                        IsPlayerInRay = true;
-                        collisionPointDist = Vector3.Distance(rayCastHits[i].collider.ClosestPoint(origin), origin);
-                    }
+                    IsPlayerInRay = true;
+                    collisionPointDist = Vector3.Distance(rayCastHits[i].collider.ClosestPoint(origin), origin);
                 }
-                else if(rayCastHits[i].collider.CompareTag("Obstacle"))
+                else if (rayCastHits[i].collider.CompareTag("Obstacle"))
                 {
                     obstacles.Add(rayCastHits[i].collider);
                 }
             }
+            Debug.Log(rayCastHits[i].collider.name);
         }
 
         if (!IsPlayerInRay)
@@ -208,63 +236,53 @@ public class EnemyInfo : HumanInfo
         return Hp <= 30.0f;
     }
     
-    public GameObject FindNearestObstacle()
+    public GameObject FindNearest(List<GameObject> objs)
     {
         GameObject nearestObj = null;
         float nearestDist = float.MaxValue;
-        for (int i = 0; i < sameRawObstacles.Count; i++)
+        for (int i = 0; i < objs.Count; i++)
         {
-            float distX = Mathf.Abs(transform.position.x - sameRawObstacles[i].transform.position.x);
+            float distX = Mathf.Abs(transform.position.x - objs[i].transform.position.x);
             if (distX < nearestDist)
             {
                 nearestDist = distX;
-                nearestObj = sameRawObstacles[i];
+                nearestObj = objs[i];
             }
         }
         return nearestObj;
     }
 
-    public GameObject FindNearestObstacleAtDirection()
+    public GameObject FindNearestObjectAtDirection(List<GameObject> objs)
     {
         GameObject nearestObj = null;
         float nearestDist = float.MaxValue;
-        for (int i = 0; i < sameRawObstacles.Count; i++)
+        for (int i = 0; i < objs.Count; i++)
         {
-            if (GetDirection().x * (sameRawObstacles[i].transform.position.x - transform.position.x) < 0.0f)
+            if (GetDirection().x * (objs[i].transform.position.x - transform.position.x) < 0.0f)
                 continue;
 
-            float distX = Mathf.Abs(transform.position.x - sameRawObstacles[i].transform.position.x);
+            float distX = Mathf.Abs(transform.position.x - objs[i].transform.position.x);
             if (distX < nearestDist)
             {
                 nearestDist = distX;
-                nearestObj = sameRawObstacles[i];
+                nearestObj = objs[i];
             }
         }
         return nearestObj;
     }
 
-    public float FindNearestObstaclePosX()
+    private const float nearObstacleDist = 0.6f;
+    public bool IsCloseToOneOf(List<GameObject> objs)
     {
-        if (FindNearestObstacle() == null)
-            return float.MaxValue;
-        else
-            return FindNearestObstacle().transform.position.x;
-    }
-
-    private const float nearObstacleDist = 0.55f;
-    public bool IsObstacleClose()
-    {
-        if (Mathf.Abs(transform.position.x - FindNearestObstaclePosX()) < nearObstacleDist)
+        if (Mathf.Abs(transform.position.x - FindNearest(objs).transform.position.x) < nearObstacleDist)
             return true;
         return false;
     }
 
-    public bool IsNearestObstacleBetween(GameObject obj)
+    public bool IsNearestObjectBetween(GameObject outObj, List<GameObject> inObj)
     {
-        if ((transform.position.x < FindNearestObstaclePosX() &&
-            FindNearestObstaclePosX() < obj.transform.position.x) ||
-            (transform.position.x > FindNearestObstaclePosX() &&
-            FindNearestObstaclePosX() > obj.transform.position.x))
+        if ((transform.position.x < FindNearest(inObj).transform.position.x && FindNearest(inObj).transform.position.x < outObj.transform.position.x) ||
+            (transform.position.x > FindNearest(inObj).transform.position.x && FindNearest(inObj).transform.position.x > outObj.transform.position.x))
             return true;
         else
             return false;
@@ -273,8 +291,9 @@ public class EnemyInfo : HumanInfo
     public SituationTimer alertSituation { private set; get; }
     public SituationTimer behindObstacleShotingSituation { private set; get; }
     public SituationTimer stunSituation { private set; get; }
+    public SituationTimer attackDelaySituation { private set; get; }
 
-    public bool isInSameRow(GameObject a, GameObject b)
+    public bool IsInSameRow(GameObject a, GameObject b)
     {
         Collider aCol = a.GetComponent<Collider>();
         if (aCol == null)
@@ -287,10 +306,10 @@ public class EnemyInfo : HumanInfo
             bCol = b.GetComponentInParent<Collider>();
         if (bCol == null)
             bCol = b.GetComponentInChildren<Collider>();
-        return isInSameRow(aCol, bCol);
+        return IsInSameRow(aCol, bCol);
     }
 
-    public bool isInSameRow(Collider a, Collider b)
+    public bool IsInSameRow(Collider a, Collider b)
     {
         return a.bounds.max.y > b.bounds.min.y && a.bounds.min.y < b.bounds.max.y;
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AimState : StateMachineBehaviour
+public class AimState : IStateBehaviour
 {
     private AimTarget aimTarget;
     private Vector3 targetPos;
@@ -13,8 +13,14 @@ public class AimState : StateMachineBehaviour
         {
             aimTarget = animator.GetComponentInParent<AimTarget>();
         }
+
         animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer = 0;
-        targetPos = GameObject.FindObjectOfType<PlayerAction>().transform.GetChild(0).GetComponent<Collider>().bounds.center;
+
+        Collider targetCollider = enemyInfo.attackTarget.GetComponent<Collider>();
+        if (targetCollider == null)
+            targetCollider = enemyInfo.attackTarget.GetComponentInChildren<Collider>();
+
+        targetPos = targetCollider.bounds.center;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -22,7 +28,7 @@ public class AimState : StateMachineBehaviour
         if (TimeManager.GetInstance().IsTimePaused())
             return;
 
-        aimTarget.AimToObject(targetPos = GameObject.FindObjectOfType<PlayerAction>().transform.GetChild(0).GetComponent<Collider>().bounds.center);
+        aimTarget.AimToObject(targetPos);
         animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer += TimeManager.GetInstance().customDeltaTime;
     }
 

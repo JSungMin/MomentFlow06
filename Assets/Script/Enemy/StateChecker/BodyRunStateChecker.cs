@@ -14,19 +14,22 @@ public class BodyRunStateChecker : StateCheckerBase
     {
         if (enemyInfo.isHaveToHide())
         {
-            if (!enemyInfo.IsNearestObstacleBetween(GameSceneData.player))
-                return true;
-
-            if (!enemyInfo.IsObstacleClose())
-                return true;
-            else
+            // 오브젝트와 적 케릭터 사이에 방해물이 있다면
+            if (enemyInfo.IsNearestObjectBetween(enemyInfo.attackTarget, enemyInfo.sameRawObstacles))
                 return false;
+            else
+            {
+                if (enemyInfo.IsCloseToOneOf(enemyInfo.sameRawWalls))
+                    return false;
+                else
+                    return true;
+            }
         }
         else
         {
-            if (Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) > enemyInfo.attackRange &&
-                Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) < enemyInfo.findRange &&
-                enemyInfo.IsObjectInView(GameSceneData.player))
+            if (!enemyInfo.IsInAttackRange(enemyInfo.attackTarget) &&
+                enemyInfo.IsInFindRange(enemyInfo.attackTarget) &&
+                enemyInfo.IsObjectInView(enemyInfo.attackTarget))
             {
                 return true;
             }

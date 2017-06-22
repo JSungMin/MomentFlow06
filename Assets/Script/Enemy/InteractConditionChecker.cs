@@ -13,13 +13,19 @@ public class InteractConditionChecker : ConditionChecker
         base.Awake();
     }
 
-    public void DoBulletDamage(int power)
+    public void DoBulletDamage(int power, GameObject bulletOwner)
     {
         if (GetCurrentBodyState() == BodyStateType.Die)
             return;
 
         if (!enemyInfo.isHaveToHide())
-            enemyInfo.SetDirectionTo(GameSceneData.player);
+        {
+            if (enemyInfo.isEnemyAttackableEnemy)
+            {
+                enemyInfo.SetDirectionTo(bulletOwner);
+                enemyInfo.SetAttackTarget(bulletOwner.transform.parent.gameObject);
+            }
+        }
 
         enemyInfo.Hp -= power;
         StartCoroutine(DamageEffectCo());

@@ -35,6 +35,6 @@ public class SituationTimer
             yield return new WaitForSeconds(deltaTm);
             yield return enemyInfo.StartCoroutine(TimeManager.GetInstance().IsTimePausedCo());
         }
-        timer = 0;
+        timer = 0.0f;
     }
 }

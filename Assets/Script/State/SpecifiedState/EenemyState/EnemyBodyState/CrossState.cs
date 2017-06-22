@@ -23,7 +23,7 @@ public class CrossState : IStateBehaviour
         rigid = enemyInfo.rigidBody;
         originY = rigid.transform.position.y;
 
-        obstacle = enemyInfo.FindNearestObstacle().GetComponent<Collider>();
+        obstacle = enemyInfo.FindNearest(enemyInfo.sameRawObstacles).GetComponent<Collider>();
         obstacleHeight = obstacle.bounds.size.y;
         direction = new Vector3(obstacle.transform.position.x - enemyInfo.transform.position.x, 0).normalized;
         selectedDirection = Mathf.Sign(enemyInfo.transform.position.x - obstacle.transform.position.x);
@@ -50,6 +50,7 @@ public class CrossState : IStateBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         rigid.isKinematic = false;
+        enemyInfo.SetDirectionTo(enemyInfo.attackTarget);
         animator.GetComponentInChildren<EnemyShoulderAction>().ActiveArm();
     }
 }

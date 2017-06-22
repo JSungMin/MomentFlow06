@@ -12,8 +12,8 @@ public class BodyShotStateChecker : StateCheckerBase
 
     public override bool IsSatisfied()
     {
-        if (Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) < enemyInfo.attackRange &&
-            enemyInfo.IsObjectInView(GameSceneData.player) &&
+        if (enemyInfo.IsInAttackRange(enemyInfo.attackTarget) &&
+            enemyInfo.IsObjectInView(enemyInfo.attackTarget) &&
             enemyInfo.AttackDelayTimer >= enemyInfo.attackDelay)
         {
             return true;

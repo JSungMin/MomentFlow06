@@ -11,15 +11,21 @@ public class RunState : IStateBehaviour
         // hide
         if (enemyInfo.isHaveToHide())
         {
-            enemyInfo.SetDirectionOppositeTo(GameSceneData.player);
-            // enemyInfo.FindNearestObstacleAtDirection();
+            enemyInfo.SetDirectionOppositeTo(enemyInfo.attackTarget);
         }
         // chase player
         else
         {
-            enemyInfo.SetDirectionTo(GameSceneData.player);
+            enemyInfo.SetDirectionTo(enemyInfo.attackTarget);
         }
 
         enemyInfo.transform.Translate(enemyInfo.GetDirection() * TimeManager.GetInstance().customDeltaTime * speed);
+    }
+
+
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (enemyInfo.isHaveToHide())
+            enemyInfo.SetDirectionTo(enemyInfo.attackTarget);
     }
 }

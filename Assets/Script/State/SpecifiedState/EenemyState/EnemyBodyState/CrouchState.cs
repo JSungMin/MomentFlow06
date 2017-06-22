@@ -8,7 +8,7 @@ public class CrouchState : IStateBehaviour
     {
         enemyInfo.CrouchDelayTimer = 0.0f;
         enemyInfo.viewHeightScale = 0.5f;
-        enemyInfo.SetDirectionTo(GameSceneData.player);
+        enemyInfo.SetDirectionTo(enemyInfo.attackTarget);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -20,7 +20,6 @@ public class CrouchState : IStateBehaviour
     {
         enemyInfo.CrouchDelayTimer = 0.0f;
         enemyInfo.viewHeightScale = 1.0f;
-        //enemyInfo.DeceaseBehindObstacleShoting(1.0f);
         enemyInfo.behindObstacleShotingSituation.GetInSituation(1.0f);
     }
 }

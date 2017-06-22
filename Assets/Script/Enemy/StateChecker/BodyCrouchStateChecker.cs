@@ -13,7 +13,7 @@ public class BodyCrouchStateChecker : StateCheckerBase
     public override bool IsSatisfied()
     {
         if (enemyInfo.isHaveToHide() &&
-            enemyInfo.IsObstacleClose() &&
+            enemyInfo.IsCloseToOneOf(enemyInfo.sameRawObstacles) &&
             enemyInfo.CrouchDelayTimer < enemyInfo.crouchDelay &&
             !enemyInfo.behindObstacleShotingSituation.IsInSituation())
         {

@@ -14,13 +14,13 @@ public class BodyCrossStateChecker : StateCheckerBase
     {
         if (enemyInfo.isHaveToHide())
         {
-            if (enemyInfo.IsObstacleClose())
+            if (enemyInfo.IsCloseToOneOf(enemyInfo.sameRawObstacles))
             {
                 // 적 케릭터가 숨는 곳과 플레이어 사이에 있다면
-                if ((enemyInfo.FindNearestObstaclePosX() > enemyInfo.transform.position.x &&
-                    enemyInfo.transform.position.x > GameSceneData.player.transform.position.x) ||
-                    (enemyInfo.FindNearestObstaclePosX() < enemyInfo.transform.position.x &&
-                    enemyInfo.transform.position.x < GameSceneData.player.transform.position.x))
+                if ((enemyInfo.FindNearest(enemyInfo.sameRawObstacles).transform.position.x > enemyInfo.transform.position.x &&
+                    enemyInfo.transform.position.x > enemyInfo.attackTarget.transform.position.x) ||
+                    (enemyInfo.FindNearest(enemyInfo.sameRawObstacles).transform.position.x < enemyInfo.transform.position.x &&
+                    enemyInfo.transform.position.x < enemyInfo.attackTarget.transform.position.x))
                     return true;
                 else
                     return false;
@@ -30,12 +30,11 @@ public class BodyCrossStateChecker : StateCheckerBase
         }
         else
         {
-            if (enemyInfo.IsObstacleClose() &&
-                //enemyInfo.alertSituation.IsInSituation() &&
-                Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) > enemyInfo.attackRange &&
-                Vector3.Distance(GameSceneData.player.transform.position, enemyInfo.transform.position) < enemyInfo.findRange &&
-                enemyInfo.IsNearestObstacleBetween(GameSceneData.player) &&
-                enemyInfo.IsObjectInView(GameSceneData.player))
+            if (enemyInfo.IsCloseToOneOf(enemyInfo.sameRawObstacles) &&
+                !enemyInfo.IsInAttackRange(enemyInfo.attackTarget) &&
+                enemyInfo.IsInFindRange(enemyInfo.attackTarget) &&
+                enemyInfo.IsNearestObjectBetween(enemyInfo.attackTarget, enemyInfo.sameRawObstacles) &&
+                enemyInfo.IsObjectInView(enemyInfo.attackTarget))
                 return true;
             else
                 return false;

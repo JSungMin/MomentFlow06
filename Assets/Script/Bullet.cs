@@ -98,7 +98,7 @@ public class Bullet : MonoBehaviour {
 	void DamageToEnemy (Collision col)
 	{
 		col.collider.GetComponentInParent<Rigidbody> ().AddForce (new Vector3 (rigid.velocity.x, 0).normalized * 2, ForceMode.Impulse);
-		col.collider.GetComponentInChildren<InteractConditionChecker> ().DoBulletDamage ((int)damage);
+		col.collider.GetComponentInChildren<InteractConditionChecker> ().DoBulletDamage ((int)damage, owner);
 	}
 
 	void MakeParticle ()

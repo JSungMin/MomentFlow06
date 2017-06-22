@@ -27,8 +27,12 @@ public class TimeRecallable : MonoBehaviour
     private Material originMaterial;
     private Material outlineMaterial;
 
+    public bool isAnimationBased { private set; get; }
+    public string animationName;
+
     private void Awake()
     {
+        isAnimationBased = animationName.Length > 0;
         outlineMaterial = Resources.Load("ExtraAssets/Selected Effect --- Outline/Material/OutlineSprite") as Material;
 
         lastFrameNode = TimeRecallNode.CreateNode(Vector3.zero, Vector3.zero, Vector3.zero);
@@ -66,7 +70,7 @@ public class TimeRecallable : MonoBehaviour
         }
         else if (lastFrameNode.position != transform.position &&
             lastFrameNode.eularAngles != transform.eulerAngles)
-        { 
+        {
             nodes.AddLast(TimeRecallNode.CreateNode(transform.position, transform.eulerAngles, rigidbody.velocity));
             lastFrameNode = nodes.Last.Value;
         }
@@ -89,7 +93,7 @@ public class TimeRecallable : MonoBehaviour
     {
         if (animator != null)
         {
-            animator.Play("ExtinguisherAnimation", 0, 1.0f);
+            animator.Play(animationName, 0, 1.0f);
             animator.SetFloat("rewindMult", -1f);
         }
 

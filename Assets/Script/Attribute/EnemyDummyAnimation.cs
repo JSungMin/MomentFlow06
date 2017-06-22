@@ -13,7 +13,8 @@ public class EnemyDummyAnimation : MonoBehaviour {
 
 	public void SetAnimationTrigger (string triggerName)
 	{
-		dummyAnimator.SetTrigger (triggerName);
+        if (dummyAnimator != null)
+            dummyAnimator.SetTrigger(triggerName);
 	}
 
 	public void ResetAnimationTrigger (string triggerName)

@@ -82,7 +82,10 @@ public class TimeRecall : SkillBase
         for (int i = 0; i < objs.Count; i++)
         {
             objs[i].StartRevert();
-            objs[i].StartRevertAni();
+            if (objs[i].isAnimationBased)
+                objs[i].StartRevertAni();
+            else
+                objs[i].StartRevert();
         }
     }
 
