@@ -497,7 +497,7 @@ public class CutSceneUnit : MonoBehaviour {
 					}
 				}
 
-				timer += Time.deltaTime;
+				timer += Time.smoothDeltaTime;
 			} else {
 				timer = 0;
 				tracks[nowTrackIndex].offset++;

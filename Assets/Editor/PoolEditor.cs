@@ -78,13 +78,12 @@ public class PoolEditor : Editor {
 		Handles.BeginGUI ();
 		width = 150;
 		height = 100;
-		GUILayout.Window (2, new Rect (Screen.width - width * 1.2f, Screen.height * 0.8f, width, height), id =>  {
+		GUILayout.Window (4, new Rect (Screen.width - width * 1.2f, Screen.height * 0.8f, width, height), id =>  {
 			GUILayout.Space (10f);
 			if (GUILayout.Button ("Create Event")) {
 				if (selectedIndex == -1)
 					selectedIndex = 0;
-				selectedIndex = Mathf.Clamp (selectedIndex,0,eventItemList.Count - 1);
-				positionPool.eventItemList.Add (new EventItem ("New Event",selectedIndex, 0, new UnityEvent ()));
+				positionPool.eventItemList.Add (new EventItem ("New Event",eventItemList[selectedIndex].targetIndex, 0, new UnityEvent ()));
 			}
 			GUILayout.FlexibleSpace ();
 			if (GUILayout.Button ("Delete Event")) {
