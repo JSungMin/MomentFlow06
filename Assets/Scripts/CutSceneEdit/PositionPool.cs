@@ -151,7 +151,6 @@ public class PositionPool : MonoBehaviour {
 					var pos = Vector3.Lerp(positionItemList[eventIndex].transform.position, positionItemList[Mathf.Min(eventIndex + 1, size - 1)].transform.position, eventItemList[j].eventTimeList / durationItemList[eventIndex].duration);
 				
 					Gizmos.DrawIcon (pos,"Event.png",true);
-					Handles.Label (pos + Vector3.up*0.1f + Vector3.up * 0.8f * tmpSize, eventItemList[j].eventName,newStyle);
 				}
 			}
 		}

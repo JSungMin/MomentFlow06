@@ -54,7 +54,7 @@ namespace Struct{
 		}
 	}
 	[System.Serializable]
-	public struct EventItem{
+	public class EventItem{
 		public string eventName;
 		public int targetIndex;//어떤 오프셋에서 해당 이벤트가 발생 할 지
 		public float eventTimeList;//이벤트가 발생할 시간
@@ -77,9 +77,11 @@ namespace Struct{
 		}
 
 		public void StoreUsedInfo(){
-			if (isUsed != storePrevUsed[Mathf.Max(storePrevUsed.Count - 1,0)])
-			{
-				storePrevUsed.Add (isUsed);
+			if (storePrevUsed.Count != 0) {
+				if (isUsed != storePrevUsed[Mathf.Max(storePrevUsed.Count - 1,0)])
+				{
+					storePrevUsed.Add (isUsed);
+				}
 			}
 		}
 		public void UndoUsedInfo(){
