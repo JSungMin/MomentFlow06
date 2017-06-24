@@ -9,6 +9,7 @@ public class SellmaCutSceneAnimation : MonoBehaviour {
 
 	public void SellmaStartCutSceneAnimation ()
 	{
+		Debug.Log ("Sellma CutScene Start");
 		playerAction.SetActive (false);
 		playerAction.GetComponentInParent<AimTarget> ().enabled = false;
 		playerAction.GetComponentInParent<Rigidbody> ().isKinematic = true;

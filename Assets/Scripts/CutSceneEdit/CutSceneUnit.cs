@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.Events;
 #endif
 using Struct;
 
@@ -56,8 +57,8 @@ namespace Struct{
 	public struct EventItem{
 		public string eventName;
 		public int targetIndex;//어떤 오프셋에서 해당 이벤트가 발생 할 지
-		public List<float> eventTimeList;//이벤트가 발생할 시간
-		public List<bool> isUsed;//이벤트를 사용했는지에 대한 여부
+		public float eventTimeList;//이벤트가 발생할 시간
+		public bool isUsed;//이벤트를 사용했는지에 대한 여부
 		[HideInInspector]
 		public List<bool> storePrevUsed;
 		public UnityEvent OccurEvent;//발생 할 이벤트
@@ -65,33 +66,25 @@ namespace Struct{
 		public EventItem(string en,int t,float et,UnityEvent ue){
 			eventName = en;
 			targetIndex = t;
-			eventTimeList = new List<float> ();
-			eventTimeList.Add(et);
-			isUsed = new List<bool> ();
-			storePrevUsed = new List<bool> ();
+			eventTimeList = et;
+			isUsed = false;
+			storePrevUsed = new List<bool>();
 			OccurEvent = ue;
 		}
-		public void StoreUsedInfo(){
-			if(storePrevUsed.Count!=isUsed.Count){
-				while(storePrevUsed.Count<isUsed.Count){
-					storePrevUsed.Add (false);
-				}
-				while (storePrevUsed.Count > isUsed.Count) {
-					if (storePrevUsed.Count - 1 >= 0)
-						storePrevUsed.RemoveAt (storePrevUsed.Count - 1);
-					else
-						break;
-				}
-			}
+		public void SetIsUsed (bool value)
+		{
+			isUsed = value;
+		}
 
-			for(int i =0;i<isUsed.Count;i++){
-				storePrevUsed [i] = isUsed [i];
+		public void StoreUsedInfo(){
+			if (isUsed != storePrevUsed[Mathf.Max(storePrevUsed.Count - 1,0)])
+			{
+				storePrevUsed.Add (isUsed);
 			}
 		}
 		public void UndoUsedInfo(){
-			for(int i =0;i<isUsed.Count;i++){
-				isUsed [i] = storePrevUsed [i];
-			}
+			isUsed = storePrevUsed [storePrevUsed.Count - 1];
+			storePrevUsed.RemoveAt (storePrevUsed.Count - 1);
 		}
 	}
 }
@@ -104,7 +97,6 @@ public class CutSceneUnit : MonoBehaviour {
 	public bool isAction;
 	public CutSceneWrapMode wrapMode;
 	public MoveMethod moveMethod;
-	public Color color;
 
 	private void MakePositionPool(){
 		prevTracksCount = tracks.Count;
@@ -490,14 +482,14 @@ public class CutSceneUnit : MonoBehaviour {
 				transform.position =  pp;
 			
 				//Finish Transform Scope
-				for(int i =0;i<tracks[nowTrackIndex].eventItemList.Count;i++){
-					if(tracks[nowTrackIndex].eventItemList[i].targetIndex == tracks[nowTrackIndex].offset){
-						for(int j=0;j<tracks[nowTrackIndex].eventItemList[i].eventTimeList.Count;j++){
-							if(tracks[nowTrackIndex].eventItemList[i].eventTimeList[j]<=timer){
-								if (null != tracks[nowTrackIndex].eventItemList [i].OccurEvent&&!tracks[nowTrackIndex].eventItemList[i].isUsed[j]) {
-									tracks[nowTrackIndex].eventItemList [i].OccurEvent.Invoke ();
-									tracks[nowTrackIndex].eventItemList [i].isUsed [j] = true;
-								}
+				var nowTrack = tracks[nowTrackIndex];
+				for(int i =0;i < nowTrack.eventItemList.Count;i++){
+					var nowEventItem = nowTrack.eventItemList [i];
+					if(nowEventItem.targetIndex == nowTrack.offset){
+						if(nowEventItem.eventTimeList <= timer){
+							if (null != nowEventItem.OccurEvent&&!nowEventItem.isUsed) {
+								nowEventItem.OccurEvent.Invoke ();
+								nowEventItem.isUsed = true;
 							}
 						}
 					}
@@ -551,12 +543,10 @@ public class CutSceneUnit : MonoBehaviour {
 				//
 				for (int i = 0; i < tracks[nowTrackIndex].eventItemList.Count; i++) {
 					if (tracks[nowTrackIndex].eventItemList [i].targetIndex == tracks[nowTrackIndex].offset) {
-						for (int j = 0; j < tracks[nowTrackIndex].eventItemList [i].eventTimeList.Count; j++) {
-							if (tracks[nowTrackIndex].eventItemList [i].eventTimeList [j] <= timer) {
-								if (tracks[nowTrackIndex].eventItemList [i].OccurEvent != null && !tracks[nowTrackIndex].eventItemList [i].isUsed [j]) {
-									tracks[nowTrackIndex].eventItemList [i].OccurEvent.Invoke ();
-									tracks[nowTrackIndex].eventItemList [i].isUsed [j] = true;
-								}
+						if (tracks[nowTrackIndex].eventItemList [i].eventTimeList <= timer) {
+							if (tracks[nowTrackIndex].eventItemList [i].OccurEvent != null && !tracks[nowTrackIndex].eventItemList [i].isUsed) {
+								tracks[nowTrackIndex].eventItemList [i].OccurEvent.Invoke ();
+								tracks[nowTrackIndex].eventItemList [i].SetIsUsed(true);
 							}
 						}
 					}
@@ -600,12 +590,10 @@ public class CutSceneUnit : MonoBehaviour {
 					//
 					for (int i = 0; i < tracks[nowTrackIndex].eventItemList.Count; i++) {
 						if (tracks[nowTrackIndex].eventItemList [i].targetIndex == tracks[nowTrackIndex].offset) {
-							for (int j = 0; j < tracks[nowTrackIndex].eventItemList [i].eventTimeList.Count; j++) {
-								if (tracks[nowTrackIndex].eventItemList [i].eventTimeList [j] >= timer) {
-									if (tracks[nowTrackIndex].eventItemList [i].OccurEvent != null && tracks[nowTrackIndex].eventItemList [i].isUsed [j]) {
-										tracks[nowTrackIndex].eventItemList [i].OccurEvent.Invoke ();
-										tracks[nowTrackIndex].eventItemList [i].isUsed [j] = false;
-									}
+							if (tracks[nowTrackIndex].eventItemList [i].eventTimeList >= timer) {
+								if (tracks[nowTrackIndex].eventItemList [i].OccurEvent != null && tracks[nowTrackIndex].eventItemList [i].isUsed) {
+									tracks[nowTrackIndex].eventItemList [i].OccurEvent.Invoke ();
+									tracks [nowTrackIndex].eventItemList [i].SetIsUsed (true);
 								}
 							}
 						}

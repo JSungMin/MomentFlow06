@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.Events;
 #endif
 
 using Struct;
 
 public class PositionPool : MonoBehaviour {
 	public CutSceneUnit unit;
+
+	public Color trackColor;
 
 	public bool selected {
 		private set;
@@ -34,30 +38,17 @@ public class PositionPool : MonoBehaviour {
 	void OnValidate(){
 		#if UNITY_EDITOR
 		//OccurEvent의 크기와 Event Item List의 크기를 같게 조정함
-		for (int i = 0; i < eventItemList.Count; i++) {				
-			if (eventItemList [i].eventTimeList.Count > eventItemList [i].OccurEvent.GetPersistentEventCount ()) {
-				//Delete
-				var num = eventItemList [i].eventTimeList.Count - eventItemList [i].OccurEvent.GetPersistentEventCount ();
-				eventItemList [i].eventTimeList.RemoveRange (eventItemList [i].eventTimeList.Count - 1 - num, num);
-			} 
-			else if(eventItemList [i].eventTimeList.Count < eventItemList [i].OccurEvent.GetPersistentEventCount ()){
-				//Add
-				var num = -eventItemList [i].eventTimeList.Count + eventItemList [i].OccurEvent.GetPersistentEventCount ();
-				for (int j = 0; j < num; j++) {
-					eventItemList[i].eventTimeList.Add(0);
+		for (int i = 0; i < eventItemList.Count; i++) {		
+			var eventIndex = eventItemList [i].targetIndex;
+
+			if (eventItemList [i].OccurEvent.GetPersistentEventCount() > 1)
+			{
+				for (int j = 1; j < eventItemList [i].OccurEvent.GetPersistentEventCount(); j++)
+				{
+					
+					UnityEventTools.UnregisterPersistentListener(eventItemList[i].OccurEvent,j);
 				}
-			}
-			if (eventItemList [i].isUsed.Count > eventItemList [i].OccurEvent.GetPersistentEventCount ()) {
-				//Delete
-				var num = eventItemList [i].isUsed.Count - eventItemList [i].OccurEvent.GetPersistentEventCount ();
-				eventItemList [i].isUsed.RemoveRange (eventItemList [i].isUsed.Count - 1 - num, num);
-			}
-			else if(eventItemList [i].isUsed.Count < eventItemList [i].OccurEvent.GetPersistentEventCount ()){
-				//Add
-				var num = -eventItemList [i].isUsed.Count + eventItemList [i].OccurEvent.GetPersistentEventCount ();
-				for(int j =0;j<num;j++){
-					eventItemList[i].isUsed.Add(false);
-				}
+				eventItemList.Add(new EventItem("New Event",0,0,new UnityEvent()));
 			}
 		}
 		#endif
@@ -133,7 +124,7 @@ public class PositionPool : MonoBehaviour {
 
 		//Show Position and Event Icon
 		if(selected||unit.pinPath){
-			for(int i =0;i<size;i++){
+			for(int i = 0; i < size; i++){
 				float tmpSize = 1f;
 				tmpSize = HandleUtility.GetHandleSize(positionItemList[i].transform.position);
 				GUIStyle newStyle = new GUIStyle ();
@@ -141,27 +132,26 @@ public class PositionPool : MonoBehaviour {
 				newStyle.fontSize = 20;
 				newStyle.alignment = TextAnchor.MiddleCenter;
 				Handles.Label (positionItemList[i].transform.position + Vector3.up*0.1f + Vector3.up*tmpSize*0.3f,(i + 1).ToString(),newStyle);
-				for(int j =i;j<size;j++){
-					if(positionItemList[i].index==positionItemList[j].index-1){
+				for(int j = i; j < size; j++){
+					if(positionItemList[i].index == positionItemList[j].index - 1){
 						Gizmos.DrawIcon (positionItemList [i].transform.position + Vector3.up*0.05f, "Position.png",true);
 						Gizmos.DrawIcon (positionItemList [j].transform.position + Vector3.up*0.05f, "Position.png",true);
-						for(int k =0;k<eventItemList.Count;k++){
-							foreach(EventItem t in eventItemList){
-								if(t.targetIndex==i){
-									foreach(float et in t.eventTimeList){
-										var pos = Vector3.Lerp (positionItemList[i].transform.position,positionItemList[j].transform.position,et/durationItemList[i].duration);
-										Gizmos.DrawIcon (pos,"Event.png",true);
-									}
-								}
-							}
-						}
-
-						var tmpColor = new Color (unit.color.r - ((unit.color.r-0.3f)/(float)size)*positionItemList[i].index,unit.color.g - ((unit.color.g-0.3f)/(float)size)*positionItemList[i].index,unit.color.b - ((unit.color.b-0.3f)/(float)size)*positionItemList[i].index);
+					
+						var tmpColor = new Color (trackColor.r - ((trackColor.r-0.3f)/(float)size)*positionItemList[i].index,trackColor.g - ((trackColor.g-0.3f)/(float)size)*positionItemList[i].index,trackColor.b - ((trackColor.b-0.3f)/(float)size)*positionItemList[i].index);
 
 						Gizmos.color = tmpColor;
 						if(positionItemList[i].transform.GetComponent<BeizerSpline>()==null)
 							Gizmos.DrawLine (positionItemList[i].transform.position,positionItemList[j].transform.position);
 					}
+				}
+
+				for (int j = 0; j < eventItemList.Count; j++)
+				{
+					var eventIndex = eventItemList [j].targetIndex;
+					var pos = Vector3.Lerp(positionItemList[eventIndex].transform.position, positionItemList[Mathf.Min(eventIndex + 1, size - 1)].transform.position, eventItemList[j].eventTimeList / durationItemList[eventIndex].duration);
+				
+					Gizmos.DrawIcon (pos,"Event.png",true);
+					Handles.Label (pos + Vector3.up*0.1f + Vector3.up * 0.8f * tmpSize, eventItemList[j].eventName,newStyle);
 				}
 			}
 		}
