@@ -83,7 +83,8 @@ public class PoolEditor : Editor {
 			if (GUILayout.Button ("Create Event")) {
 				if (selectedIndex == -1)
 					selectedIndex = 0;
-				positionPool.eventItemList.Add (new EventItem ("New Event", selectedIndex, 0, new UnityEvent ()));
+				selectedIndex = Mathf.Clamp (selectedIndex,0,eventItemList.Count - 1);
+				positionPool.eventItemList.Add (new EventItem ("New Event",selectedIndex, 0, new UnityEvent ()));
 			}
 			GUILayout.FlexibleSpace ();
 			if (GUILayout.Button ("Delete Event")) {
@@ -215,10 +216,14 @@ public class PoolEditor : Editor {
 					GUILayout.Label ("Object");
 					if (null != objectName)
 					{
-						GUILayout.Label (objectName.name);
-						var objectPos = GameObject.Find(objectName.name);
-						if (null != objectPos)
-							Handles.DrawDottedLine (new Vector3  (uiPoint.x + width,  uiPoint.y - height * 1.3f),HandleUtility.WorldToGUIPoint (objectPos.transform.position),0.5f);
+							var objectPos = GameObject.Find(objectName.name);
+							if (GUILayout.Button (objectName.name))
+							{
+								if (null != objectPos)
+									SceneView.lastActiveSceneView.LookAt (objectPos.transform.position);
+								else
+									Debug.LogError ("Select Object isn't Actived");
+							}
 					}
 					EditorGUILayout.EndHorizontal ();
 
@@ -231,9 +236,10 @@ public class PoolEditor : Editor {
 						GUILayout.Label (functionName);
 					}
 					EditorGUILayout.EndHorizontal();
+					
 					EditorGUILayout.BeginVertical("Controller");
 					SerializedProperty sProp = serializedObject.FindProperty("eventItemList");
-					SerializedProperty childProp = sProp.GetArrayElementAtIndex(0);
+					SerializedProperty childProp = sProp.GetArrayElementAtIndex(index);
 
 					childProp.Next(true);
 					//Get Unity Event Prop
@@ -241,13 +247,30 @@ public class PoolEditor : Editor {
 					{
 						childProp.Next(false);
 					}
-			
+
 					EditorGUIUtility.LookLikeControls();
 					EditorGUILayout.PropertyField (childProp);
+					//childProp.serializedObject.ApplyModifiedProperties();
 					serializedObject.ApplyModifiedProperties();
 					EditorGUILayout.EndVertical();
 				}
+				else{
+						EditorGUILayout.BeginVertical("Controller");
+						SerializedProperty sProp = serializedObject.FindProperty("eventItemList");
+						SerializedProperty childProp = sProp.GetArrayElementAtIndex(index);
 
+						childProp.Next(true);
+						//Get Unity Event Prop
+						for (int n = 0; n < 5; n++)
+						{
+							childProp.Next(false);
+						}
+						EditorGUIUtility.LookLikeControls();
+						EditorGUILayout.PropertyField (childProp);
+						//childProp.serializedObject.ApplyModifiedProperties();
+						serializedObject.ApplyModifiedProperties();
+						EditorGUILayout.EndVertical();
+				}
 				if (GUILayout.Button ("Minimize"))
 				{
 					minimize = true;
