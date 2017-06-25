@@ -20,7 +20,7 @@ public class AimState : IStateBehaviour
         if (targetCollider == null)
             targetCollider = enemyInfo.attackTarget.GetComponentInChildren<Collider>();
 
-        targetPos = targetCollider.bounds.center;
+		targetPos = targetCollider.bounds.center + Vector3.up * Random.Range (0,targetCollider.bounds.extents.y);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

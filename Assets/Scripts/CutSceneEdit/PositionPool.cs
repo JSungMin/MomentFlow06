@@ -38,19 +38,7 @@ public class PositionPool : MonoBehaviour {
 	void OnValidate(){
 		#if UNITY_EDITOR
 		//OccurEvent의 크기와 Event Item List의 크기를 같게 조정함
-		for (int i = 0; i < eventItemList.Count; i++) {		
-			var eventIndex = eventItemList [i].targetIndex;
 
-			if (eventItemList [i].OccurEvent.GetPersistentEventCount() > 1)
-			{
-				for (int j = 1; j < eventItemList [i].OccurEvent.GetPersistentEventCount(); j++)
-				{
-					
-					UnityEventTools.UnregisterPersistentListener(eventItemList[i].OccurEvent,j);
-				}
-				eventItemList.Add(new EventItem("New Event",0,0,new UnityEvent()));
-			}
-		}
 		#endif
 	}
 	void OnDrawGizmos(){

@@ -1,26 +1,4 @@
-﻿/****************************************************************************
- Copyright (c) 2014 Martin Ysa
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
-
-namespace DynamicLight2D
+﻿namespace DynamicLight2D
 {
 	using UnityEngine;
 	using System.Collections;
@@ -40,10 +18,8 @@ namespace DynamicLight2D
 	
 	public class DynamicLight : MonoBehaviour {
 		
-		
-		
 		// Public variables
-		
+		public bool renderOnce = false;
 		public string version = "1.0.5"; //release date 09/01/2017
 
 		public Color lightColor;
@@ -86,39 +62,47 @@ namespace DynamicLight2D
 			lightMaterial.SetColor ("_Color",lightColor);
 			lightMaterial.SetVector ("_DistanceOffset", new Vector4 (0.5f, 0.5f, 0f, 0f));
 			// Find the specified type of material shader
-			renderer.sharedMaterial = lightMaterial;														// Add this texture
 			lightMesh = new Mesh();																	// create a new mesh for our light mesh
 			meshFilter.mesh = lightMesh;															// Set this newly created mesh to the mesh filter
 			lightMesh.name = "Light Mesh";															// Give it a name
 			lightMesh.MarkDynamic ();
-			
-			
+
+			renderer.sharedMaterial = lightMaterial;														// Add this texture
+
+			renderOnce = GetComponent<LightColor> ().renderOnce;
+
+			if (renderOnce) {
+				getAllMeshes();
+				setLight ();
+				renderLightMeshWithNotClear ();
+				GetComponent<Renderer>().sharedMaterial = lightMaterial;
+			} 
 		}
 		
 		
-		void Update(){
-			
-			getAllMeshes();
-			setLight ();
-			renderLightMesh ();
-			resetBounds ();
-			
+		void FixedUpdate(){
+			if (!renderOnce) {
+				Vector3 pos = Camera.main.WorldToViewportPoint (transform.position);
+				if (Mathf.Abs(pos.x) <= 1.5f && Mathf.Abs (pos.y) <= 1.5f) {
+					getAllMeshes();
+					setLight ();
+					renderLightMesh ();
+					resetBounds ();
+				}
+				GetComponent<Renderer>().sharedMaterial = lightMaterial;
+			}
 		}
 		
 		
 		void getAllMeshes(){
 			//allMeshes = FindObjectsOfType(typeof(PolygonCollider2D)) as PolygonCollider2D[];
-			
-			
+
 			Collider2D [] allColl2D = Physics2D.OverlapCircleAll(transform.position, lightRadius, layer);
 			allMeshes = new PolygonCollider2D[allColl2D.Length];
 			
 			for (int i=0; i<allColl2D.Length; i++) {
 				allMeshes[i] = (PolygonCollider2D)allColl2D[i];
 			}
-			
-			
-			
 		}
 		
 		void resetBounds(){
@@ -479,9 +463,60 @@ namespace DynamicLight2D
 			
 			lightMesh.triangles = triangles;												
 			//lightMesh.RecalculateNormals();
-			GetComponent<Renderer>().sharedMaterial = lightMaterial;
 		}
-		
+
+		void renderLightMeshWithNotClear(){
+			//-- Step 5: fill the mesh with vertices--//
+			//---------------------------------------------------------------------//
+
+			//interface_touch.vertexCount = allVertices.Count; // notify to UI
+
+			Vector3 []initVerticesMeshLight = new Vector3[allVertices.Count+1];
+
+			initVerticesMeshLight [0] = Vector3.zero;
+
+
+			for (int i = 0; i < allVertices.Count; i++) { 
+				//Debug.Log(allVertices[i].angle);
+				initVerticesMeshLight [i+1] = allVertices[i].pos;
+
+				//if(allVertices[i].endpoint == true)
+				//Debug.Log(allVertices[i].angle);
+
+			}
+				
+			lightMesh.vertices = initVerticesMeshLight;
+
+			Vector2 [] uvs = new Vector2[initVerticesMeshLight.Length];
+			for (int i = 0; i < initVerticesMeshLight.Length; i++) {
+				uvs[i] = new Vector2(initVerticesMeshLight[i].x, initVerticesMeshLight[i].y);		
+			}
+			lightMesh.uv = uvs;
+
+			// triangles
+			int idx = 0;
+			int [] triangles = new int[(allVertices.Count * 3)];
+			for (int i = 0; i < (allVertices.Count*3); i+= 3) {
+
+				triangles[i] = 0;
+				triangles[i+1] = idx+1;
+
+
+				if(i == (allVertices.Count*3)-3){
+					//-- if is the last vertex (one loop)
+					triangles[i+2] = 1;	
+				}else{
+					triangles[i+2] = idx+2; //next next vertex	
+				}
+
+				idx++;
+			}
+
+
+			lightMesh.triangles = triangles;												
+			//lightMesh.RecalculateNormals();
+		}
+
 		void sortList(List<verts> lista){
 			lista.Sort((item1, item2) => (item2.angle.CompareTo(item1.angle)));
 		}

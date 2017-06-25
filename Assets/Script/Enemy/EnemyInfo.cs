@@ -22,6 +22,9 @@ public class EnemyInfo : HumanInfo
     // attack 하기 전 aim을 하고 있는 시간
     private float attackDelayTimer;
 
+
+	public float findRangeOffset;
+
     //private 
     public float attackDelay { private set; get; }
     public float attackRange { private set; get; }
@@ -55,10 +58,10 @@ public class EnemyInfo : HumanInfo
 
         hp = 100;
         attackDelay = 0.5f;
-        attackRange = 3.0f;
+        attackRange = 2f;
         crouchDelay = 2.0f;
         
-        findRange = attackRange + 3.0f;
+		findRange = attackRange + findRangeOffset;
         rigidBody = GetComponent<Rigidbody>();
         viewCollider = GetComponent<BoxCollider>();
         boxCollider = GetComponentInChildren<BoxCollider>();
