@@ -29,6 +29,11 @@ public class AimState : IStateBehaviour
             return;
 
         aimTarget.AimToObject(targetPos);
+
+		AimLineRenderer.instance.startPoint.Add (aimTarget.GetComponentInChildren<EnemyShoulderAction>().shotPosition.position);
+		AimLineRenderer.instance.endPoint.Add (targetPos);
+		AimLineRenderer.instance.pointAlpha.Add (animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer);
+
         animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer += TimeManager.GetInstance().customDeltaTime;
     }
 

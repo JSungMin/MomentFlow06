@@ -6,12 +6,14 @@ using UnityEngine;
 public class HierarchySystem : MonoBehaviour {
 	public CutSceneUnit unit;
 	public PositionPool positionPool;
+	public AnimationCurve durationCurve;
 	private Transform parent;
 	public int index;
 
 	public void SetParent(Transform p,CutSceneUnit u){
 		parent = p;
 		positionPool = parent.GetComponent<PositionPool> ();
+		durationCurve = positionPool.curveItemList [Mathf.Min (index, positionPool.curveItemList.Count - 1)].curve;
 		unit = u;
 		transform.localScale = positionPool.transform.localScale;
 	}

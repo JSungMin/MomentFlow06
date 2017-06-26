@@ -46,6 +46,7 @@ namespace Struct{
 	[System.Serializable]
 	public struct CurveItem{
 		public int index;
+		[SerializeField]
 		public AnimationCurve curve;
 
 		public CurveItem(int i, AnimationCurve c){

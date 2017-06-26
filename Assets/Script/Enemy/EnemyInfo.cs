@@ -22,7 +22,6 @@ public class EnemyInfo : HumanInfo
     // attack 하기 전 aim을 하고 있는 시간
     private float attackDelayTimer;
 
-
 	public float findRangeOffset;
 
     //private 
@@ -57,7 +56,7 @@ public class EnemyInfo : HumanInfo
         attackDelaySituation = new SituationTimer(this);
 
         hp = 100;
-        attackDelay = 0.5f;
+        attackDelay = 1f;
         attackRange = 2f;
         crouchDelay = 2.0f;
         
