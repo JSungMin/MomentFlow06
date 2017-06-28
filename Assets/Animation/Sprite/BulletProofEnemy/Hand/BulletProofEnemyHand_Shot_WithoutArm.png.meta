@@ -1,9 +1,19 @@
 fileFormatVersion: 2
 guid: 4e2992f6d48c62e4ebfb4c2933bba4d9
-timeCreated: 1498140076
+timeCreated: 1498165402
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: BulletProofEnemyHand_Shot_WithoutArm_0
+    21300002: BulletProofEnemyHand_Shot_WithoutArm_1
+    21300004: BulletProofEnemyHand_Shot_WithoutArm_2
+    21300006: BulletProofEnemyHand_Shot_WithoutArm_3
+    21300008: BulletProofEnemyHand_Shot_WithoutArm_4
+    21300010: BulletProofEnemyHand_Shot_WithoutArm_5
+    21300012: BulletProofEnemyHand_Shot_WithoutArm_6
+    21300014: BulletProofEnemyHand_Shot_WithoutArm_7
+    21300016: BulletProofEnemyHand_Shot_WithoutArm_8
+    21300018: BulletProofEnemyHand_Shot_WithoutArm_9
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -68,7 +78,137 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: BulletProofEnemyHand_Shot_WithoutArm_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 150
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.95, y: 0.67}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BulletProofEnemyHand_Shot_WithoutArm_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 150
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.95, y: 0.67}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BulletProofEnemyHand_Shot_WithoutArm_2
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 150
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.95, y: 0.67}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BulletProofEnemyHand_Shot_WithoutArm_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 100
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.95, y: 0.67}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BulletProofEnemyHand_Shot_WithoutArm_4
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 100
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.95, y: 0.67}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BulletProofEnemyHand_Shot_WithoutArm_5
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 100
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.95, y: 0.67}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BulletProofEnemyHand_Shot_WithoutArm_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 50
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.95, y: 0.67}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BulletProofEnemyHand_Shot_WithoutArm_7
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 50
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.95, y: 0.67}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BulletProofEnemyHand_Shot_WithoutArm_8
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 50
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.95, y: 0.67}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BulletProofEnemyHand_Shot_WithoutArm_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 50
+        height: 50
+      alignment: 9
+      pivot: {x: 0.95, y: 0.67}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

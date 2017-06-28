@@ -14,11 +14,12 @@ public class EnemyInfo : HumanInfo
     public BoxCollider viewCollider;
     [HideInInspector]
     public Rigidbody rigidBody;
-    private GameObject[] obstacles;
-    public List<GameObject> sameRawObstacles { private set; get; }
 
-    private GameObject[] walls;
+    public List<GameObject> sameRawObstacles { private set; get; }
     public List<GameObject> sameRawWalls { private set; get; }
+
+    private GameObject[] enemies;
+    public List<GameObject> sameRawEnemies { private set; get; }
     // attack 하기 전 aim을 하고 있는 시간
     private float attackDelayTimer;
 
@@ -66,6 +67,7 @@ public class EnemyInfo : HumanInfo
         
         sameRawObstacles = AllocateSameRawObjectListByTag("Obstacle");
         sameRawWalls = AllocateSameRawObjectListByTag("Wall");
+        sameRawEnemies = AllocateSameRawObjectListByTag("Enemy");
     }
 
     public void SetAttackTarget(GameObject target)

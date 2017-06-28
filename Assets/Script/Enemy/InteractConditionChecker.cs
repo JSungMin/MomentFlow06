@@ -29,6 +29,11 @@ public class InteractConditionChecker : ConditionChecker
 
         enemyInfo.Hp -= power;
         StartCoroutine(DamageEffectCo());
+
+        for (int i = 0; i < enemyInfo.sameRawEnemies.Count; i++)
+        {
+            enemyInfo.sameRawEnemies[i].GetComponent<InteractConditionChecker>().DoEnemyDamageAlert();
+        }
     }
 
     private IEnumerator DamageEffectCo()
@@ -48,5 +53,10 @@ public class InteractConditionChecker : ConditionChecker
             return;
 
         enemyInfo.stunSituation.GetInSituation(1.0f);
+    }
+
+    public void DoEnemyDamageAlert()
+    {
+
     }
 }
