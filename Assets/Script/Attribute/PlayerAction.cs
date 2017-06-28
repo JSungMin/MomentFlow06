@@ -51,6 +51,12 @@ public class PlayerAction : MonoBehaviour {
         walkClip = Resources.Load("Sound/Effect/Walk") as AudioClip;
         runClip = Resources.Load("Sound/Effect/Run") as AudioClip;
 
+<<<<<<< HEAD
+=======
+        skills = new SkillBase[] { new TimePause (KeyCode.E, 15.0f, 3.0f, 0.2f), new TimeRecall (KeyCode.R, 10.0f) };
+		skillNum = skills.Length;
+
+>>>>>>> origin/master
 		aimTarget = GetComponent<AimTarget> ();
 	}
 

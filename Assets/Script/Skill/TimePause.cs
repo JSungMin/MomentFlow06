@@ -5,12 +5,23 @@ using UnityEngine;
 
 public class TimePause : SkillBase
 {
+<<<<<<< HEAD
 	public TimePause(HumanInfo oInfo ,KeyCode keyCode,float manaCost)
+=======
+    public bool isTimePaused { private set; get; }
+    private float manaCostPer;
+    private float manaCostDelTm;
+    private Coroutine addManaForCoroutine;
+
+    public TimePause(KeyCode keyCode, float manaCost, float manaCostPer, float manaCostDelTm)
+>>>>>>> origin/master
     {
         soundPlayer = GameObject.FindObjectOfType<SoundPlayer>();
 		this.ownerInfo = oInfo;
 		this.keyCode = keyCode;
         this.manaCost = manaCost;
+        this.manaCostPer = manaCostPer;
+        this.manaCostDelTm = manaCostDelTm;
     }
 
     public override bool IsTryUseSKill()
@@ -44,8 +55,9 @@ public class TimePause : SkillBase
         TimeManager.GetInstance().SetTimeScale(0.0f);
 		TimeManager.isTimePaused = true;
         soundPlayer.StopBGM();
+        addManaForCoroutine = playerInfo.StartCoroutine(playerInfo.mana.AddManaFor(-manaCostPer, manaCostDelTm, true));
 
-		GameObject.Find ("PauseEffect").GetComponent<ParticleSystem> ().Play ();
+        GameObject.Find ("PauseEffect").GetComponent<ParticleSystem> ().Play ();
 		var animators = GameObject.FindObjectsOfType<Animator> ();
 		for (int i = 0; i < animators.Length; i++)
 		{
@@ -54,7 +66,7 @@ public class TimePause : SkillBase
 				animators [i].speed = TimeManager.GetInstance ().customTimeScale;
 		}
     }
-
+    
     protected override void CancelSkill()
     {
 		TimeManager.isTimePaused = false;
@@ -62,6 +74,7 @@ public class TimePause : SkillBase
 		TimeManager.isTimePaused = false;
 
         soundPlayer.PlayBGM();
+        playerInfo.StopCoroutine(addManaForCoroutine);
 
         var animators = GameObject.FindObjectsOfType<Animator> ();
 		for (int i = 0; i < animators.Length; i++)
