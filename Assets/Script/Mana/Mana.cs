@@ -10,7 +10,7 @@ public class Mana
         this.maxManaPoint = maxManaPoint;
     }
 
-    public IEnumerator RecoveryMana(float perIncManaPoint, float incDeltaTm)
+    public IEnumerator AddManaFor(float perIncManaPoint, float incDeltaTm)
     {
         while(true)
         {
@@ -20,9 +20,9 @@ public class Mana
         }
     }
 
-    public void ConsumeMana(float manaPoint)
+    public void AddMana(float manaPoint)
     {
-        this.ManaPoint -= manaPoint;
+        this.ManaPoint += manaPoint;
     }
 
     private float maxManaPoint;

@@ -62,7 +62,7 @@ public class TimeRecall : SkillBase
     // 키가 떼어졌을 때
     protected override void CancelSkill()
     {
-        playerInfo.mana.ConsumeMana(manaCost);
+        playerInfo.mana.AddMana(-manaCost);
         RevertObjs(timeRevertables);
 
         isInTimeRevertPhase = false;
