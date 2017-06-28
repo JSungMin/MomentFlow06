@@ -7,6 +7,8 @@ public class AimState : IStateBehaviour
     private AimTarget aimTarget;
     private Vector3 targetPos;
 
+	private float offset;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (null == aimTarget)
@@ -16,17 +18,25 @@ public class AimState : IStateBehaviour
 
         enemyInfo.AttackDelayTimer = 0;
 
+
         Collider targetCollider = enemyInfo.attackTarget.GetComponent<Collider>();
         if (targetCollider == null)
             targetCollider = enemyInfo.attackTarget.GetComponentInChildren<Collider>();
 
-        targetPos = targetCollider.bounds.center + Vector3.up * Random.Range(0, targetCollider.bounds.extents.y);
+		offset = Random.Range (-targetCollider.bounds.extents.y * 0.5f, targetCollider.bounds.extents.y);
+		targetPos = targetCollider.bounds.center;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (TimeManager.GetInstance().IsTimePaused())
             return;
+
+		Collider targetCollider = enemyInfo.attackTarget.GetComponent<Collider>();
+		if (targetCollider == null)
+			targetCollider = enemyInfo.attackTarget.GetComponentInChildren<Collider>();
+
+		targetPos = targetCollider.bounds.center + Vector3.up * offset + Vector3.up * 0.05f;
 
         aimTarget.AimToObject(targetPos);
 
@@ -49,6 +59,7 @@ public class AimState : IStateBehaviour
 		AimLineRenderer.instance.pointAlpha.Add (animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer);
 
         enemyInfo.AttackDelayTimer += TimeManager.GetInstance().customDeltaTime;
+		offset = Mathf.Lerp (offset, 0, TimeManager.GetInstance ().customDeltaTime);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

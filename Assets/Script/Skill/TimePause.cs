@@ -5,31 +5,29 @@ using UnityEngine;
 
 public class TimePause : SkillBase
 {
-    public bool isTimePaused { private set; get; }
-
-    public TimePause(KeyCode keyCode,float manaCost)
+	public TimePause(HumanInfo oInfo ,KeyCode keyCode,float manaCost)
     {
         soundPlayer = GameObject.FindObjectOfType<SoundPlayer>();
-        isTimePaused = false;
-        this.keyCode = keyCode;
+		this.ownerInfo = oInfo;
+		this.keyCode = keyCode;
         this.manaCost = manaCost;
     }
 
     public override bool IsTryUseSKill()
     {
         //return Input.GetKeyDown(keyCode) && !isTimePaused;
-        return Input.GetKeyDown(keyCode) && !isTimePaused;
+		return Input.GetKeyDown(keyCode) && !TimeManager.isTimePaused;
     }
 
     public override bool IsTryCancelSkill()
     {
         //return Input.GetKeyDown(keyCode) && isTimePaused;
-        return Input.GetKeyDown(keyCode) && isTimePaused;
+		return Input.GetKeyDown(keyCode) && TimeManager.isTimePaused;
     }
 
     protected override bool CanUseSkill()
     {
-        if (playerInfo.mana.ManaPoint >= manaCost)
+		if (ownerInfo.mana.ManaPoint >= manaCost)
             return true;
         return false;
     }
@@ -41,10 +39,10 @@ public class TimePause : SkillBase
 
     protected override void UseSkill()
     {
-        isTimePaused = true;
-        playerInfo.mana.AddMana(-manaCost);
+		TimeManager.isTimePaused = true;
+		ownerInfo.mana.AddMana(-manaCost);
         TimeManager.GetInstance().SetTimeScale(0.0f);
-
+		TimeManager.isTimePaused = true;
         soundPlayer.StopBGM();
 
 		GameObject.Find ("PauseEffect").GetComponent<ParticleSystem> ().Play ();
@@ -59,8 +57,9 @@ public class TimePause : SkillBase
 
     protected override void CancelSkill()
     {
-        isTimePaused = false;
+		TimeManager.isTimePaused = false;
         TimeManager.GetInstance().SetTimeScale(1.0f);
+		TimeManager.isTimePaused = false;
 
         soundPlayer.PlayBGM();
 

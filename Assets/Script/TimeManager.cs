@@ -7,6 +7,8 @@ public class TimeManager : MonoBehaviour
     public float customDeltaTime { private set; get; }
 	public float customTimeScale;
 
+	public static bool isTimePaused = false;
+
     private void Update()
     {
 		customDeltaTime =  Time.deltaTime * customTimeScale;

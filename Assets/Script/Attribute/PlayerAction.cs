@@ -51,25 +51,27 @@ public class PlayerAction : MonoBehaviour {
         walkClip = Resources.Load("Sound/Effect/Walk") as AudioClip;
         runClip = Resources.Load("Sound/Effect/Run") as AudioClip;
 
-        skills = new SkillBase[] { new TimePause (KeyCode.E, 15.0f), new TimeRecall (KeyCode.R, 10.0f) };
-		skillNum = skills.Length;
-
 		aimTarget = GetComponent<AimTarget> ();
 	}
 
 	public void Start()
 	{
+		playerInfo = GetComponent<PlayerInfo> ();
+
 		bloomEffect = Camera.main.GetComponent<UnityStandardAssets.ImageEffects.BloomAndFlares> ();
 		timePauseEffect = GameObject.Find ("PauseEffect").GetComponent<ParticleSystem>();
 
 		Physics.gravity = Vector3.down * 9.8f;
-		playerInfo = GetComponent<PlayerInfo> ();
+
 		playerAnimator = transform.GetComponentInChildren<Animator> ();
 		pBody = GetComponent<Rigidbody> ();
 		pCollider = GetComponentInChildren<BoxCollider> ();
 		shoulderAction = gunAnimator.GetComponent<Shoulder> ();
 		equiptInfo = GetComponent<EquiptInfo> ();
 		outsideInfo = GetComponent<OutsideInfo> ();
+
+		skills = new SkillBase[] { new TimePause ((HumanInfo)playerInfo,KeyCode.E, 1.0f), new TimeRecall ((HumanInfo)playerInfo ,KeyCode.R, 10.0f), new StrikeAttack((HumanInfo)playerInfo  ,KeyCode.Space) };
+		skillNum = skills.Length;
 	}
 
 	public T GetSkill<T>()
@@ -79,18 +81,6 @@ public class PlayerAction : MonoBehaviour {
             return default(T);
         return child;
     }
-
-	public void HoldOnWeapon ()
-	{
-		holdOnWeapon = true;
-		aimTarget.hideShoulder = false;
-	}
-
-	public void ReleaseWeapon ()
-	{
-		holdOnWeapon = false;
-		aimTarget.hideShoulder = true;
-	}
 
 	public void Update()
 	{		
@@ -103,7 +93,7 @@ public class PlayerAction : MonoBehaviour {
 				skills[i].TryCancelSkill();
 		}
         
-		if (GetSkill<TimePause>().isTimePaused) {
+		if (TimeManager.isTimePaused) {
 			if (input.x != 0)
 			{
 				if (!timePauseEffect.isPlaying)
@@ -136,15 +126,22 @@ public class PlayerAction : MonoBehaviour {
 
 		SelectAnimatorLayer ();
 
+		if (GetSkill<StrikeAttack>().inProgressed)
+		{
+			var enemy = outsideInfo.GetNearestEnemyObject ();
+			if (null != enemy && enemy.GetComponentInParent<EnemyInfo>().hp > 0) {
+				playerAnimator.SetTrigger ("TriggerGrab");
+				playerAnimator.GetBehaviour<PlayerGrabState> ().grabbedEnemyBodyAnimator = enemy.GetComponent<Animator> ();
+			}
+		}
+
 		CheckChangeWeapon ();
 
 		CheckInteractWithNPC (nearestNPC);
-
 		CheckCrossObstacle (nearestObstacle);
+		CheckInteractWithObject ();
 
 		CheckOnStair (nearestStair);
-
-		CheckInteractWithObject ();
 
 		CheckDrinkUpPotion ();
 
@@ -156,6 +153,18 @@ public class PlayerAction : MonoBehaviour {
 			aimTarget.AimToForward();
 
 		aimTarget.CheckCanVisibleShoulder ();
+	}
+
+	public void HoldOnWeapon ()
+	{
+		holdOnWeapon = true;
+		aimTarget.hideShoulder = false;
+	}
+
+	public void ReleaseWeapon ()
+	{
+		holdOnWeapon = false;
+		aimTarget.hideShoulder = true;
 	}
 
 	void SelectAnimatorLayer ()
@@ -190,6 +199,7 @@ public class PlayerAction : MonoBehaviour {
 
 	void InitAnimatorParameters ()
 	{
+		playerAnimator.SetFloat ("MagnitudeX",Mathf.Abs (pBody.velocity.x));
 		playerAnimator.SetFloat ("HorizontalInput", input.x);
 		playerAnimator.SetFloat ("VerticalInput", input.y);
 		playerAnimator.SetFloat ("MaxMoveSpeed", maxSpeed);
@@ -307,11 +317,6 @@ public class PlayerAction : MonoBehaviour {
             if (!audioSource.isPlaying)
                 audioSource.Play();
         }
-		if (Input.GetKeyDown (KeyCode.Space)) 
-		{
-			playerAnimator.SetTrigger ("TriggerJump");
-            audioSource.Stop();
-        }
 
 		if (Input.GetKey (KeyCode.S)) 
 		{
@@ -343,12 +348,6 @@ public class PlayerAction : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		pBody.velocity = new Vector3 (
-			Mathf.Clamp (pBody.velocity.x, -maxSpeed, maxSpeed),
-			pBody.velocity.y,
-			0
-		);
-		velocity = pBody.velocity;
 		playerAnimator.SetFloat ("VelocityY", velocity.y);
 
 		GetDistanceToGround ();

@@ -6,7 +6,8 @@ using System;
 public enum SKILL
 {
     TimePause = 0 ,
-    TimeRevert = 1
+    TimeRevert = 1 ,
+	StrikeAttack = 2
 }
 
 public abstract class SkillBase : MonoBehaviour
@@ -14,7 +15,7 @@ public abstract class SkillBase : MonoBehaviour
     public int id;
     public KeyCode keyCode { protected set; get; }
 
-	protected PlayerInfo playerInfo = GameObject.FindObjectOfType<PlayerInfo>();
+	protected HumanInfo ownerInfo;
     protected float manaCost;
     protected SoundPlayer soundPlayer;
 

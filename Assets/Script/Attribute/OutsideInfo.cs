@@ -11,6 +11,8 @@ public class OutsideInfo : MonoBehaviour {
 
 	public List<GameObject> npcList;
 
+	public List<GameObject> enemyList;
+
 	public static GameObject nearestStair = null;
 
 	public void OnTriggerEnter(Collider col)
@@ -38,6 +40,10 @@ public class OutsideInfo : MonoBehaviour {
 		{
 			npcList.Add (col.gameObject);
 		}
+		else if (col.GetComponent<Collider>().CompareTag ("Enemy"))
+		{
+			enemyList.Add (col.GetComponent<Collider>().gameObject);
+		}
 
 	}
 
@@ -59,6 +65,13 @@ public class OutsideInfo : MonoBehaviour {
 			if (!npcList.Contains (col.gameObject))
 			{
 				npcList.Add (col.gameObject);
+			}
+		}
+		else if (col.GetComponent<Collider>().CompareTag ("Enemy"))
+		{
+			if (!enemyList.Contains (col.GetComponent<Collider>().gameObject))
+			{
+				enemyList.Add (col.GetComponent<Collider>().gameObject);
 			}
 		}
 	}
@@ -88,6 +101,32 @@ public class OutsideInfo : MonoBehaviour {
 				npcList.Remove (col.gameObject);
 			}
 		}
+		else if (col.GetComponent<Collider>().CompareTag ("Enemy"))
+		{
+			if (enemyList.Contains (col.gameObject))
+			{
+				enemyList.Remove (col.gameObject);
+			}
+		}
+	}
+
+	public GameObject GetNearestEnemyObject ()
+	{
+		if (enemyList.Count != 0)
+		{
+			var tmpDis = Vector3.Distance (transform.position, enemyList [0].transform.position);
+			var index = 0;
+			for (int i = 0 ; i < enemyList.Count; i++)
+			{
+				var prevDis = tmpDis;
+				tmpDis = Mathf.Min(tmpDis, Vector3.Distance (transform.position, enemyList[i].transform.position));
+
+				if (prevDis != tmpDis)
+					index = i;
+			}
+			return enemyList [index];
+		}
+		return null;
 	}
 
 	public GameObject GetNearestObstacleObject()
