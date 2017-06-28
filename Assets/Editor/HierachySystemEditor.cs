@@ -38,17 +38,23 @@ public class HierachySystemEditor : Editor {
 			EditorGUILayout.FloatField (durationItemList[Mathf.Min (hierachySystem.index,durationItemList.Count -1)].duration);
 			EditorGUILayout.EndHorizontal ();
 
-			EditorGUILayout.BeginVertical ("Curve Area");
-
 			SerializedObject sPropObj = serializedObject;
-
-			SerializedProperty sProp = sPropObj.FindProperty ("durationCurve");
+			EditorGUILayout.BeginVertical ("WrapMode Area");
+			SerializedProperty sProp01 = sPropObj.FindProperty ("moveMethod");
 			EditorGUIUtility.LookLikeInspector();
-
-			EditorGUILayout.PropertyField (sProp);
-			serializedObject.ApplyModifiedProperties();
-
+			EditorGUILayout.PropertyField (sProp01);
 			EditorGUILayout.EndVertical ();
+
+			if (sProp01.enumValueIndex != 0)
+			{
+				EditorGUILayout.BeginVertical ("Curve Area");
+				SerializedProperty sProp02 = sPropObj.FindProperty ("durationCurve");
+				EditorGUIUtility.LookLikeInspector();
+
+				EditorGUILayout.PropertyField (sProp02);
+				EditorGUILayout.EndVertical ();
+			}
+			serializedObject.ApplyModifiedProperties();
 
 		}, "Duration Curve");
 

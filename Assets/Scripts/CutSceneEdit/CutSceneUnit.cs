@@ -99,7 +99,7 @@ public class CutSceneUnit : MonoBehaviour {
 
 	public bool isAction;
 	public CutSceneWrapMode wrapMode;
-	public MoveMethod moveMethod;
+	public List<MoveMethod> moveMethod = new List<MoveMethod> ();
 
 	private void MakePositionPool(){
 		prevTracksCount = tracks.Count;
@@ -208,6 +208,7 @@ public class CutSceneUnit : MonoBehaviour {
 	public void ChangeTrack (int trackIndex)
 	{
 		nowTrackIndex = trackIndex;
+		moveMethod = tracks [trackIndex].moveMethod;
 		pp = tracks[trackIndex].positionItemList[0].transform.position;
 		StopAction ();
 	}
@@ -466,7 +467,7 @@ public class CutSceneUnit : MonoBehaviour {
 			if (timer <= tracks[nowTrackIndex].durationItemList [tracks[nowTrackIndex].offset].duration) {
 
 				//Animate Transform
-				switch (moveMethod) {
+				switch (moveMethod[tracks[nowTrackIndex].offset]) {
 				case MoveMethod.Flat:
 					if (tracks[nowTrackIndex].positionItemList [tracks[nowTrackIndex].offset].transform.GetComponent<BeizerSpline> () == null)
 						pp += -Time.deltaTime * (tracks[nowTrackIndex].positionItemList [tracks[nowTrackIndex].offset].transform.position - tracks[nowTrackIndex].positionItemList [tracks[nowTrackIndex].offset + 1].transform.position) / tracks[nowTrackIndex].durationItemList [tracks[nowTrackIndex].offset].duration;
@@ -523,7 +524,7 @@ public class CutSceneUnit : MonoBehaviour {
 		if (tracks[nowTrackIndex].offset < tracks[nowTrackIndex].size - 1 && !isPong) {
 			if (timer <= tracks[nowTrackIndex].durationItemList [tracks[nowTrackIndex].offset].duration) {
 				//Animate Transform
-				switch (moveMethod) {
+				switch (moveMethod[tracks[nowTrackIndex].offset]) {
 				case MoveMethod.Flat:
 					if (tracks[nowTrackIndex].positionItemList [tracks[nowTrackIndex].offset].transform.GetComponent<BeizerSpline> () == null)
 						pp += -Time.deltaTime * (tracks[nowTrackIndex].positionItemList [tracks[nowTrackIndex].offset].transform.position - tracks[nowTrackIndex].positionItemList [tracks[nowTrackIndex].offset + 1].transform.position) / tracks[nowTrackIndex].durationItemList [tracks[nowTrackIndex].offset].duration;
@@ -570,7 +571,7 @@ public class CutSceneUnit : MonoBehaviour {
 			if (tracks[nowTrackIndex].offset >= 0) {
 				if (timer >= 0) {
 					//Animate Transform
-					switch (moveMethod) {
+					switch (moveMethod[tracks[nowTrackIndex].offset]) {
 					case MoveMethod.Flat:
 						if (tracks[nowTrackIndex].positionItemList [tracks[nowTrackIndex].offset].transform.GetComponent<BeizerSpline> () == null)
 							pp += Time.deltaTime * (tracks[nowTrackIndex].positionItemList [tracks[nowTrackIndex].offset].transform.position - tracks[nowTrackIndex].positionItemList [tracks[nowTrackIndex].offset + 1].transform.position) / tracks[nowTrackIndex].durationItemList [tracks[nowTrackIndex].offset].duration;
@@ -626,6 +627,7 @@ public class CutSceneUnit : MonoBehaviour {
 
 	void Start(){
 		pp = tracks[nowTrackIndex].positionItemList [0].transform.position;
+		moveMethod = tracks [nowTrackIndex].moveMethod;
 		for(int i=0;i<tracks[nowTrackIndex].eventItemList.Count;i++){
 			tracks[nowTrackIndex].eventItemList [i].StoreUsedInfo ();
 		}

@@ -2,10 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Struct;
+
 [ExecuteInEditMode]
 public class HierarchySystem : MonoBehaviour {
 	public CutSceneUnit unit;
 	public PositionPool positionPool;
+	public MoveMethod moveMethod;
 	public AnimationCurve durationCurve;
 	private Transform parent;
 	public int index;
@@ -14,6 +17,7 @@ public class HierarchySystem : MonoBehaviour {
 		parent = p;
 		positionPool = parent.GetComponent<PositionPool> ();
 		durationCurve = positionPool.curveItemList [Mathf.Min (index, positionPool.curveItemList.Count - 1)].curve;
+		moveMethod = positionPool.moveMethod [Mathf.Min (index, positionPool.moveMethod.Count - 1)];
 		unit = u;
 		transform.localScale = positionPool.transform.localScale;
 	}

@@ -293,32 +293,7 @@ public class CutSceneEditor : EditorWindow {
 						}
 
 						GUILayout.Label ("Adjust MoveSpeed To Value (Only Flat Move)", EditorStyles.boldLabel);
-						GUILayout.BeginVertical (EditorStyles.helpBox);
-						{
-							if (((GameObject)source).GetComponent<CutSceneUnit> ().moveMethod == Struct.MoveMethod.Flat) {
-								showSpeedAdjustField = new AnimBool (true);
-								showSpeedAdjustField.valueChanged.AddListener (Repaint);
-								showSpeedAdjustField.target = true;
-							} else {
-								showSpeedAdjustField.target = false;
-							}
 
-							if (EditorGUILayout.BeginFadeGroup (showSpeedAdjustField.faded)) {
-								GUILayout.Space (5);
-								durationTime = EditorGUILayout.FloatField ("Speed", durationTime, GUILayout.MaxWidth (200));
-								GUILayout.Space (20);
-								GUILayout.BeginHorizontal ();
-								{
-									GUILayout.FlexibleSpace ();
-									if (GUILayout.Button ("Adjust It!", GUILayout.MaxWidth (200))) {
-										((GameObject)source).GetComponent<CutSceneUnit> ().AdjustSpeed (durationTime);
-									}
-								}
-								GUILayout.EndHorizontal ();
-							}
-							EditorGUILayout.EndFadeGroup ();
-							GUILayout.EndVertical ();
-						}
 
 						GUILayout.EndScrollView ();
 					}

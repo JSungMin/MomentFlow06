@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System;
+
+
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Events;
@@ -11,6 +14,8 @@ using Struct;
 
 public class PositionPool : MonoBehaviour {
 	public CutSceneUnit unit;
+
+	public List<MoveMethod> moveMethod = new List<MoveMethod>();
 
 	public Color trackColor;
 
