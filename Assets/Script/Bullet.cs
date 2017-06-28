@@ -5,6 +5,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 	public int bulletIndex;
 
+	private Collider ignoreCollider;
+
 	public GameObject owner;
 
 	private Rigidbody rigid;
@@ -85,7 +87,8 @@ public class Bullet : MonoBehaviour {
 					DamageToEnemy (col);
 				}
 				else {
-					Physics.IgnoreCollision (enemy, GetComponent<Collider> ());
+					ignoreCollider = enemy;
+					Physics.IgnoreCollision (ignoreCollider, GetComponent<Collider>(), true);
 					return;
 				}
 			}
@@ -117,6 +120,10 @@ public class Bullet : MonoBehaviour {
 		flingDistance = 0;
 		rigid.velocity = Vector3.zero;
 		transform.position = Vector3.zero;
+		if (null != ignoreCollider) {
+			Debug.Log ("ignore 발동");
+			Physics.IgnoreCollision (ignoreCollider, GetComponent<Collider> (), false);
+		}
 		BulletPool.Instance.ReturnBullet (gameObject);
 	}
 }
