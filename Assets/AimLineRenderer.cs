@@ -24,15 +24,14 @@ public class AimLineRenderer : MonoBehaviour {
 		{
 			var point01 = Camera.main.WorldToScreenPoint (startPoint [i]);
 			var point02 = Camera.main.WorldToScreenPoint (endPoint [i]);
-			Debug.Log (point01.y + "  :  " + point02.y);
+
 			GL.PushMatrix ();
 			mat.SetPass (0);
 			GL.LoadOrtho ();
 			GL.Begin (GL.LINES);
 			GL.Color (new Color (1 ,0 ,0 ,pointAlpha[i]));
 			GL.Vertex (new Vector3 (point01.x/Screen.width, point01.y / Screen.height));
-			var dir = (point02 - point01).normalized;
-			GL.Vertex (new Vector3 (point01.x/Screen.width, point01.y / Screen.height) + dir * 10);
+			GL.Vertex (new Vector3 (point02.x/Screen.width, point02.y / Screen.height));
 			GL.End ();
 			GL.PopMatrix ();
 		}

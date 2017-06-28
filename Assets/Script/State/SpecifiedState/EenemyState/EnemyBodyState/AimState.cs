@@ -19,7 +19,7 @@ public class AimState : IStateBehaviour
         Collider targetCollider = enemyInfo.attackTarget.GetComponent<Collider>();
         if (targetCollider == null)
             targetCollider = enemyInfo.attackTarget.GetComponentInChildren<Collider>();
-
+		
 		targetPos = targetCollider.bounds.center + Vector3.up * Random.Range (0,targetCollider.bounds.extents.y);
     }
 
@@ -30,8 +30,22 @@ public class AimState : IStateBehaviour
 
         aimTarget.AimToObject(targetPos);
 
-		AimLineRenderer.instance.startPoint.Add (aimTarget.GetComponentInChildren<EnemyShoulderAction>().shotPosition.position);
-		AimLineRenderer.instance.endPoint.Add (targetPos);
+		var point01 = aimTarget.GetComponentInChildren<EnemyShoulderAction> ().shotPosition.position;
+		var point02 = targetPos;
+		RaycastHit hit;
+		if (Physics.Raycast (
+			aimTarget.GetComponentInChildren<EnemyShoulderAction>().transform.position,
+			(point02 - point01).normalized,
+			out hit,
+			(point02 - point01).magnitude,
+			1 << LayerMask.NameToLayer ("Collision"))
+		)
+		{
+			point02 = hit.point;
+		}
+
+		AimLineRenderer.instance.startPoint.Add (point01);
+		AimLineRenderer.instance.endPoint.Add (point02);
 		AimLineRenderer.instance.pointAlpha.Add (animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer);
 
         animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer += TimeManager.GetInstance().customDeltaTime;
