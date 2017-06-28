@@ -10,12 +10,13 @@ public class Mana
         this.maxManaPoint = maxManaPoint;
     }
 
-    public IEnumerator AddManaFor(float perIncManaPoint, float incDeltaTm)
+    public IEnumerator AddManaFor(float perIncManaPoint, float incDeltaTm, bool isTimePauseStillUse)
     {
         while(true)
         {
             yield return new WaitForSeconds(incDeltaTm);
-            yield return TimeManager.GetInstance().StartCoroutine(TimeManager.GetInstance().IsTimePausedCo());
+            if (!isTimePauseStillUse)
+                yield return TimeManager.GetInstance().StartCoroutine(TimeManager.GetInstance().IsTimePausedCo());
             ManaPoint += perIncManaPoint;
         }
     }

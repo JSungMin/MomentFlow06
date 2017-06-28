@@ -31,7 +31,6 @@ public class SituationTimer
         float deltaTm = 0.02f;
         while (timer > 0)
         {
-            Debug.Log(timer);
             timer -= deltaTm;
             yield return new WaitForSeconds(deltaTm);
             yield return enemyInfo.StartCoroutine(TimeManager.GetInstance().IsTimePausedCo());

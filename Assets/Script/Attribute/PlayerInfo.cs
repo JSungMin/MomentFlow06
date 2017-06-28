@@ -17,7 +17,7 @@ public class PlayerInfo : HumanInfo {
     private void Awake()
     {
         mana = new Mana(100.0f);
-        RecoveryManaCo = StartCoroutine(mana.AddManaFor(perManaInc, 0.5f));
+        RecoveryManaCo = StartCoroutine(mana.AddManaFor(perManaInc, 0.5f, false));
     }
 
     void Start () {
