@@ -1,33 +1,33 @@
 fileFormatVersion: 2
-guid: ca2860d3d9e0c494c91ff062f505805a
-timeCreated: 1498165419
+guid: d8e0f071949b44e4caa7e8df5ec381c0
+timeCreated: 1498165448
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: BulletProofEnemyHand_Walk_GunDown_0
-    21300002: BulletProofEnemyHand_Walk_GunDown_1
-    21300004: BulletProofEnemyHand_Walk_GunDown_2
-    21300006: BulletProofEnemyHand_Walk_GunDown_3
-    21300008: BulletProofEnemyHand_Walk_GunDown_4
-    21300010: BulletProofEnemyHand_Walk_GunDown_5
-    21300012: BulletProofEnemyHand_Walk_GunDown_6
-    21300014: BulletProofEnemyHand_Walk_GunDown_7
-    21300016: BulletProofEnemyHand_Walk_GunDown_8
-    21300018: BulletProofEnemyHand_Walk_GunDown_9
-    21300020: BulletProofEnemyHand_Walk_GunDown_10
-    21300022: BulletProofEnemyHand_Walk_GunDown_11
-    21300024: BulletProofEnemyHand_Walk_GunDown_12
-    21300026: BulletProofEnemyHand_Walk_GunDown_13
-    21300028: BulletProofEnemyHand_Walk_GunDown_14
-    21300030: BulletProofEnemyHand_Walk_GunDown_15
-    21300032: BulletProofEnemyHand_Walk_GunDown_16
-    21300034: BulletProofEnemyHand_Walk_GunDown_17
-    21300036: BulletProofEnemyHand_Walk_GunDown_18
-    21300038: BulletProofEnemyHand_Walk_GunDown_19
-    21300040: BulletProofEnemyHand_Walk_GunDown_20
-    21300042: BulletProofEnemyHand_Walk_GunDown_21
-    21300044: BulletProofEnemyHand_Walk_GunDown_22
-    21300046: BulletProofEnemyHand_Walk_GunDown_23
+    21300000: BulletProofEnemyHand_Walk_WithoutArm_0
+    21300002: BulletProofEnemyHand_Walk_WithoutArm_1
+    21300004: BulletProofEnemyHand_Walk_WithoutArm_2
+    21300006: BulletProofEnemyHand_Walk_WithoutArm_3
+    21300008: BulletProofEnemyHand_Walk_WithoutArm_4
+    21300010: BulletProofEnemyHand_Walk_WithoutArm_5
+    21300012: BulletProofEnemyHand_Walk_WithoutArm_6
+    21300014: BulletProofEnemyHand_Walk_WithoutArm_7
+    21300016: BulletProofEnemyHand_Walk_WithoutArm_8
+    21300018: BulletProofEnemyHand_Walk_WithoutArm_9
+    21300020: BulletProofEnemyHand_Walk_WithoutArm_10
+    21300022: BulletProofEnemyHand_Walk_WithoutArm_11
+    21300024: BulletProofEnemyHand_Walk_WithoutArm_12
+    21300026: BulletProofEnemyHand_Walk_WithoutArm_13
+    21300028: BulletProofEnemyHand_Walk_WithoutArm_14
+    21300030: BulletProofEnemyHand_Walk_WithoutArm_15
+    21300032: BulletProofEnemyHand_Walk_WithoutArm_16
+    21300034: BulletProofEnemyHand_Walk_WithoutArm_17
+    21300036: BulletProofEnemyHand_Walk_WithoutArm_18
+    21300038: BulletProofEnemyHand_Walk_WithoutArm_19
+    21300040: BulletProofEnemyHand_Walk_WithoutArm_20
+    21300042: BulletProofEnemyHand_Walk_WithoutArm_21
+    21300044: BulletProofEnemyHand_Walk_WithoutArm_22
+    21300046: BulletProofEnemyHand_Walk_WithoutArm_23
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -94,7 +94,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_0
+      name: BulletProofEnemyHand_Walk_WithoutArm_0
       rect:
         serializedVersion: 2
         x: 0
@@ -107,7 +107,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_1
+      name: BulletProofEnemyHand_Walk_WithoutArm_1
       rect:
         serializedVersion: 2
         x: 50
@@ -120,7 +120,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_2
+      name: BulletProofEnemyHand_Walk_WithoutArm_2
       rect:
         serializedVersion: 2
         x: 100
@@ -133,7 +133,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_3
+      name: BulletProofEnemyHand_Walk_WithoutArm_3
       rect:
         serializedVersion: 2
         x: 150
@@ -146,7 +146,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_4
+      name: BulletProofEnemyHand_Walk_WithoutArm_4
       rect:
         serializedVersion: 2
         x: 200
@@ -159,7 +159,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_5
+      name: BulletProofEnemyHand_Walk_WithoutArm_5
       rect:
         serializedVersion: 2
         x: 0
@@ -172,7 +172,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_6
+      name: BulletProofEnemyHand_Walk_WithoutArm_6
       rect:
         serializedVersion: 2
         x: 50
@@ -185,7 +185,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_7
+      name: BulletProofEnemyHand_Walk_WithoutArm_7
       rect:
         serializedVersion: 2
         x: 100
@@ -198,7 +198,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_8
+      name: BulletProofEnemyHand_Walk_WithoutArm_8
       rect:
         serializedVersion: 2
         x: 150
@@ -211,7 +211,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_9
+      name: BulletProofEnemyHand_Walk_WithoutArm_9
       rect:
         serializedVersion: 2
         x: 200
@@ -224,7 +224,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_10
+      name: BulletProofEnemyHand_Walk_WithoutArm_10
       rect:
         serializedVersion: 2
         x: 0
@@ -237,7 +237,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_11
+      name: BulletProofEnemyHand_Walk_WithoutArm_11
       rect:
         serializedVersion: 2
         x: 50
@@ -250,7 +250,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_12
+      name: BulletProofEnemyHand_Walk_WithoutArm_12
       rect:
         serializedVersion: 2
         x: 100
@@ -263,7 +263,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_13
+      name: BulletProofEnemyHand_Walk_WithoutArm_13
       rect:
         serializedVersion: 2
         x: 150
@@ -276,7 +276,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_14
+      name: BulletProofEnemyHand_Walk_WithoutArm_14
       rect:
         serializedVersion: 2
         x: 200
@@ -289,7 +289,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_15
+      name: BulletProofEnemyHand_Walk_WithoutArm_15
       rect:
         serializedVersion: 2
         x: 0
@@ -302,7 +302,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_16
+      name: BulletProofEnemyHand_Walk_WithoutArm_16
       rect:
         serializedVersion: 2
         x: 50
@@ -315,7 +315,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_17
+      name: BulletProofEnemyHand_Walk_WithoutArm_17
       rect:
         serializedVersion: 2
         x: 100
@@ -328,7 +328,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_18
+      name: BulletProofEnemyHand_Walk_WithoutArm_18
       rect:
         serializedVersion: 2
         x: 150
@@ -341,7 +341,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_19
+      name: BulletProofEnemyHand_Walk_WithoutArm_19
       rect:
         serializedVersion: 2
         x: 200
@@ -354,7 +354,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_20
+      name: BulletProofEnemyHand_Walk_WithoutArm_20
       rect:
         serializedVersion: 2
         x: 0
@@ -367,7 +367,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_21
+      name: BulletProofEnemyHand_Walk_WithoutArm_21
       rect:
         serializedVersion: 2
         x: 50
@@ -380,7 +380,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_22
+      name: BulletProofEnemyHand_Walk_WithoutArm_22
       rect:
         serializedVersion: 2
         x: 100
@@ -393,7 +393,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletProofEnemyHand_Walk_GunDown_23
+      name: BulletProofEnemyHand_Walk_WithoutArm_23
       rect:
         serializedVersion: 2
         x: 150

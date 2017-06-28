@@ -42,7 +42,7 @@ public class TimePause : SkillBase
     protected override void UseSkill()
     {
         isTimePaused = true;
-        playerInfo.mana.ConsumeMana(manaCost);
+        playerInfo.mana.AddMana(-manaCost);
         TimeManager.GetInstance().SetTimeScale(0.0f);
 
         soundPlayer.StopBGM();

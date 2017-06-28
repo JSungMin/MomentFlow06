@@ -8,12 +8,12 @@ public class Door : InteractableObject, ILockable, ITimeRecallableForInteractabl
 	private Animator doorAnimator;
     private AudioSource audioSource;
 
-	// Use this for initialization
 	void Start () {
 		doorAnimator = GetComponent<Animator> ();
 		cancelInteractActions += CloseDoor;
         audioSource = GetComponent<AudioSource>();
-        audioSource.playOnAwake = false;
+        if (audioSource != null)
+            audioSource.playOnAwake = false;
     }
 
 	public void OnCollisionStay(Collision col)
@@ -143,7 +143,7 @@ public class Door : InteractableObject, ILockable, ITimeRecallableForInteractabl
 		var mana = challenger.GetComponentInParent<HumanInfo> ().mana;
 		Debug.Log (mana.ManaPoint);
 		if (IsChangeable && mana.ManaPoint - ConsumeAmount >= 0) {
-			mana.ConsumeMana (ConsumeAmount);
+			mana.AddMana (-ConsumeAmount);
 			return true;
 		}
 		return false;
