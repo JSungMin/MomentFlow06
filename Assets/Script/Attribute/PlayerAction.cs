@@ -199,14 +199,14 @@ public class PlayerAction : MonoBehaviour {
 
 	void ExcuteShotableLayer ()
 	{
-		playerAnimator.SetLayerWeight (1, 0);
-		playerAnimator.SetLayerWeight (2, 1);
+		//playerAnimator.SetLayerWeight (1, 0);
+		//playerAnimator.SetLayerWeight (2, 1);
 	}
 
 	void ExcuteNoneShotableLayer ()
 	{
-		playerAnimator.SetLayerWeight (1, 1);
-		playerAnimator.SetLayerWeight (2, 0);
+		//playerAnimator.SetLayerWeight (1, 1);
+		//playerAnimator.SetLayerWeight (2, 0);
 	}
 
 	void CheckInteractWithNPC (GameObject nearestNPC)

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class Door : InteractableObject, ILockable {
+public class Door : InteractableObject, ILockable, ITimeRecallableForInteractable {
 
 	private Animator doorAnimator;
     private AudioSource audioSource;
@@ -53,7 +54,8 @@ public class Door : InteractableObject, ILockable {
 
 	public override bool TryInteract (GameObject challenger)
 	{
-		IsLocked = TryToReleaseLock (ref challenger.GetComponent<EquiptInfo>().itemInfoList);
+		if (IsLocked)
+			IsLocked = TryToReleaseLock (ref challenger.GetComponent<EquiptInfo>().itemInfoList);
 
 		if (!IsLocked) {
 			if (!isInteracted) {
@@ -76,12 +78,12 @@ public class Door : InteractableObject, ILockable {
 
 	public bool TryToReleaseLock(ref List<ItemInfoStruct> pocketItems)
 	{
-		if (null == KeyObject)
-			return false;
+		if (null == KeyObject && isLocked)
+			return true;
 
 		foreach(var item in pocketItems)
 		{
-			if (item.itemType == KeyObject.itemType && item.itemId == KeyObject.itemId || null == KeyObject)
+			if (item.itemType == KeyObject.itemType && item.itemId == KeyObject.itemId)
 			{
 				pocketItems.Remove (item);
 				return false;
@@ -109,4 +111,81 @@ public class Door : InteractableObject, ILockable {
 			keyObject = value;
 		}
 	}
+
+	private void OnMouseEnter ()
+	{
+		GetComponentInChildren<SpriteRenderer> ().material.color = Color.red;
+	}
+
+	private void OnMouseDown ()
+	{
+		TryRecall (GameObject.FindObjectOfType<PlayerInfo>().gameObject);
+	}
+
+	private void OnMouseExit ()
+	{
+		GetComponentInChildren<SpriteRenderer> ().material.color = Color.white;
+	}
+
+	#region ITimeRecallableForInteractable implementation
+
+	public bool TryRecall (GameObject challenger)
+	{
+		if (IsSatisfied (challenger)) {
+			DoRecall (challenger);
+			return true;
+		}
+		return false;
+	}
+
+	public bool IsSatisfied (GameObject challenger)
+	{
+		var mana = challenger.GetComponentInParent<HumanInfo> ().mana;
+		Debug.Log (mana.ManaPoint);
+		if (IsChangeable && mana.ManaPoint - ConsumeAmount >= 0) {
+			mana.ConsumeMana (ConsumeAmount);
+			return true;
+		}
+		return false;
+	}
+
+	public void DoRecall (GameObject challenger)
+	{
+		if (isLocked) {
+			Debug.Log ("Lock Release");
+			isLocked = false;
+			TryInteract (challenger);
+			return;
+		} 
+		else {
+			Debug.Log ("Lock");
+			TryInteract (challenger);
+			isLocked = true;
+		}
+	}
+
+	[SerializeField]
+	private float consumeAmount;
+	[SerializeField]
+	private bool isChangeable;
+
+	public float ConsumeAmount {
+		get {
+			return consumeAmount;
+		}
+		set {
+			consumeAmount = value;
+		}
+	}
+
+	public bool IsChangeable {
+		get {
+			return isChangeable;
+		}
+		set {
+			isChangeable = value;
+		}
+	}
+		
+	#endregion
 }

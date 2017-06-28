@@ -10,7 +10,6 @@ public class PlayerInfo : HumanInfo {
 
 	public Transform playerTransform;
 
-    public Mana mana { private set; get; }
     private Coroutine RecoveryManaCo;
 
     public float perManaInc = 1.0f;

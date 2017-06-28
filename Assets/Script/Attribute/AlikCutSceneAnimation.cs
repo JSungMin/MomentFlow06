@@ -48,8 +48,7 @@ public class AlikCutSceneAnimation : MonoBehaviour {
 
 	public void AlikIdle ()
 	{
-		bodyAnimator.Play ("Idle");
-		shoulderAnimator.Play ("Walk");
+		bodyAnimator.SetTrigger ("TriggerIdle");
 	}
 
 	public void AlikWalk ()
@@ -60,6 +59,11 @@ public class AlikCutSceneAnimation : MonoBehaviour {
 
 	public void AlikShoot ()
 	{
-		bodyAnimator.Play ("Shoot");
+		bodyAnimator.SetTrigger ("TriggerShot");
+	}
+
+	public void AlikDisarm()
+	{
+		bodyAnimator.SetTrigger ("TriggerDisarm");
 	}
 }

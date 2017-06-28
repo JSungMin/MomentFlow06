@@ -54,7 +54,7 @@ public class BeizerSpline : MonoBehaviour {
 			Vector3 lineStart = spline.GetPoint (0f);
 			for (int i = 1; i <= 30; i++) {
 				Vector3 lineEnd = spline.GetPoint (i / (float)30);
-				var tmpColor = GetComponent<HierarchySystem> ().unit.color;
+				var tmpColor = GetComponentInParent<PositionPool> ().trackColor;
 				tmpColor.a = 255;
 				Gizmos.color = tmpColor;
 				Gizmos.DrawLine (lineStart, lineEnd);

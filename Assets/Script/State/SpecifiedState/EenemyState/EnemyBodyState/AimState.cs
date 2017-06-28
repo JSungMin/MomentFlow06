@@ -20,7 +20,7 @@ public class AimState : IStateBehaviour
         if (targetCollider == null)
             targetCollider = enemyInfo.attackTarget.GetComponentInChildren<Collider>();
 
-        targetPos = targetCollider.bounds.center;
+		targetPos = targetCollider.bounds.center + Vector3.up * Random.Range (0,targetCollider.bounds.extents.y);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -29,6 +29,11 @@ public class AimState : IStateBehaviour
             return;
 
         aimTarget.AimToObject(targetPos);
+
+		AimLineRenderer.instance.startPoint.Add (aimTarget.GetComponentInChildren<EnemyShoulderAction>().shotPosition.position);
+		AimLineRenderer.instance.endPoint.Add (targetPos);
+		AimLineRenderer.instance.pointAlpha.Add (animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer);
+
         animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer += TimeManager.GetInstance().customDeltaTime;
     }
 
