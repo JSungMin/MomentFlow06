@@ -14,13 +14,13 @@ public class AimState : IStateBehaviour
             aimTarget = animator.GetComponentInParent<AimTarget>();
         }
 
-        animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer = 0;
+        enemyInfo.AttackDelayTimer = 0;
 
         Collider targetCollider = enemyInfo.attackTarget.GetComponent<Collider>();
         if (targetCollider == null)
             targetCollider = enemyInfo.attackTarget.GetComponentInChildren<Collider>();
-		
-		targetPos = targetCollider.bounds.center + Vector3.up * Random.Range (0,targetCollider.bounds.extents.y);
+
+        targetPos = targetCollider.bounds.center + Vector3.up * Random.Range(0, targetCollider.bounds.extents.y);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -48,11 +48,13 @@ public class AimState : IStateBehaviour
 		AimLineRenderer.instance.endPoint.Add (point02);
 		AimLineRenderer.instance.pointAlpha.Add (animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer);
 
-        animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer += TimeManager.GetInstance().customDeltaTime;
+        enemyInfo.AttackDelayTimer += TimeManager.GetInstance().customDeltaTime;
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer = 0;
+        enemyInfo.AttackDelayTimer = 0.0f;
+
+        enemyInfo.alertSituation.GetInSituation(3.0f);
     }
 }

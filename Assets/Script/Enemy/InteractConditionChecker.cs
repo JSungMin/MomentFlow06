@@ -32,7 +32,8 @@ public class InteractConditionChecker : ConditionChecker
 
         for (int i = 0; i < enemyInfo.sameRawEnemies.Count; i++)
         {
-            enemyInfo.sameRawEnemies[i].GetComponent<InteractConditionChecker>().DoEnemyDamageAlert();
+            if (enemyInfo.sameRawEnemies[i].GetComponentInChildren<InteractConditionChecker>() != null)
+                enemyInfo.sameRawEnemies[i].GetComponentInChildren<InteractConditionChecker>().DoEnemyDamageAlert();
         }
     }
 

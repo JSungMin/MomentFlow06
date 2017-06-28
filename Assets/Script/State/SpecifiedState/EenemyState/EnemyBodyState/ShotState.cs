@@ -17,6 +17,5 @@ public class ShotState : IStateBehaviour
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        enemyInfo.alertSituation.GetInSituation(5.0f);
     }
 }
