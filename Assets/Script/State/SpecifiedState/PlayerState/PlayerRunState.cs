@@ -20,7 +20,7 @@ public class PlayerRunState : StateMachineBehaviour {
 		var newVelocity = animator.GetComponentInParent<Rigidbody> ().velocity;
 		newVelocity += Vector3.right * animator.GetFloat ("HorizontalInput") * accel * Time.unscaledDeltaTime;
 		newVelocity.x = Mathf.Clamp (newVelocity.x, -animator.GetFloat("MaxMoveSpeed"), animator.GetFloat("MaxMoveSpeed"));
-		if (TimeRecall.isInTimeRevertPhase)
+		if (TimeManager.isTimeSlowed)
 			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity * TimeManager.GetInstance ().customTimeScale;
 		else
 			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity;

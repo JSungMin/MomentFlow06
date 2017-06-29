@@ -17,9 +17,15 @@ public class LightColor : MonoBehaviour {
 	{
 		GetComponent<DynamicLight2D.DynamicLight> ().lightColor = lightColor;
 	}
+		
 
 	// Update is called once per frame
 	void Update () {
+		if (!renderOnce)
+		{
+			GetComponent<MeshCollider> ().sharedMesh = GetComponent<MeshFilter> ().sharedMesh;
+		}
+
 		GetComponent<DynamicLight2D.DynamicLight> ().lightMaterial.SetFloat ("_Radius",lightColorRadius);
 		GetComponent<DynamicLight2D.DynamicLight> ().lightMaterial.SetFloat ("_ContrastFactor",contrastFactor);
 		GetComponent<DynamicLight2D.DynamicLight> ().lightMaterial.SetFloat ("_ColorFactor",colorFactor);

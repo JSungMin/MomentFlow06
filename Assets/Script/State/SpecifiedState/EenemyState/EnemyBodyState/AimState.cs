@@ -17,9 +17,10 @@ public class AimState : IStateBehaviour
         }
 
         enemyInfo.AttackDelayTimer = 0;
+		Collider targetCollider = null;
 
-
-        Collider targetCollider = enemyInfo.attackTarget.GetComponent<Collider>();
+		if (null != enemyInfo.attackTarget)
+        	targetCollider = enemyInfo.attackTarget.GetComponent<Collider>();
         if (targetCollider == null)
             targetCollider = enemyInfo.attackTarget.GetComponentInChildren<Collider>();
 

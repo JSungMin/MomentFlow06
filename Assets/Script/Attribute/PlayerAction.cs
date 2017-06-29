@@ -16,6 +16,7 @@ public class PlayerAction : MonoBehaviour {
 	private Rigidbody pBody;
 	private BoxCollider pCollider;
 
+	public static List<bool> numberPadToggleInput = new List<bool>();
 	public static GameObject nearestStair;
 
 	public bool holdOnWeapon = false;
@@ -51,12 +52,6 @@ public class PlayerAction : MonoBehaviour {
         walkClip = Resources.Load("Sound/Effect/Walk") as AudioClip;
         runClip = Resources.Load("Sound/Effect/Run") as AudioClip;
 
-<<<<<<< HEAD
-=======
-        skills = new SkillBase[] { new TimePause (KeyCode.E, 15.0f, 3.0f, 0.2f), new TimeRecall (KeyCode.R, 10.0f) };
-		skillNum = skills.Length;
-
->>>>>>> origin/master
 		aimTarget = GetComponent<AimTarget> ();
 	}
 
@@ -76,8 +71,17 @@ public class PlayerAction : MonoBehaviour {
 		equiptInfo = GetComponent<EquiptInfo> ();
 		outsideInfo = GetComponent<OutsideInfo> ();
 
-		skills = new SkillBase[] { new TimePause ((HumanInfo)playerInfo,KeyCode.E, 1.0f), new TimeRecall ((HumanInfo)playerInfo ,KeyCode.R, 10.0f), new StrikeAttack((HumanInfo)playerInfo  ,KeyCode.Space) };
+		skills = new SkillBase[] { 
+			new TimePause ((HumanInfo)playerInfo, KeyCode.E, 1.0f, 0.5f, 0.5f),
+			new TimeRecall ((HumanInfo)playerInfo ,KeyCode.R, 1.0f),
+			new StrikeAttack((HumanInfo)playerInfo  ,KeyCode.Space),
+			new Decoy ((HumanInfo)playerInfo, KeyCode.F1 , 0)
+		};
 		skillNum = skills.Length;
+		for (int i = 0; i < skillNum; i++)
+		{
+			numberPadToggleInput.Add (false);
+		}
 	}
 
 	public T GetSkill<T>()
@@ -99,21 +103,7 @@ public class PlayerAction : MonoBehaviour {
 				skills[i].TryCancelSkill();
 		}
         
-		if (TimeManager.isTimePaused) {
-			if (input.x != 0)
-			{
-				if (!timePauseEffect.isPlaying)
-					timePauseEffect.Play ();
-				GetComponent<GhostingEffect> ().SetEnabled (true);
-			}
-			else
-				GetComponent<GhostingEffect> ().SetEnabled (false);
-			bloomEffect.bloomIntensity = Mathf.Clamp (bloomEffect.bloomIntensity + Time.deltaTime * 5, 0, 1.5f);
-		} else {
-			timePauseEffect.Stop ();
-			GetComponent<GhostingEffect> ().SetEnabled (false);
-			bloomEffect.bloomIntensity = Mathf.Clamp (bloomEffect.bloomIntensity - Time.deltaTime * 5, 0, 1.5f);
-		}
+		PlayTimePauseEffect ();
 
 		input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
 		inputF = Input.GetKeyDown (KeyCode.F);
@@ -136,8 +126,8 @@ public class PlayerAction : MonoBehaviour {
 		{
 			var enemy = outsideInfo.GetNearestEnemyObject ();
 			if (null != enemy && enemy.GetComponentInParent<EnemyInfo>().hp > 0) {
-				playerAnimator.SetTrigger ("TriggerGrab");
-				playerAnimator.GetBehaviour<PlayerGrabState> ().grabbedEnemyBodyAnimator = enemy.GetComponent<Animator> ();
+				playerAnimator.SetTrigger ("TriggerKnockOut");
+				playerAnimator.GetBehaviour<PlayerKnockOutEnemyState> ().grabbedEnemyBodyAnimator = enemy.GetComponent<Animator> ();
 			}
 		}
 
@@ -159,6 +149,25 @@ public class PlayerAction : MonoBehaviour {
 			aimTarget.AimToForward();
 
 		aimTarget.CheckCanVisibleShoulder ();
+	}
+
+	void PlayTimePauseEffect ()
+	{
+		if (TimeManager.isTimePaused) {
+			if (input.x != 0) {
+				if (!timePauseEffect.isPlaying)
+					timePauseEffect.Play ();
+				GetComponent<GhostingEffect> ().SetEnabled (true);
+			}
+			else
+				GetComponent<GhostingEffect> ().SetEnabled (false);
+			bloomEffect.bloomIntensity = Mathf.Clamp (bloomEffect.bloomIntensity + Time.deltaTime * 5, 0, 1.5f);
+		}
+		else {
+			timePauseEffect.Stop ();
+			GetComponent<GhostingEffect> ().SetEnabled (false);
+			bloomEffect.bloomIntensity = Mathf.Clamp (bloomEffect.bloomIntensity - Time.deltaTime * 5, 0, 1.5f);
+		}
 	}
 
 	public void HoldOnWeapon ()
@@ -195,11 +204,15 @@ public class PlayerAction : MonoBehaviour {
 			if (mouseWheel > 0) {
 				equiptInfo.EquiptNextIndexWeapon ();
 			}
-		int inputNumeric = 0;
-		if (int.TryParse (Input.inputString, out inputNumeric)) {
-			if (Input.GetKeyDown (((KeyCode)(inputNumeric + 48)))) {
-				equiptInfo.EquiptWeapon (inputNumeric - 1);
-			}
+		int inputNumeric = InputParsher.NumericInputToInteger(Input.inputString);
+		if (Input.GetKeyDown (InputParsher.NumericInputToKeyCode(Input.inputString))) {
+			equiptInfo.EquiptWeapon (inputNumeric - 1);
+			if (!TimeManager.isTimeSlowed)
+				return;
+			if (numberPadToggleInput[inputNumeric - 1])
+				numberPadToggleInput [inputNumeric - 1] = false;
+			else
+				numberPadToggleInput [inputNumeric - 1] = true;
 		}
 	}
 
@@ -273,6 +286,15 @@ public class PlayerAction : MonoBehaviour {
 				}
 				var interactableObject = outsideInfo.interactableObject [i].GetComponentInParent<InteractableObject>();
 				interactableObject.TryInteract (gameObject);
+			}
+			for (int i = 0; i < outsideInfo.enemyList.Count; i++)
+			{
+				var enemy = outsideInfo.enemyList [i];
+				if (enemy.GetComponentInParent<EnemyInfo>().hp <= 0) 
+				{
+					playerAnimator.SetTrigger ("TriggerGrab");
+					break;
+				}
 			}
 		}
 	}

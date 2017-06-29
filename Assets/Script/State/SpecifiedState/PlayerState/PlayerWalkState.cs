@@ -27,7 +27,7 @@ public class PlayerWalkState : StateMachineBehaviour {
 		} else
 			newVelocity.x = Mathf.Clamp (newVelocity.x, -animator.GetFloat ("MoveSpeed"), animator.GetFloat ("MoveSpeed"));
 
-		if (TimeRecall.isInTimeRevertPhase) {
+		if (TimeManager.isTimeSlowed) {
 			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity * TimeManager.GetInstance().customTimeScale;
 		} 
 		else

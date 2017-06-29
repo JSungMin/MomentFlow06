@@ -5,16 +5,13 @@ using UnityEngine;
 
 public class TimePause : SkillBase
 {
-<<<<<<< HEAD
-	public TimePause(HumanInfo oInfo ,KeyCode keyCode,float manaCost)
-=======
+
     public bool isTimePaused { private set; get; }
     private float manaCostPer;
     private float manaCostDelTm;
     private Coroutine addManaForCoroutine;
 
-    public TimePause(KeyCode keyCode, float manaCost, float manaCostPer, float manaCostDelTm)
->>>>>>> origin/master
+	public TimePause(HumanInfo oInfo, KeyCode keyCode, float manaCost, float manaCostPer, float manaCostDelTm)
     {
         soundPlayer = GameObject.FindObjectOfType<SoundPlayer>();
 		this.ownerInfo = oInfo;
@@ -50,41 +47,19 @@ public class TimePause : SkillBase
 
     protected override void UseSkill()
     {
-		TimeManager.isTimePaused = true;
-		ownerInfo.mana.AddMana(-manaCost);
-        TimeManager.GetInstance().SetTimeScale(0.0f);
-		TimeManager.isTimePaused = true;
+		TimeManager.GetInstance ().TimePause ();
+		ownerInfo.mana.AddMana (-manaCost);
         soundPlayer.StopBGM();
-        addManaForCoroutine = playerInfo.StartCoroutine(playerInfo.mana.AddManaFor(-manaCostPer, manaCostDelTm, true));
+		addManaForCoroutine = ownerInfo.StartCoroutine(ownerInfo.mana.AddManaFor(-manaCostPer, manaCostDelTm, true));
 
         GameObject.Find ("PauseEffect").GetComponent<ParticleSystem> ().Play ();
-		var animators = GameObject.FindObjectsOfType<Animator> ();
-		for (int i = 0; i < animators.Length; i++)
-		{
-			if (!animators[i].CompareTag("Player") &&
-				!animators[i].CompareTag("InteractableObject"))
-				animators [i].speed = TimeManager.GetInstance ().customTimeScale;
-		}
     }
     
     protected override void CancelSkill()
     {
-		TimeManager.isTimePaused = false;
-        TimeManager.GetInstance().SetTimeScale(1.0f);
-		TimeManager.isTimePaused = false;
+		TimeManager.GetInstance ().TimeResume ();
 
         soundPlayer.PlayBGM();
-        playerInfo.StopCoroutine(addManaForCoroutine);
-
-        var animators = GameObject.FindObjectsOfType<Animator> ();
-		for (int i = 0; i < animators.Length; i++)
-		{
-			animators [i].speed = TimeManager.GetInstance ().customTimeScale;
-		}
+		ownerInfo.StopCoroutine(addManaForCoroutine);
     }
-
-	void Update()
-	{
-		
-	}
 }

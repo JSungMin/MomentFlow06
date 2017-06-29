@@ -7,13 +7,10 @@ public class TimeRecall : SkillBase
 {
     // 시간을 돌리기 위해 시간이 천천히 흐르고 있는 상태인지를 나타내는 변수
     // 오브젝트의 시간이 되돌아가고 있는지를 체크하는 변수는 각 오브젝트마다 있음
-    public static bool isInTimeRevertPhase { private set; get; }
-
     private List<TimeRecallable> timeRevertables = new List<TimeRecallable>();
 
 	public TimeRecall(HumanInfo ownerInfo ,KeyCode keyCode, float manaCost)
     {
-        isInTimeRevertPhase = false;
 		this.ownerInfo = ownerInfo;
 		this.keyCode = keyCode;
         this.manaCost = manaCost;
@@ -29,12 +26,12 @@ public class TimeRecall : SkillBase
 
     public override bool IsTryUseSKill()
     {
-		return Input.GetKeyDown(keyCode) && !isInTimeRevertPhase;
+		return Input.GetKeyDown(keyCode) && !TimeManager.isTimeSlowed;
     }
 
     public override bool IsTryCancelSkill()
     {
-        return Input.GetKeyUp(keyCode) && isInTimeRevertPhase;
+		return Input.GetKeyDown(keyCode) && TimeManager.isTimeSlowed;
     }
 
     protected override bool CanUseSkill()
@@ -51,13 +48,7 @@ public class TimeRecall : SkillBase
     
     protected override void UseSkill()
     {
-        isInTimeRevertPhase = true;
-		Time.timeScale = 0.25f;
-		var animators = GameObject.FindObjectsOfType<Animator> ();
-		for (int i = 0; i < animators.Length; i++)
-		{
-			animators [i].speed = TimeManager.GetInstance ().customTimeScale;
-		}
+		TimeManager.GetInstance ().TimeSlowDown (0.25f);
     }
 
     // 키가 떼어졌을 때
@@ -66,15 +57,9 @@ public class TimeRecall : SkillBase
 		ownerInfo.mana.AddMana(-manaCost);
         RevertObjs(timeRevertables);
 
-        isInTimeRevertPhase = false;
-        timeRevertables.Clear();
+		TimeManager.GetInstance ().TimeNormalize ();
 
-		Time.timeScale = 1f;
-		var animators = GameObject.FindObjectsOfType<Animator> ();
-		for (int i = 0; i < animators.Length; i++)
-		{
-			animators [i].speed = TimeManager.GetInstance ().customTimeScale;
-		}
+        timeRevertables.Clear();
     }
 
     // 다른곳에서도 호출할 수 있지 않을까? 하는 생각 때문에 인자로 둠
@@ -92,7 +77,7 @@ public class TimeRecall : SkillBase
 
     private void AddOrRemoveTimeRevertableObj(TimeRecallable obj)
     {
-        if (!isInTimeRevertPhase)
+		if (!TimeManager.isTimeSlowed)
             return;
 
         if (timeRevertables.Contains(obj))

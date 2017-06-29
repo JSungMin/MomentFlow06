@@ -39,7 +39,7 @@ public class PlayerShoulderAction : Shoulder {
 			shoulderAnimator.SetTrigger ("TriggerReload");
 		}
 
-		if (TimeRecall.isInTimeRevertPhase) 
+		if (TimeManager.isTimeSlowed) 
 		{
 			parentAnimator.ResetTrigger("TriggerShot");
 			shoulderAnimator.ResetTrigger("TriggerShot");

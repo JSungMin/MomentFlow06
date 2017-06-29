@@ -34,8 +34,8 @@ public class GhostingEffect : MonoBehaviour {
 				GhostingObject tmpTrailObject = trail.GetComponent<GhostingObject> ();
 
 				tmpTrailObject.Init (trailTime, ghostingTargetSprite.sprite, this);
-				trail.transform.position = transform.position;
-				trail.transform.localScale = ghostingTargetSprite.transform.parent.localScale;
+				trail.transform.position = transform.position + Vector3.up * 0.1f;
+				trail.transform.localScale = ghostingTargetSprite.transform.parent.localScale * 0.7f;
 				trailObjects.Add (trail);
 
 				spawnTimer = 0;

@@ -9,12 +9,13 @@ public class BodyShotStateChecker : StateCheckerBase
         this.enemyInfo = enemyInfo;
 		this.bodyStateType = stateType;
     }
+		
 
     public override bool IsSatisfied()
     {
         if (enemyInfo.IsInAttackRange(enemyInfo.attackTarget) &&
             enemyInfo.IsObjectInView(enemyInfo.attackTarget) &&
-            enemyInfo.AttackDelayTimer >= enemyInfo.attackDelay)
+			enemyInfo.AttackDelayTimer >= enemyInfo.attackDelay)
         {
             return true;
         }

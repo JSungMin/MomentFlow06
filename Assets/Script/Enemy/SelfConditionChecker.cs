@@ -40,6 +40,9 @@ public class SelfConditionChecker : ConditionChecker
         if (!enemyInfo.isUpdatable)
             return;
 
+		if (null == enemyInfo.attackTarget)
+			enemyInfo.attackTarget = GameSceneData.playerAction;
+
         for (int i = 0; i < bodyStateCheckers.Length; i++)
         {
             if (bodyStateCheckers[i].IsSatisfied())

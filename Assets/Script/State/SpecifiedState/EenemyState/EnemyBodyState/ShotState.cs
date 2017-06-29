@@ -17,5 +17,6 @@ public class ShotState : IStateBehaviour
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+		enemyInfo.attackTarget = null;
     }
 }

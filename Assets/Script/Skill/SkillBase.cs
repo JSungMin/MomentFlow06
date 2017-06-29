@@ -7,7 +7,8 @@ public enum SKILL
 {
     TimePause = 0 ,
     TimeRevert = 1 ,
-	StrikeAttack = 2
+	StrikeAttack = 2,
+	Decoy = 3
 }
 
 public abstract class SkillBase : MonoBehaviour
