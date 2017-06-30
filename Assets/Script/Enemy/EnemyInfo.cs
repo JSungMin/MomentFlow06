@@ -140,10 +140,10 @@ public class EnemyInfo : HumanInfo
         return Vector3.Distance(obj.transform.position, transform.position) < findRange;
     }
 
-    public bool IsObjectInView(GameObject obj)
+    public bool IsObjectInViewWithoutObstacle(GameObject obj)
     {
-        if (!IsInSameRow(obj, gameObject))
-            return false;
+        //if (!IsInSameRow(obj, gameObject))
+        //    return false;
 
         if (Vector3.Distance(obj.transform.position, transform.position) < 1.0f)
         {
@@ -162,14 +162,15 @@ public class EnemyInfo : HumanInfo
         float minY = -(rayNum / 2) * deltaY;
         for (int i = 0; i < rayNum; i++)
         {
-            if (IsObjectInViewWithoutObstacle(obj, origin, Vector3.Normalize(direction + Vector3.up * (minY + deltaY)), findRange, layermask))
+            Debug.DrawRay(origin, (direction + Vector3.up * (minY + deltaY * i)) * findRange);
+            if (IsNoObstacleBetweenObject(obj, origin, Vector3.Normalize(direction + Vector3.up * (minY + deltaY * i)), findRange, layermask))
                 return true;
         }
 
         return false;
     }
 
-    private bool IsObjectInViewWithoutObstacle(GameObject obj, Vector3 origin, Vector3 direction, float length, int layermask)
+    private bool IsNoObstacleBetweenObject(GameObject obj, Vector3 origin, Vector3 direction, float length, int layermask)
     {
         RaycastHit[] rayCastHits = Physics.RaycastAll(origin, direction, length, layermask);
         List<Collider> obstacles = new List<Collider>();
@@ -182,6 +183,7 @@ public class EnemyInfo : HumanInfo
             {
                 if (rayCastHits[i].collider.gameObject == obj)
                 {
+                    Debug.Log("in ray");
                     IsPlayerInRay = true;
                     collisionPointDist = Vector3.Distance(rayCastHits[i].collider.ClosestPoint(origin), origin);
                 }

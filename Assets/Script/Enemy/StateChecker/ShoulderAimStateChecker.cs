@@ -13,7 +13,7 @@ public class ShoulderAimStateChecker : StateCheckerBase
     public override bool IsSatisfied()
     {
         if (enemyInfo.IsInAttackRange(enemyInfo.attackTarget) &&
-            enemyInfo.IsObjectInView(enemyInfo.attackTarget) &&
+            enemyInfo.IsObjectInViewWithoutObstacle(enemyInfo.attackTarget) &&
             enemyInfo.AttackDelayTimer < enemyInfo.attackDelay)
         {
             return true;

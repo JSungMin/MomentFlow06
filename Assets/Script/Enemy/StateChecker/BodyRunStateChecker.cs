@@ -27,9 +27,12 @@ public class BodyRunStateChecker : StateCheckerBase
         }
         else
         {
+            if (enemyInfo.IsObjectInViewWithoutObstacle(enemyInfo.attackTarget))
+                Debug.Log("is in object view range");
+
             if (!enemyInfo.IsInAttackRange(enemyInfo.attackTarget) &&
                 enemyInfo.IsInFindRange(enemyInfo.attackTarget) &&
-                enemyInfo.IsObjectInView(enemyInfo.attackTarget))
+                enemyInfo.IsObjectInViewWithoutObstacle(enemyInfo.attackTarget))
             {
                 return true;
             }
