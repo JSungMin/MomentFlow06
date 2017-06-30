@@ -34,7 +34,7 @@ public class BodyCrossStateChecker : StateCheckerBase
                 !enemyInfo.IsInAttackRange(enemyInfo.attackTarget) &&
                 enemyInfo.IsInFindRange(enemyInfo.attackTarget) &&
                 enemyInfo.IsNearestObjectBetween(enemyInfo.attackTarget, enemyInfo.sameRawObstacles) &&
-                enemyInfo.IsObjectInView(enemyInfo.attackTarget))
+                enemyInfo.IsObjectInViewWithoutObstacle(enemyInfo.attackTarget))
                 return true;
             else
                 return false;

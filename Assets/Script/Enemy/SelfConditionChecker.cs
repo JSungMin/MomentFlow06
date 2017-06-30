@@ -42,7 +42,7 @@ public class SelfConditionChecker : ConditionChecker
 
 		if (null == enemyInfo.attackTarget)
 			enemyInfo.attackTarget = GameSceneData.playerAction;
-
+        
         for (int i = 0; i < bodyStateCheckers.Length; i++)
         {
             if (bodyStateCheckers[i].IsSatisfied())
