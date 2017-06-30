@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerCrossState : StateMachineBehaviour
 {
-    public AnimationCurve heightCurve;
+	private DynamicObject dynamicObject;
+	public AnimationCurve heightCurve;
 
     private Rigidbody pRigid;
     private Collider obstacle;
@@ -19,6 +20,7 @@ public class PlayerCrossState : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         pRigid = animator.GetComponentInParent<Rigidbody>();
+		dynamicObject = animator.GetComponentInParent <DynamicObject> ();
         originY = pRigid.transform.position.y;
         obstacle = animator.GetComponentInParent<OutsideInfo>().GetNearestObstacleObject().GetComponent<Collider>();
         obstacleHeight = obstacle.bounds.size.y;
@@ -34,7 +36,7 @@ public class PlayerCrossState : StateMachineBehaviour
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        pRigid.transform.Translate(direction * (distance / 0.66f) * Time.deltaTime);
+		pRigid.transform.Translate(direction * (distance / 0.66f) * dynamicObject.customDeltaTime);
         pRigid.transform.position = new Vector3(
             pRigid.transform.position.x,
             originY + heightCurve.Evaluate(stateInfo.normalizedTime) * obstacleHeight,

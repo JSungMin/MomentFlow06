@@ -28,12 +28,8 @@ public class PlayerWalkState : StateMachineBehaviour {
 			newVelocity.x = Mathf.Clamp (newVelocity.x, -animator.GetFloat ("MoveSpeed"), animator.GetFloat ("MoveSpeed")) * 0.8f;
 		} else
 			newVelocity.x = Mathf.Clamp (newVelocity.x, -animator.GetFloat ("MoveSpeed"), animator.GetFloat ("MoveSpeed"));
-
-		if (TimeManager.isTimeSlowed) {
-			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity * dynamicObject.customTimeScale;
-		} 
-		else
-			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity;
+		
+		animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity * dynamicObject.customTimeScale;
 	}
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

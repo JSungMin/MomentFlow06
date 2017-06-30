@@ -32,7 +32,7 @@ public class TimeManager : MonoBehaviour
 
 		dynamicObjectList.ForEach (delegate (DynamicObject obj) 
 		{
-			obj.ChangeTimeScale (0);
+				obj.ChangeTimeScale (obj.customTimeScale * 0.25f);
 		});
 
 	}
@@ -41,7 +41,7 @@ public class TimeManager : MonoBehaviour
 	{
 		dynamicObjectList.ForEach (delegate (DynamicObject obj) 
 		{
-			obj.ChangeTimeScale (1);
+			obj.BackToPreviousTimeScale();
 		});
 		isTimePaused = false;
 	}
@@ -51,7 +51,7 @@ public class TimeManager : MonoBehaviour
 		Time.timeScale = 1.0f;
 		dynamicObjectList.ForEach (delegate (DynamicObject obj) 
 		{
-			obj.ChangeTimeScale (1);
+				obj.BackToPreviousTimeScale();
 		});
 
 		AffectTimeScaleToAllAnimator ();

@@ -11,13 +11,15 @@ public class DynamicObject : MonoBehaviour {
 	public float customTimeScale;
 	public float customDeltaTime;
 
+	public List<float> previousTimeScaleList;
+
 	// Use this for initialization
 	void Start () {
 		if (null == rootTransform)
 		{
 			rootTransform = transform;
 		}
-
+		customTimeScale = 1;
 		TimeManager.GetInstance ().dynamicObjectList.Add (this);
 
 		SetDynamicComponents ();
@@ -35,7 +37,15 @@ public class DynamicObject : MonoBehaviour {
 
 	public void ChangeTimeScale (float timeScale)
 	{
+		previousTimeScaleList.Add (customTimeScale);
 		customTimeScale = timeScale;
+		AffectCustomTimeScale ();
+	}
+
+	public void BackToPreviousTimeScale ()
+	{
+		customTimeScale = previousTimeScaleList [previousTimeScaleList.Count - 1];
+		previousTimeScaleList.RemoveAt (previousTimeScaleList.Count - 1);
 		AffectCustomTimeScale ();
 	}
 

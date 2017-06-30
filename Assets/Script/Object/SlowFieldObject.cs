@@ -17,9 +17,12 @@ public class SlowFieldObject : MonoBehaviour {
 	public float lifeTime;
 	public float playTime = 0f;
 
+	public List<Collider> affectedList;
+
 	// Use this for initialization
 	void Start () {
 		playTime = 0;
+		affectedList = new List<Collider> ();
 	}
 	
 	// Update is called once per frame
@@ -85,25 +88,33 @@ public class SlowFieldObject : MonoBehaviour {
 		Debug.DrawLine (new Vector3 (max.x, max.y), new Vector3 (max.x, min.y), Color.blue);
 		#endif
 
-		var objects = Physics.BoxCastAll (centerPosition, halfExtend, Vector3.right, Quaternion.identity, fieldRange, dynamicObjectMask);
+		var objects = Physics.BoxCastAll (centerPosition, halfExtend, Vector3.forward, Quaternion.identity, fieldRange * 0.5f, dynamicObjectMask);
+
+		for (int i = 0; i < affectedList.Count; i++)
+		{
+			var obj = affectedList [i].bounds;
+			if (obj.min.x >= max.x ||
+				obj.max.x <= min.x ||
+				obj.min.y >= max.y ||
+				obj.max.y <= min.y)
+			{
+				var dynamicObject = affectedList [i].GetComponentInParent<DynamicObject> ();
+				if (affectedList[i].gameObject.activeSelf)
+					dynamicObject.BackToPreviousTimeScale();
+				affectedList.RemoveAt (i);
+			}
+		}
 
 		for (int i = 0; i < objects.Length; i++)
 		{
-			var col = objects [i].collider;
-			if (null != col.GetComponentInParent<Rigidbody> ()) 
-			{
-				var vel = col.GetComponentInParent<Rigidbody> ().velocity;
-				vel *= reductionAmount;
-				objects [i].collider.GetComponentInParent<Rigidbody> ().velocity = vel;
+			Debug.Log (objects[i].collider.name);
+			if (affectedList.Contains (objects [i].collider)) {
+				return;
 			}
-			if (0 != col.GetComponentsInChildren<Animator> ().Length) {
-				var animators = col.GetComponentsInChildren<Animator> ();
-				for (int j = 0; j < animators.Length; j++)
-				{
-					var speed = animators [j].speed;
-					speed *= reductionAmount;
-					animators [j].speed = speed;
-				}
+			var col = objects [i].collider.GetComponentInParent <DynamicObject>();
+			if (null != col) {
+				col.ChangeTimeScale (col.customTimeScale * reductionAmount);
+				affectedList.Add (objects [i].collider);
 			}
 		}
 	}

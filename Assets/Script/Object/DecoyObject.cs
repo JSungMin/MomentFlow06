@@ -21,6 +21,7 @@ public class DecoyObject : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		playTime = 0;
+		dynamicObject = GetComponent<DynamicObject> ();
 	}
 	
 	// Update is called once per frame

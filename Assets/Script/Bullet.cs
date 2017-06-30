@@ -37,14 +37,17 @@ public class Bullet : MonoBehaviour {
 
 	public void Start()
 	{
+		gameObject.name = gameObject.name + bulletIndex;
 		rigid = GetComponent<Rigidbody> ();
 		startPosition = transform.position;
 		destroyParticle = GetComponentInChildren<ParticleSystem> ().gameObject;
+		dynamicObject = GetComponent<DynamicObject> ();
 	}
 
 	public void Update()
 	{
 		flingDistance += rigid.velocity.magnitude * dynamicObject.customDeltaTime;
+		rigid.velocity = originVelocity * Mathf.Pow(dynamicObject.customTimeScale, 8f);
 		if (maxFlingDistance < flingDistance)
 		{
 			DestroyBullet ();
@@ -53,7 +56,7 @@ public class Bullet : MonoBehaviour {
 
 	public void FixedUpdate()
 	{
-		rigid.velocity = originVelocity * dynamicObject.customTimeScale;
+		
 	}
 
 	public void OnCollisionEnter(Collision col)
@@ -126,6 +129,8 @@ public class Bullet : MonoBehaviour {
 			Debug.Log ("ignore 발동");
 			Physics.IgnoreCollision (ignoreCollider, GetComponent<Collider> (), false);
 		}
+		dynamicObject.customTimeScale = 1;
+		dynamicObject.previousTimeScaleList.Clear ();
 		BulletPool.Instance.ReturnBullet (gameObject);
 	}
 }
