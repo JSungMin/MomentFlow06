@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Extinguisher : MonoBehaviour
 {
+	public DynamicObject dynamicObject;
+
     private Rigidbody rigidBody;
     private Vector3 explosionPos;
     private float explosionUpwardsModifier = 2.0f;
@@ -44,7 +46,7 @@ public class Extinguisher : MonoBehaviour
 
         if (isExplosing)
         {
-            exploseTimer += TimeManager.GetInstance().customDeltaTime;
+			exploseTimer += dynamicObject.customDeltaTime;
             rigidBody.centerOfMass = Vector3.right * Random.Range(-massRange, massRange) + Vector3.up * Random.Range(-massRange, massRange);
             if (exploseTimer > exploseDelay)
             {

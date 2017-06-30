@@ -9,10 +9,4 @@ public class ParticleTimer : MonoBehaviour {
 	void Start () {
 		ps = GetComponent<ParticleSystem> ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		var ma = ps.main;
-		ma.simulationSpeed = TimeManager.GetInstance ().customTimeScale;
-	}
 }

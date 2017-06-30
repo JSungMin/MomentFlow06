@@ -11,6 +11,11 @@ public class AimState : IStateBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+		if (null == dynamicObject)
+		{
+			dynamicObject = animator.GetComponentInParent<DynamicObject> ();
+		}
+
         if (null == aimTarget)
         {
             aimTarget = animator.GetComponentInParent<AimTarget>();
@@ -32,7 +37,7 @@ public class AimState : IStateBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (TimeManager.GetInstance().IsTimePaused())
+        if (TimeManager.isTimePaused)
             return;
 
 		if (null == enemyInfo.attackTarget)
@@ -66,8 +71,8 @@ public class AimState : IStateBehaviour
 		AimLineRenderer.instance.endPoint.Add (point02);
 		AimLineRenderer.instance.pointAlpha.Add (animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer);
 
-        enemyInfo.AttackDelayTimer += TimeManager.GetInstance().customDeltaTime;
-		offset = Mathf.Lerp (offset, 0, TimeManager.GetInstance ().customDeltaTime);
+		enemyInfo.AttackDelayTimer += dynamicObject.customDeltaTime;
+		offset = Mathf.Lerp (offset, 0, dynamicObject.customDeltaTime);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

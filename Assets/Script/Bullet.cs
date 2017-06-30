@@ -5,6 +5,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 	public int bulletIndex;
 
+	public DynamicObject dynamicObject;
+
 	private Collider ignoreCollider;
 
 	public GameObject owner;
@@ -42,7 +44,7 @@ public class Bullet : MonoBehaviour {
 
 	public void Update()
 	{
-		flingDistance += rigid.velocity.magnitude * TimeManager.GetInstance().customDeltaTime;
+		flingDistance += rigid.velocity.magnitude * dynamicObject.customDeltaTime;
 		if (maxFlingDistance < flingDistance)
 		{
 			DestroyBullet ();
@@ -51,7 +53,7 @@ public class Bullet : MonoBehaviour {
 
 	public void FixedUpdate()
 	{
-		rigid.velocity = originVelocity * TimeManager.GetInstance().customTimeScale;
+		rigid.velocity = originVelocity * dynamicObject.customTimeScale;
 	}
 
 	public void OnCollisionEnter(Collision col)

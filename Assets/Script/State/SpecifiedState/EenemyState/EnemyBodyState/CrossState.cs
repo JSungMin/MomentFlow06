@@ -20,6 +20,11 @@ public class CrossState : IStateBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+		if (null == dynamicObject)
+		{
+			dynamicObject = animator.GetComponentInParent<DynamicObject> ();
+		}
+
         rigid = enemyInfo.rigidBody;
         originY = rigid.transform.position.y;
 
@@ -36,7 +41,7 @@ public class CrossState : IStateBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        rigid.transform.Translate(direction * (distance / 0.66f) * TimeManager.GetInstance().customDeltaTime);
+		rigid.transform.Translate(direction * (distance / 0.66f) * dynamicObject.customDeltaTime);
         rigid.transform.position = new Vector3(
             rigid.transform.position.x,
             originY + heightCurve.Evaluate(stateInfo.normalizedTime) * obstacleHeight,

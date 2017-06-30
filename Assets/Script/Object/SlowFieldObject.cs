@@ -31,8 +31,8 @@ public class SlowFieldObject : MonoBehaviour {
 	private void CalculateRect ()
 	{
 		centerPosition = GetComponent<Collider> ().bounds.center;
-		max = Vector2.zero;
-		min = Vector2.zero;
+		max = centerPosition;
+		min = centerPosition;
 
 		var deltaAngle = 360 / segmentNum;
 
@@ -44,10 +44,11 @@ public class SlowFieldObject : MonoBehaviour {
 
 			if (hits.Length == 0) {
 				var emptyPoint = centerPosition + dir * fieldRange;
+				Debug.DrawLine (centerPosition, emptyPoint, Color.blue);
 				max = new Vector2 (Mathf.Max (max.x, emptyPoint.x), Mathf.Max (max.y, emptyPoint.y));
 				min = new Vector2 (Mathf.Min (min.x, emptyPoint.x), Mathf.Min (min.y, emptyPoint.y));
 			} else {
-				var hitPoint = hits[hits.Length - 1].point;
+				var hitPoint = hits[0].point;
 				hitPoint.z = 0;
 				float dis = Vector3.Distance (centerPosition, hitPoint);
 				for (int j = 0; j < hits.Length; j++)
@@ -56,11 +57,13 @@ public class SlowFieldObject : MonoBehaviour {
 					hit.z = 0;
 					if (Vector3.Distance (centerPosition, hit) < dis)
 					{
-						hitPoint = hits [j].point;
+						hitPoint = hit;
 						hitPoint.z = transform.position.z;
 						dis = Vector3.Distance (centerPosition, hit);
 					}
 				}
+				Debug.DrawLine (centerPosition, hitPoint, Color.blue);
+		
 				max = new Vector2 (Mathf.Max (max.x, hitPoint.x), Mathf.Max (max.y, hitPoint.y));
 				min = new Vector2 (Mathf.Min (min.x, hitPoint.x), Mathf.Min (min.y, hitPoint.y));
 			}

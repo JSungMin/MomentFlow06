@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlayerRunState : StateMachineBehaviour {
 
+	DynamicObject dynamicObject;
+
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-	//override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-	//
-	//}
+	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+		dynamicObject = animator.GetComponentInParent <DynamicObject> ();
+	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
@@ -21,7 +23,7 @@ public class PlayerRunState : StateMachineBehaviour {
 		newVelocity += Vector3.right * animator.GetFloat ("HorizontalInput") * accel * Time.unscaledDeltaTime;
 		newVelocity.x = Mathf.Clamp (newVelocity.x, -animator.GetFloat("MaxMoveSpeed"), animator.GetFloat("MaxMoveSpeed"));
 		if (TimeManager.isTimeSlowed)
-			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity * TimeManager.GetInstance ().customTimeScale;
+			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity * dynamicObject.customTimeScale;
 		else
 			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity;
 	}

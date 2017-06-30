@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerWalkState : StateMachineBehaviour {
 
+	private DynamicObject dynamicObject;
+
 	static void SetStepDirection (Animator animator)
 	{
 		if (animator.GetFloat ("HorizontalInput") != 0)
@@ -13,7 +15,7 @@ public class PlayerWalkState : StateMachineBehaviour {
 		}
 	}
 
-	static void Walk (Animator animator, AnimatorStateInfo stateInfo)
+	void Walk (Animator animator, AnimatorStateInfo stateInfo)
 	{
 		SetStepDirection (animator);
 
@@ -28,16 +30,16 @@ public class PlayerWalkState : StateMachineBehaviour {
 			newVelocity.x = Mathf.Clamp (newVelocity.x, -animator.GetFloat ("MoveSpeed"), animator.GetFloat ("MoveSpeed"));
 
 		if (TimeManager.isTimeSlowed) {
-			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity * TimeManager.GetInstance().customTimeScale;
+			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity * dynamicObject.customTimeScale;
 		} 
 		else
 			animator.GetComponentInParent<Rigidbody> ().velocity = newVelocity;
 	}
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-	//override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-	//
-	//}
+	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+		dynamicObject = animator.GetComponentInParent <DynamicObject> ();
+	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {

@@ -6,6 +6,11 @@ public class CrouchState : IStateBehaviour
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+		if (null == dynamicObject)
+		{
+			dynamicObject = animator.GetComponentInParent<DynamicObject> ();
+		}
+
         enemyInfo.CrouchDelayTimer = 0.0f;
         enemyInfo.viewHeightScale = 0.5f;
         enemyInfo.SetDirectionTo(enemyInfo.attackTarget);
@@ -13,7 +18,7 @@ public class CrouchState : IStateBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        enemyInfo.CrouchDelayTimer += TimeManager.GetInstance().customDeltaTime;
+		enemyInfo.CrouchDelayTimer += dynamicObject.customDeltaTime;
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

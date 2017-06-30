@@ -6,6 +6,7 @@ public class IStateBehaviour : StateMachineBehaviour
 {
     protected SpriteRenderer shoulderSpriteRenderer;
     protected EnemyInfo enemyInfo;
+	protected DynamicObject dynamicObject;
 
     public void LoadData(SpriteRenderer shoulderSpriteRenderer, EnemyInfo enemyInfo)
     {

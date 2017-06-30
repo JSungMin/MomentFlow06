@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DecoyObject : MonoBehaviour {
+	public DynamicObject dynamicObject;
 
 	public int segmentNum;
 	public Vector3 max, min;
@@ -32,14 +33,14 @@ public class DecoyObject : MonoBehaviour {
 			DoDestroy ();
 		}
 		else
-			playTime += TimeManager.GetInstance ().customDeltaTime;
+			playTime += dynamicObject.customDeltaTime;
 	}
 
 	private void CalculateRect ()
 	{
 		centerPosition = GetComponent<Collider> ().bounds.center;
-		max = Vector2.zero;
-		min = Vector2.zero;
+		max = centerPosition;
+		min = centerPosition;
 
 		var deltaAngle = 360 / segmentNum;
 
@@ -110,7 +111,7 @@ public class DecoyObject : MonoBehaviour {
 	{
 		if (destroyTimer <= 1f) {
 			GetComponent<_2dxFX_Hologram2> ()._Alpha = Mathf.Lerp (destroyTimer, 1f, Time.deltaTime);
-			destroyTimer += TimeManager.GetInstance ().customDeltaTime;
+			destroyTimer += dynamicObject.customDeltaTime;
 		} else {
 			DestroyObject (this.gameObject);
 		}

@@ -4,66 +4,59 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
-    public float customDeltaTime { private set; get; }
-	public float customTimeScale;
-
 	public static bool isTimeSlowed;
 
 	public static bool isTimePaused = false;
 
-    private void Update()
-    {
-		customDeltaTime =  Time.deltaTime * customTimeScale;
-    }
+	public List<DynamicObject> dynamicObjectList = new List<DynamicObject>();
 
-
-    public void SetCustomTimeScale(float scale)
-    {
-        customTimeScale = scale;
-		AffectCustomTimeScaleToAllAnimator ();
-    }
+	public void SetCustomTimeScale (DynamicObject obj, float timeScale)
+	{
+		obj.ChangeTimeScale (timeScale);
+	}
 
 	public void TimePause ()
 	{
 		isTimePaused = true;
-		customTimeScale = 0;
-		AffectCustomTimeScaleToAllAnimator ();
+
+		dynamicObjectList.ForEach (delegate (DynamicObject obj) 
+		{
+			obj.ChangeTimeScale (0);
+		});
 	}
 
 	public void TimeSlowDown (float timeScale)
 	{
-		Time.timeScale = timeScale;
-		customTimeScale = timeScale;
-
-		AffectTimeScaleToAllAnimator ();
-
 		isTimeSlowed = true;
+		Time.timeScale = timeScale;
+
+		dynamicObjectList.ForEach (delegate (DynamicObject obj) 
+		{
+			obj.ChangeTimeScale (0);
+		});
+
 	}
 	// Time Pause의 Nagative
 	public void TimeResume ()
 	{
-		customTimeScale = 1;
-		AffectCustomTimeScaleToAllAnimator ();
+		dynamicObjectList.ForEach (delegate (DynamicObject obj) 
+		{
+			obj.ChangeTimeScale (1);
+		});
 		isTimePaused = false;
 	}
 	// TimeSlowDown의 Nagative
 	public void TimeNormalize ()
 	{
 		Time.timeScale = 1.0f;
-		customTimeScale = 1;
+		dynamicObjectList.ForEach (delegate (DynamicObject obj) 
+		{
+			obj.ChangeTimeScale (1);
+		});
 
 		AffectTimeScaleToAllAnimator ();
 
 		isTimeSlowed = false;
-	}
-
-	private void AffectCustomTimeScaleToAllAnimator ()
-	{
-		var animators = GameObject.FindObjectsOfType <Animator> ();
-		for (int i = 0; i < animators.Length; i++)
-		{
-			animators [i].speed = customTimeScale;
-		}
 	}
 
 	private void AffectTimeScaleToAllAnimator ()
@@ -74,15 +67,10 @@ public class TimeManager : MonoBehaviour
 			animators [i].speed = Time.timeScale;
 		}
 	}
-
-    public bool IsTimePaused()
-    {
-        return customTimeScale == 0.0f;
-    }
-
+		
     public IEnumerator IsTimePausedCo()
     {
-        while (IsTimePaused())
+		while (isTimePaused)
             yield return new WaitForSeconds(0.02f);
     }
 
@@ -97,7 +85,7 @@ public class TimeManager : MonoBehaviour
             container = new GameObject();
             container.name = "TimeManager";
             instance = container.AddComponent<TimeManager>();
-			instance.customTimeScale = 1;
+
         }
         return instance;
     }

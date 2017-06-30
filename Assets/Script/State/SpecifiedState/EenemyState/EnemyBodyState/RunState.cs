@@ -6,6 +6,14 @@ public class RunState : IStateBehaviour
 {
     private const float speed = 1.0f;
     
+	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+	{
+		if (null == dynamicObject)
+		{
+			dynamicObject = animator.GetComponentInParent<DynamicObject> ();
+		}
+	}
+
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // hide
@@ -19,7 +27,7 @@ public class RunState : IStateBehaviour
             enemyInfo.SetDirectionTo(enemyInfo.attackTarget);
         }
 
-        enemyInfo.transform.Translate(enemyInfo.GetDirection() * TimeManager.GetInstance().customDeltaTime * speed);
+		enemyInfo.transform.Translate(enemyInfo.GetDirection() * dynamicObject.customDeltaTime * speed);
     }
 
 
