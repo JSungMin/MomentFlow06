@@ -75,7 +75,8 @@ public class PlayerAction : MonoBehaviour {
 			new TimePause ((HumanInfo)playerInfo, KeyCode.E, 1.0f, 0.5f, 0.5f),
 			new TimeRecall ((HumanInfo)playerInfo ,KeyCode.R, 1.0f),
 			new StrikeAttack((HumanInfo)playerInfo  ,KeyCode.Space),
-			new Decoy ((HumanInfo)playerInfo, KeyCode.F1 , 0)
+			new Decoy ((HumanInfo)playerInfo, KeyCode.F1 , 0),
+			new SlowField ((HumanInfo)playerInfo, KeyCode.F2, 0)
 		};
 		skillNum = skills.Length;
 		for (int i = 0; i < skillNum; i++)

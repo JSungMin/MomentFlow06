@@ -6,7 +6,7 @@ public class EnemyShoulderAction : Shoulder
 {
     private AimTarget enemyAimTarget;
 
-    void Start()
+    public new void Start()
     {
         base.Start();
         enemyAimTarget = GetComponentInParent<AimTarget>();

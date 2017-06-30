@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DecoyObject : MonoBehaviour {
+public class SlowFieldObject : MonoBehaviour {
 
 	public int segmentNum;
-	public Vector3 max, min;
-
-	public float aggroRange;
-
-	private Vector3 centerPosition;
-
 	public LayerMask collisionMask;
-	public LayerMask enemyMask;
+	public LayerMask dynamicObjectMask;
+
+	public Vector3 max, min;
+	public float fieldRange;
+	[Range(0,1)]
+	public float reductionAmount;
+	private Vector3 centerPosition;
 
 	public float lifeTime;
 	public float playTime = 0f;
@@ -25,14 +25,7 @@ public class DecoyObject : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		CalculateRect ();
-		CheckEnemyInAggroRect ();
-
-		if (CheckDestroy())
-		{
-			DoDestroy ();
-		}
-		else
-			playTime += TimeManager.GetInstance ().customDeltaTime;
+		ApplyTimeReduction ();
 	}
 
 	private void CalculateRect ()
@@ -47,10 +40,10 @@ public class DecoyObject : MonoBehaviour {
 		{
 			var dir = Quaternion.Euler (0, 0, deltaAngle * i) * Vector3.right;
 
-			var hits = Physics.RaycastAll (centerPosition, dir, aggroRange, collisionMask);
+			var hits = Physics.RaycastAll (centerPosition, dir, fieldRange, collisionMask);
 
 			if (hits.Length == 0) {
-				var emptyPoint = centerPosition + dir * aggroRange;
+				var emptyPoint = centerPosition + dir * fieldRange;
 				max = new Vector2 (Mathf.Max (max.x, emptyPoint.x), Mathf.Max (max.y, emptyPoint.y));
 				min = new Vector2 (Mathf.Min (min.x, emptyPoint.x), Mathf.Min (min.y, emptyPoint.y));
 			} else {
@@ -74,7 +67,7 @@ public class DecoyObject : MonoBehaviour {
 		}
 	}
 
-	private void CheckEnemyInAggroRect ()
+	private void ApplyTimeReduction ()
 	{
 		var halfExtend = new Vector3 (
 			Mathf.Abs(max.x - min.x) * 0.5f,
@@ -83,36 +76,32 @@ public class DecoyObject : MonoBehaviour {
 		);
 
 		#if UNITY_EDITOR
-		Debug.DrawLine (new Vector3 (min.x,max.y), new Vector3 (max.x,max.y), Color.red);
-		Debug.DrawLine (new Vector3 (min.x,min.y), new Vector3 (max.x,min.y), Color.red);
-		Debug.DrawLine (new Vector3 (min.x,max.y), new Vector3 (min.x, min.y), Color.red);
-		Debug.DrawLine (new Vector3 (max.x, max.y), new Vector3 (max.x, min.y), Color.red);
+		Debug.DrawLine (new Vector3 (min.x,max.y), new Vector3 (max.x,max.y), Color.blue);
+		Debug.DrawLine (new Vector3 (min.x,min.y), new Vector3 (max.x,min.y), Color.blue);
+		Debug.DrawLine (new Vector3 (min.x,max.y), new Vector3 (min.x, min.y), Color.blue);
+		Debug.DrawLine (new Vector3 (max.x, max.y), new Vector3 (max.x, min.y), Color.blue);
 		#endif
 
-		var enemies = Physics.BoxCastAll (centerPosition, halfExtend, Vector3.right, Quaternion.identity, aggroRange, enemyMask);
+		var objects = Physics.BoxCastAll (centerPosition, halfExtend, Vector3.right, Quaternion.identity, fieldRange, dynamicObjectMask);
 
-		for (int i = 0; i < enemies.Length; i++)
+		for (int i = 0; i < objects.Length; i++)
 		{
-			enemies [i].collider.GetComponentInParent<EnemyInfo> ().attackTarget = gameObject;
-		}
-	}
-
-	private bool CheckDestroy() 
-	{
-		if (playTime >= lifeTime)
-		{
-			return true;
-		}
-		return false;
-	}
-	float destroyTimer = 0;
-	private void DoDestroy ()
-	{
-		if (destroyTimer <= 1f) {
-			GetComponent<_2dxFX_Hologram2> ()._Alpha = Mathf.Lerp (destroyTimer, 1f, Time.deltaTime);
-			destroyTimer += TimeManager.GetInstance ().customDeltaTime;
-		} else {
-			DestroyObject (this.gameObject);
+			var col = objects [i].collider;
+			if (null != col.GetComponentInParent<Rigidbody> ()) 
+			{
+				var vel = col.GetComponentInParent<Rigidbody> ().velocity;
+				vel *= reductionAmount;
+				objects [i].collider.GetComponentInParent<Rigidbody> ().velocity = vel;
+			}
+			if (0 != col.GetComponentsInChildren<Animator> ().Length) {
+				var animators = col.GetComponentsInChildren<Animator> ();
+				for (int j = 0; j < animators.Length; j++)
+				{
+					var speed = animators [j].speed;
+					speed *= reductionAmount;
+					animators [j].speed = speed;
+				}
+			}
 		}
 	}
 }

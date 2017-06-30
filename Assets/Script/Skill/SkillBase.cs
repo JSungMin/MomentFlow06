@@ -8,7 +8,8 @@ public enum SKILL
     TimePause = 0 ,
     TimeRevert = 1 ,
 	StrikeAttack = 2,
-	Decoy = 3
+	Decoy = 3,
+	SlowField = 4
 }
 
 public abstract class SkillBase : MonoBehaviour

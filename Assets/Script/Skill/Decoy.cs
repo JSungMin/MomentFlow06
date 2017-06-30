@@ -47,6 +47,7 @@ public class Decoy : SkillBase {
 		var position = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		position.z = ownerInfo.transform.position.z;
 		var decoy = Instantiate (decoyObject, position, Quaternion.identity);
+		decoy.GetComponent<SpriteRenderer> ().sprite = sprite;
 	}
 
 	protected override void CancelSkill ()

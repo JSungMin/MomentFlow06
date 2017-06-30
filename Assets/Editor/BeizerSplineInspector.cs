@@ -60,7 +60,7 @@ public class BeizerSplineInspector : Editor {
 	private Vector3 ShowPoint (int index) {
 		Vector3 point = (spline.GetControlPoint(index));
 		float size = HandleUtility.GetHandleSize(point);
-		if (Handles.Button(point, handleRotation, size*handleSize, pickSize, Handles.DotCap)) {
+		if (Handles.Button(point, handleRotation, size*handleSize, pickSize, Handles.DotHandleCap)) {
 			selectedIndex = index;
 			Repaint ();
 		}

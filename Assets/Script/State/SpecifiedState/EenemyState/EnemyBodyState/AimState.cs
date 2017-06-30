@@ -20,9 +20,11 @@ public class AimState : IStateBehaviour
 		Collider targetCollider = null;
 
 		if (null != enemyInfo.attackTarget)
-        	targetCollider = enemyInfo.attackTarget.GetComponent<Collider>();
+			targetCollider = enemyInfo.attackTarget.GetComponent<Collider> ();
+		else
+			return;
         if (targetCollider == null)
-            targetCollider = enemyInfo.attackTarget.GetComponentInChildren<Collider>();
+			targetCollider = enemyInfo.attackTarget.GetComponentInChildren<Collider>();
 
 		offset = Random.Range (-targetCollider.bounds.extents.y * 0.5f, targetCollider.bounds.extents.y);
 		targetPos = targetCollider.bounds.center;
@@ -32,6 +34,11 @@ public class AimState : IStateBehaviour
     {
         if (TimeManager.GetInstance().IsTimePaused())
             return;
+
+		if (null == enemyInfo.attackTarget)
+		{
+			return;
+		}
 
 		Collider targetCollider = enemyInfo.attackTarget.GetComponent<Collider>();
 		if (targetCollider == null)
