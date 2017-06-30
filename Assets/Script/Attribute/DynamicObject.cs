@@ -20,9 +20,16 @@ public class DynamicObject : MonoBehaviour {
 			rootTransform = transform;
 		}
 		customTimeScale = 1;
-		TimeManager.GetInstance ().dynamicObjectList.Add (this);
 
 		SetDynamicComponents ();
+	}
+
+	public void OnEnable()
+	{
+		if (!TimeManager.GetInstance().dynamicObjectList.Contains(this))
+		{
+			TimeManager.GetInstance ().dynamicObjectList.Add (this);
+		}
 	}
 
 	public void OnDisable()
@@ -44,8 +51,11 @@ public class DynamicObject : MonoBehaviour {
 
 	public void BackToPreviousTimeScale ()
 	{
-		customTimeScale = previousTimeScaleList [previousTimeScaleList.Count - 1];
-		previousTimeScaleList.RemoveAt (previousTimeScaleList.Count - 1);
+		if (previousTimeScaleList.Count != 0) {
+			customTimeScale = previousTimeScaleList [previousTimeScaleList.Count - 1];
+			previousTimeScaleList.RemoveAt (previousTimeScaleList.Count - 1);
+		} else
+			customTimeScale = 1f;
 		AffectCustomTimeScale ();
 	}
 
@@ -57,15 +67,18 @@ public class DynamicObject : MonoBehaviour {
 
 	private void AffectCustomTimeScale ()
 	{
-		for (int i = 0; i < animators.Length; i++)
-		{
-			animators [i].speed = customTimeScale;
+		if (null != animators) {
+			for (int i = 0; i < animators.Length; i++)
+			{
+				animators [i].speed = customTimeScale;
+			}
 		}
-
-		for (int i = 0; i < particles.Length; i++)
-		{
-			var ma = particles [i].main;
-			ma.simulationSpeed = customTimeScale;
+		if (null != particles) {
+			for (int i = 0; i < particles.Length; i++)
+			{
+				var ma = particles [i].main;
+				ma.simulationSpeed = customTimeScale;
+			}
 		}
 	}
 }
