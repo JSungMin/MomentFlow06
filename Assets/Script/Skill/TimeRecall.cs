@@ -58,7 +58,7 @@ public class TimeRecall : SkillBase
         RevertObjs(timeRevertables);
 
 		TimeManager.GetInstance ().TimeNormalize ();
-
+		Debug.Log ("Cancel");
         timeRevertables.Clear();
     }
 

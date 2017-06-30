@@ -23,7 +23,7 @@ public class LightColor : MonoBehaviour {
 	void Update () {
 		if (!renderOnce)
 		{
-			GetComponent<MeshCollider> ().sharedMesh = GetComponent<MeshFilter> ().sharedMesh;
+			
 		}
 
 		GetComponent<DynamicLight2D.DynamicLight> ().lightMaterial.SetFloat ("_Radius",lightColorRadius);

@@ -22,7 +22,6 @@ _StencilOp ("Stencil Operation", Float) = 0
 _StencilWriteMask ("Stencil Write Mask", Float) = 255
 _StencilReadMask ("Stencil Read Mask", Float) = 255
 _ColorMask ("Color Mask", Float) = 15
-
 }
 
 SubShader
@@ -43,6 +42,12 @@ WriteMask [_StencilWriteMask]
 
 Pass
 {
+
+	Stencil{
+		Ref 5
+		Comp notequal
+		Pass Keep
+	}
 
 CGPROGRAM
 #pragma vertex vert
@@ -102,17 +107,18 @@ float4 frag (v2f i) : COLOR
 {
 float2 uv = i.texcoord;
 float4 tex = tex2D(_MainTex, uv)*i.color;
+
 float t = frac(_Distortion*0.9999);
-float4 c = smoothstep(t/1.2, t+.1, a(3.5*uv));
-c=tex*c;
-c.r=lerp(c.r,c.r*15.0*(1-c.a)*8,_Distortion);
-c.g=lerp(c.g,c.g*10.0*(1-c.a)*4,_Distortion);
+float4 c = tex;
+
+c = smoothstep(t/1.2, t+.1, a(8*uv)) * c;
+c.r=lerp(c.r,c.r*15.0*(1-c.a),_Distortion);
+c.g=lerp(c.g,c.g*10.0*(1-c.a),_Distortion);
 c.b=lerp(c.b,c.b*5.0*(1-c.a),_Distortion);
 
+
+
 return float4(c.rgb,c.a*1-_Alpha);
-
-
-
 }
 
 ENDCG

@@ -132,7 +132,7 @@ public class PlayerAction : MonoBehaviour {
 			}
 		}
 
-		CheckChangeWeapon ();
+		InputNumpad ();
 
 		CheckInteractWithNPC (nearestNPC);
 		CheckCrossObstacle (nearestObstacle);
@@ -195,7 +195,7 @@ public class PlayerAction : MonoBehaviour {
 		}
 	}
 
-	void CheckChangeWeapon ()
+	void InputNumpad ()
 	{
 		var mouseWheel = Input.GetAxis ("Mouse ScrollWheel");
 		if (mouseWheel < 0) {
@@ -208,12 +208,19 @@ public class PlayerAction : MonoBehaviour {
 		int inputNumeric = InputParsher.NumericInputToInteger(Input.inputString);
 		if (Input.GetKeyDown (InputParsher.NumericInputToKeyCode(Input.inputString))) {
 			equiptInfo.EquiptWeapon (inputNumeric - 1);
-			if (!TimeManager.isTimeSlowed)
-				return;
+
 			if (numberPadToggleInput[inputNumeric - 1])
 				numberPadToggleInput [inputNumeric - 1] = false;
 			else
 				numberPadToggleInput [inputNumeric - 1] = true;
+		}
+	}
+
+	public void ResetNumpadList (bool val)
+	{
+		for (int i = 0; i < numberPadToggleInput.Count; i++)
+		{
+			numberPadToggleInput [i] = val;
 		}
 	}
 

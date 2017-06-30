@@ -49,14 +49,13 @@ public class TimeManager : MonoBehaviour
 	public void TimeNormalize ()
 	{
 		Time.timeScale = 1.0f;
+		isTimeSlowed = false;
 		dynamicObjectList.ForEach (delegate (DynamicObject obj) 
 		{
-				obj.BackToPreviousTimeScale();
+				if (null != obj)
+					obj.BackToPreviousTimeScale();
 		});
-
-		AffectTimeScaleToAllAnimator ();
-
-		isTimeSlowed = false;
+		GameObject.FindObjectOfType<PlayerAction> ().ResetNumpadList (false);
 	}
 
 	private void AffectTimeScaleToAllAnimator ()

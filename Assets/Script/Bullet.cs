@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour {
 	public void Update()
 	{
 		flingDistance += rigid.velocity.magnitude * dynamicObject.customDeltaTime;
-		rigid.velocity = originVelocity * Mathf.Pow(dynamicObject.customTimeScale, 8f);
+		rigid.velocity = originVelocity * Mathf.Pow(dynamicObject.customTimeScale, 12f);
 		if (maxFlingDistance < flingDistance)
 		{
 			DestroyBullet ();

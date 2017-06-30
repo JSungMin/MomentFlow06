@@ -48,6 +48,8 @@ public class Decoy : SkillBase {
 		position.z = ownerInfo.transform.position.z;
 		var decoy = Instantiate (decoyObject, position, Quaternion.identity);
 		decoy.GetComponent<SpriteRenderer> ().sprite = sprite;
+
+		TimeManager.GetInstance ().TimeNormalize ();
 	}
 
 	protected override void CancelSkill ()

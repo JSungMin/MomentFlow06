@@ -44,7 +44,10 @@ public class SlowField : SkillBase {
 
 	protected override void UseSkill ()
 	{
-		Debug.Log ("Make Field");
+		var position = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+		position.z = ownerInfo.transform.position.z;
+		var slowField = Instantiate (slowFieldObject, position, Quaternion.identity);
+		TimeManager.GetInstance ().TimeNormalize ();
 	}
 
 	protected override void CancelSkill ()
