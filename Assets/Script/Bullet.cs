@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour {
 	public void Update()
 	{
 		flingDistance += rigid.velocity.magnitude * dynamicObject.customDeltaTime;
-		rigid.velocity = originVelocity * Mathf.Pow(dynamicObject.customTimeScale, 12f);
+		rigid.velocity = originVelocity * Mathf.Pow(dynamicObject.customTimeScale, 8f);
 		if (maxFlingDistance < flingDistance)
 		{
 			DestroyBullet ();
@@ -76,13 +76,21 @@ public class Bullet : MonoBehaviour {
 			}
 			else if (col.collider.CompareTag ("Player"))
 			{
-				
+				ignoreCollider = col.collider;
+				Physics.IgnoreCollision (ignoreCollider, GetComponent<Collider>(), true);
+				return;
 			}
 		} 
 		else if (owner.CompareTag ("Enemy"))
 		{
 			if (col.collider.CompareTag ("Player"))
 			{
+				if (col.collider.CompareTag("Decoy"))
+				{
+					ignoreCollider = col.collider;
+					Physics.IgnoreCollision (ignoreCollider, GetComponent<Collider>(), true);
+					return;
+				}
                 col.collider.GetComponentInParent<HumanInfo>().hp -= damage;
 			}
 			if (col.collider.CompareTag ("Enemy"))
