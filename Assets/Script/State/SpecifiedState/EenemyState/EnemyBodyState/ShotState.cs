@@ -9,6 +9,7 @@ public class ShotState : IStateBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+		enemyInfo = animator.GetComponentInParent<EnemyInfo> ();
     }
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -17,6 +18,6 @@ public class ShotState : IStateBehaviour
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-		enemyInfo.attackTarget = null;
+		enemyInfo.GetComponentInChildren<EnemyAttackChecker> ().attackTimer = 0;
     }
 }

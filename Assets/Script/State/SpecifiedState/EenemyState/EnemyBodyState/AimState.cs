@@ -20,7 +20,7 @@ public class AimState : IStateBehaviour
         {
             aimTarget = animator.GetComponentInParent<AimTarget>();
         }
-
+		enemyInfo = animator.GetComponentInParent<EnemyInfo> ();
         enemyInfo.AttackDelayTimer = 0;
 		Collider targetCollider = null;
 
@@ -69,15 +69,15 @@ public class AimState : IStateBehaviour
 
 		AimLineRenderer.instance.startPoint.Add (point01);
 		AimLineRenderer.instance.endPoint.Add (point02);
-		AimLineRenderer.instance.pointAlpha.Add (animator.GetComponentInParent<EnemyInfo>().AttackDelayTimer);
+		AimLineRenderer.instance.pointAlpha.Add (enemyInfo.GetComponentInChildren<EnemyAttackChecker>().attackTimer);
 
-		enemyInfo.AttackDelayTimer += dynamicObject.customDeltaTime;
+		enemyInfo.GetComponentInChildren<EnemyAttackChecker>().attackTimer += dynamicObject.customDeltaTime;
 		offset = Mathf.Lerp (offset, 0, dynamicObject.customDeltaTime);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        enemyInfo.AttackDelayTimer = 0.0f;
+		enemyInfo.GetComponentInChildren<EnemyAttackChecker>().attackTimer = 0.0f;
 
         enemyInfo.alertSituation.GetInSituation(3.0f);
     }

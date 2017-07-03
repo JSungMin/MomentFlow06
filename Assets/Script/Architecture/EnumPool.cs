@@ -34,7 +34,8 @@ public enum GunType
 public enum InteractableObjectType
 {
 	Door,
-	Chest
+	Chest,
+	Other
 }
 
 public enum ItemType
@@ -42,6 +43,18 @@ public enum ItemType
 	Potion = 0,
 	GunAmmoItem,
 	Gun
+}
+
+public enum EnemyActionType
+{
+	Idle = 0,
+	Suspicious = 1,
+	Attack = 2,
+	Chase = 3,
+	SearchTarget = 4,
+	Restore,
+	Damaged,
+	Die
 }
 
 public enum BodyStateType

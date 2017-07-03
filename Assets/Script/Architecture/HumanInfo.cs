@@ -11,6 +11,10 @@ public class HumanInfo : MonoBehaviour {
 	public int maxPocketCapacity;
 	public int nowPocketCapacity;
 
+	public Collider bodyCollider;
+	public Collider triggerCollider;
+
+	public bool isCrouched;
 
 	public bool CanStoreItem()
 	{

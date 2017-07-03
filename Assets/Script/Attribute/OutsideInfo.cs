@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OutsideInfo : MonoBehaviour {
+	public GameObject owner;
+
+	public bool isOnObstacle;
 
 	public List<GameObject> obstacleList;
+	public GameObject switchableObstacle;
+	public GameObject teleportEntrance;
 	public List<GameObject> stairList;
 	public Collider cutSceneTrigger;
 	public List<GameObject> interactableObject;
@@ -17,9 +22,11 @@ public class OutsideInfo : MonoBehaviour {
 
 	public void OnTriggerEnter(Collider col)
 	{
+		Debug.Log (col.name);
 		if (col.CompareTag("Obstacle"))
 		{
 			obstacleList.Add (col.gameObject);
+			isOnObstacle = true;
 		}
 		else if (col.CompareTag ("Stair"))
 		{
@@ -33,8 +40,10 @@ public class OutsideInfo : MonoBehaviour {
 		}
 		else if (col.CompareTag ("CutSceneTrigger"))
 		{
-			cutSceneTrigger = col;
-			cutSceneTrigger.GetComponent<CutSceneEventTrigger> ().StartTrigger ();
+			if (gameObject.CompareTag ("Player")) {
+				cutSceneTrigger = col;
+				cutSceneTrigger.GetComponent<CutSceneEventTrigger> ().StartTrigger ();
+			}
 		}
 		else if (col.CompareTag ("NPC"))
 		{
@@ -43,6 +52,15 @@ public class OutsideInfo : MonoBehaviour {
 		else if (col.GetComponent<Collider>().CompareTag ("Enemy"))
 		{
 			enemyList.Add (col.GetComponent<Collider>().gameObject);
+		}
+		else if (col.CompareTag("SwitchableObstacle"))
+		{
+			switchableObstacle = col.gameObject;
+			isOnObstacle = true;
+		}
+		else if(col.CompareTag("TeleportEntrance"))
+		{
+			teleportEntrance = col.gameObject;
 		}
 
 	}
@@ -74,6 +92,14 @@ public class OutsideInfo : MonoBehaviour {
 				enemyList.Add (col.GetComponent<Collider>().gameObject);
 			}
 		}
+		else if (col.CompareTag("SwitchableObstacle"))
+		{
+			switchableObstacle = col.gameObject;
+		}
+		else if(col.CompareTag("TeleportEntrance"))
+		{
+			teleportEntrance = col.gameObject;
+		}
 	}
 
 	public void OnTriggerExit(Collider col)
@@ -81,6 +107,7 @@ public class OutsideInfo : MonoBehaviour {
 		if (col.CompareTag("Obstacle"))
 		{
 			obstacleList.Remove (col.gameObject);
+			isOnObstacle = false;
 		}
 		else if (col.CompareTag("Stair"))
 		{
@@ -108,6 +135,15 @@ public class OutsideInfo : MonoBehaviour {
 				enemyList.Remove (col.gameObject);
 			}
 		}
+		else if (col.CompareTag("SwitchableObstacle"))
+		{
+			switchableObstacle = null;
+			isOnObstacle = false;
+		}
+		else if(col.CompareTag("TeleportEntrance"))
+		{
+			teleportEntrance = null;
+		}
 	}
 
 	public GameObject GetNearestEnemyObject ()
@@ -128,7 +164,7 @@ public class OutsideInfo : MonoBehaviour {
 		}
 		return null;
 	}
-
+		
 	public GameObject GetNearestObstacleObject()
 	{
 		if (obstacleList.Count != 0)

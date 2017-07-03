@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyInfo : HumanInfo
 {
+	public EnemyActionType actionType;
+
 	public int teamId;
 	[SerializeField]
     private Vector3 aimPos;
@@ -20,7 +22,15 @@ public class EnemyInfo : HumanInfo
 
     private GameObject[] enemies;
     public List<GameObject> sameRawEnemies { private set; get; }
-    // attack 하기 전 aim을 하고 있는 시간
+    
+	//Enemy가 Target을 디텍트하기 위해 채워야 할 게이지
+	public float detectGauge; // 안전성 검증 후 private로 정할 것
+	public float maxDetectGauge; 
+	public float detectIncreasement;
+	public float detectDecreasement;
+	public bool isDetect;
+
+	// attack 하기 전 aim을 하고 있는 시간
     private float attackDelayTimer;
 
 	public float findRangeOffset;
@@ -67,9 +77,9 @@ public class EnemyInfo : HumanInfo
         boxCollider = GetComponentInChildren<BoxCollider>();
         aimTarget = GetComponent<AimTarget>();
         
-        sameRawObstacles = AllocateSameRawObjectListByTag("Obstacle");
-        sameRawWalls = AllocateSameRawObjectListByTag("Wall");
-        sameRawEnemies = AllocateSameRawObjectListByTag("Enemy");
+        //sameRawObstacles = AllocateSameRawObjectListByTag("Obstacle");
+        //sameRawWalls = AllocateSameRawObjectListByTag("Wall");
+        //sameRawEnemies = AllocateSameRawObjectListByTag("Enemy");
     }
 
     public void SetAttackTarget(GameObject target)
@@ -130,9 +140,42 @@ public class EnemyInfo : HumanInfo
         get { return crouchDelayTimer; }
     }
 
+	public float detectSustainDuration;
+	private float detectSustainTimer;
+
+	public void IncreaseDetectGauge()
+	{
+		if (!isDetect) {
+			detectGauge = Mathf.Clamp (detectGauge + detectIncreasement * GetComponentInChildren<DynamicObject> ().customDeltaTime, 0, maxDetectGauge);
+		}
+		if (detectGauge == maxDetectGauge)
+		{
+			detectSustainTimer = 0;
+			isDetect = true;
+		}
+	}
+
+	public void DecreaseDetectGauge()
+	{
+		if (isDetect) {
+			if (detectSustainTimer >= detectSustainDuration) {
+				isDetect = false;
+				detectSustainTimer = 0;
+			}
+			else
+				detectSustainTimer += GetComponentInChildren<DynamicObject> ().customDeltaTime;
+		} else {
+			detectGauge = Mathf.Clamp (detectGauge - detectDecreasement * GetComponentInChildren<DynamicObject> ().customDeltaTime, 0, maxDetectGauge);
+		}
+	}
+
     public bool IsInAttackRange(GameObject obj)
     {
-        return Vector3.Distance(obj.transform.position, transform.position) < attackRange;
+		var point01 = obj.transform.position;
+		var point02 = transform.position;
+		point01.z = 0;
+		point02.z = 0;
+		return Vector3.Distance(point01, point02) < attackRange;
     }
 
     public bool IsInFindRange(GameObject obj)
@@ -233,10 +276,20 @@ public class EnemyInfo : HumanInfo
         SetDirection(obj.transform.position.x < transform.position.x);
     }
 
+	public void SetDirectionTo (Vector3 targetPos)
+	{
+		SetDirection (targetPos.x < transform.position.x);
+	}
+
     public void SetDirectionOppositeTo(GameObject obj)
     {
         SetDirection(obj.transform.position.x > transform.position.x);
     }
+
+	public void SetDirectionOppositeTo (Vector3 targetPos)
+	{
+		SetDirection (targetPos.x > transform.position.x);
+	}
 
     // 체력이 3할 이하일 경우
     public bool isHaveToHide()

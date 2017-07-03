@@ -295,6 +295,12 @@ public class PlayerAction : MonoBehaviour {
 				var interactableObject = outsideInfo.interactableObject [i].GetComponentInParent<InteractableObject>();
 				interactableObject.TryInteract (gameObject);
 			}
+
+			if (null != outsideInfo.teleportEntrance && !outsideInfo.isOnObstacle)
+			{
+				outsideInfo.teleportEntrance.GetComponent<InteractableObject> ().TryInteract (this.gameObject);
+			}
+
 			for (int i = 0; i < outsideInfo.enemyList.Count; i++)
 			{
 				var enemy = outsideInfo.enemyList [i];
