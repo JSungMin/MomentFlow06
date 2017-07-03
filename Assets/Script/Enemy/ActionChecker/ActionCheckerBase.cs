@@ -9,10 +9,14 @@ public abstract class ActionCheckerBase : MonoBehaviour {
 	public UnityAction additionalActionInStart;
 	public UnityAction additionalActionInExit;
 
+	public Vector3 originPoint;
+	public bool canUpdateOriginPoint;
+
 	// Use this for initialization
 	protected void Start () {
 		enemyAction = GetComponentInParent <EnemyAction> ();
 		enemyInfo = enemyAction.enemyInfo;
+		originPoint = enemyInfo.transform.position;
 	}
 
 	public virtual void TryAction ()
@@ -38,6 +42,14 @@ public abstract class ActionCheckerBase : MonoBehaviour {
 		}
 	}
 
+	public void UpdateOriginPoint (Vector3 newPoint)
+	{
+		if (canUpdateOriginPoint)
+		{
+			originPoint = newPoint;
+		}
+	}
+
 	protected void InitTargetZListOffset (float myZ)
 	{
 		if (enemyAction.targetZListOffet != enemyAction.targetZList.Count)
@@ -59,5 +71,53 @@ public abstract class ActionCheckerBase : MonoBehaviour {
 			return true;
 		}
 		return false;
+	}
+
+	public TeleportYAxis FindNearestYTeleporter (List<TeleportYAxis> teleporters)
+	{
+		if (teleporters.Count != 0) {
+			Vector3 pos01 = enemyInfo.transform.position;
+			pos01.z = 0;
+			Vector3 pos02 = teleporters [0].transform.position;
+			pos02.z = 0;
+			var dis = Vector3.Distance (pos01, pos02);
+			var index = 0;
+			for (int i = 0; i < teleporters.Count; i++)
+			{
+				pos02 = teleporters [i].transform.position;
+				pos02.z = 0;
+				var tmpDis = Vector3.Distance (pos01,pos02);
+				if (tmpDis < dis)
+				{
+					index = i;
+					dis = tmpDis;
+				}
+			}
+			return teleporters [index];
+		}
+		return null;
+	}
+
+	public TeleportZAxis FindNearestZTeleporter (List<TeleportZAxis> teleporters)
+	{
+		if (teleporters.Count != 0) {
+			Vector3 pos01 = enemyInfo.transform.position;
+			Vector3 pos02 = teleporters [0].transform.position;
+
+			var dis = Vector3.Distance (pos01, pos02);
+			var index = 0;
+			for (int i = 0; i < teleporters.Count; i++)
+			{
+				pos02 = teleporters [i].transform.position;
+				var tmpDis = Vector3.Distance (pos01,pos02);
+				if (tmpDis < dis)
+				{
+					index = i;
+					dis = tmpDis;
+				}
+			}
+			return teleporters [index];
+		}
+		return null;
 	}
 }

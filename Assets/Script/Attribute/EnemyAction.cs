@@ -10,8 +10,8 @@ public class EnemyAction : MonoBehaviour {
 	public Animator bodyAnimator;
 	public Animator shoulderAnimator;
 
-	public SelfConditionChecker selfConditionChecker;
-	
+	public EnemyActionType defaultAction;
+
 	public LayerMask findOutLayerMask;
 	public LayerMask targetLayerMask;
 	public float findRange;
@@ -30,15 +30,19 @@ public class EnemyAction : MonoBehaviour {
 	void Start () {
 		if (null == enemyInfo)
 			enemyInfo.GetComponentInParent<EnemyInfo> ();
-		if (null == selfConditionChecker)
-			selfConditionChecker = GetComponent<SelfConditionChecker> ();
 		enemyBodyCollider = enemyInfo.boxCollider;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (!enemyInfo.isUpdatable)
+		if (!GetComponentInParent<DynamicObject> ().IsUpdateable ()) {
+			if (enemyInfo.isDetect) {
+				enemyInfo.isDetect = false;
+				detectedTarget = null;
+				enemyInfo.DecreaseDetectGauge ();
+			}
 			return;
+		}
 
 		transform.position = new Vector3 (
 			transform.position.x,
@@ -67,11 +71,9 @@ public class EnemyAction : MonoBehaviour {
 			return;
 		}
 
-
-
 		if (enemyInfo.detectGauge == 0)
 		{
-			enemyInfo.actionType = EnemyActionType.Idle;
+			enemyInfo.actionType = defaultAction;
 		}
 		else if (enemyInfo.detectGauge > 0 && enemyInfo.detectGauge < enemyInfo.maxDetectGauge)
 		{

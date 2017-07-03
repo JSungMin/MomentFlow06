@@ -5,6 +5,8 @@ using UnityEngine;
 public class DynamicObject : MonoBehaviour {
 	public Transform rootTransform;
 
+	public bool isImmunity;
+
 	private Animator[] animators;
 	private ParticleSystem[] particles;
 
@@ -80,5 +82,14 @@ public class DynamicObject : MonoBehaviour {
 				ma.simulationSpeed = customTimeScale;
 			}
 		}
+	}
+
+	public bool IsUpdateable ()
+	{
+		if (isImmunity || customTimeScale != 0)
+		{
+			return true;
+		}
+		return false;
 	}
 }

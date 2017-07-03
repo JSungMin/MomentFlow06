@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemySearchTargetChecker : ActionCheckerBase {
 	[Range(0,100)]
 	public float searchProbability;
-
+	public float autoStopOffset = 0.05f;
 	WalkState walkState;
 
 	#region implemented abstract members of ActionCheckerBase
@@ -29,8 +29,7 @@ public class EnemySearchTargetChecker : ActionCheckerBase {
 
 		ChaseZAxis ();
 
-		enemyAction.bodyAnimator.SetTrigger ("TriggerWalk");
-		enemyAction.shoulderAnimator.SetTrigger ("TriggerWalk");
+		AutoStopWalking ();
 
 	}
 	#endregion
@@ -81,29 +80,16 @@ public class EnemySearchTargetChecker : ActionCheckerBase {
 			}
 		}
 	}
-
-	public TeleportZAxis FindNearestZTeleporter (List<TeleportZAxis> teleporters)
+		
+	void AutoStopWalking ()
 	{
-		if (teleporters.Count != 0) {
-			Vector3 pos01 = enemyInfo.transform.position;
-			pos01.z = 0;
-			Vector3 pos02 = teleporters [0].transform.position;
-			pos02.z = 0;
-			var dis = Vector3.Distance (pos01, pos02);
-			var index = 0;
-			for (int i = 0; i < teleporters.Count; i++)
-			{
-				pos02 = teleporters [i].transform.position;
-				pos02.z = 0;
-				var tmpDis = Vector3.Distance (pos01,pos02);
-				if (tmpDis < dis)
-				{
-					index = i;
-					dis = tmpDis;
-				}
-			}
-			return teleporters [index];
+		if (Mathf.Abs (enemyInfo.transform.position.x - enemyAction.suspiciousPoint.x) <= autoStopOffset) {
+			enemyAction.bodyAnimator.SetTrigger ("TriggerIdle");
+			enemyAction.shoulderAnimator.SetTrigger ("TriggerIdle");
 		}
-		return null;
+		else {
+			enemyAction.bodyAnimator.SetTrigger ("TriggerWalk");
+			enemyAction.shoulderAnimator.SetTrigger ("TriggerWalk");
+		}
 	}
 }

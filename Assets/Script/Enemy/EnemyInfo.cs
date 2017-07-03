@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyInfo : HumanInfo
 {
 	public EnemyActionType actionType;
+	public DynamicObject dynamicObject;
 
 	public int teamId;
 	[SerializeField]
@@ -76,7 +77,7 @@ public class EnemyInfo : HumanInfo
         viewCollider = GetComponent<BoxCollider>();
         boxCollider = GetComponentInChildren<BoxCollider>();
         aimTarget = GetComponent<AimTarget>();
-        
+		dynamicObject = GetComponent<DynamicObject> ();
         //sameRawObstacles = AllocateSameRawObjectListByTag("Obstacle");
         //sameRawWalls = AllocateSameRawObjectListByTag("Wall");
         //sameRawEnemies = AllocateSameRawObjectListByTag("Enemy");

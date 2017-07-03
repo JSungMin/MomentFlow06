@@ -53,6 +53,7 @@ public enum EnemyActionType
 	Chase = 3,
 	SearchTarget = 4,
 	Restore,
+	Patrol,
 	Damaged,
 	Die
 }

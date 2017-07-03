@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyChaseChecker : ActionCheckerBase {
+public class EnemyRestoreAction : ActionCheckerBase {
 
-	RunState runState;
+	bool needYMove;
+	public float autoStopOffset = 0.02f;
 
-	public bool needYMove = false;
+	WalkState walkState;
 
 	#region implemented abstract members of ActionCheckerBase
 	protected override bool IsSatisfied ()
@@ -15,32 +16,37 @@ public class EnemyChaseChecker : ActionCheckerBase {
 	}
 	protected override void DoAction ()
 	{
-		runState = enemyAction.bodyAnimator.GetBehaviour<RunState> ();
+		if (Vector3.Distance (originPoint, enemyInfo.transform.position) > autoStopOffset) {
+			walkState = enemyAction.bodyAnimator.GetBehaviour <WalkState> ();
 
-		if (enemyAction.enemyOutsideInfo.interactableObject.Count != 0) {
-			var obj = enemyAction.enemyOutsideInfo.interactableObject [Random.Range (0, enemyAction.enemyOutsideInfo.interactableObject.Count - 1)];
-			if (!obj.GetComponentInParent<InteractableObject> ().isInteracted && obj.GetComponentInParent<InteractableObject>().objectType == InteractableObjectType.Door)
-				obj.GetComponentInParent<InteractableObject> ().TryInteract (enemyInfo.gameObject);
+			ChaseYAxis ();
+
+			ChaseZAxis ();
+
+			enemyAction.bodyAnimator.SetTrigger ("TriggerWalk");
+			enemyAction.shoulderAnimator.SetTrigger ("TriggerWalk");
+		} else {
+			enemyAction.bodyAnimator.SetTrigger ("TriggerIdle");
+			enemyAction.shoulderAnimator.SetTrigger ("TriggerIdle");
 		}
-
-		ChaseYAxis ();
-
-		ChaseZAxis ();
-		
-		enemyAction.bodyAnimator.SetTrigger ("TriggerRun");
-		enemyAction.shoulderAnimator.SetTrigger ("TriggerRun");
 	}
 	#endregion
 
+	private void SetWalkPosition (Vector3 position)
+	{
+		if (!needYMove)
+			walkState.targetPos = position;
+	}
+
 	void ChaseYAxis ()
 	{
-		var detectedPos = enemyAction.detectedTarget.transform.position + enemyAction.detectedTarget.GetComponent<Collider> ().bounds.center;
+		var detectedPos = originPoint + enemyAction.enemyBodyCollider.bounds.center;
 		if (detectedPos.y > enemyAction.enemyBodyCollider.bounds.max.y) {
 			var nearestYTelporter = FindNearestYTeleporter (TeleportYAxis.FindYUpTeleporters (enemyInfo.transform.position + enemyAction.enemyBodyCollider.center));
 			if (null != nearestYTelporter) {
-				runState.targetPos = nearestYTelporter.transform.position;
+				walkState.targetPos = nearestYTelporter.transform.position;
 				needYMove = true;
-				if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
+				if (Mathf.Abs (walkState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
 					nearestYTelporter.GoUpStair (enemyInfo.gameObject);
 					needYMove = false;
 				}
@@ -50,9 +56,9 @@ public class EnemyChaseChecker : ActionCheckerBase {
 			if (detectedPos.y < enemyAction.enemyBodyCollider.bounds.min.y) {
 				var nearestYTelporter = FindNearestYTeleporter (TeleportYAxis.FindYDownTeleporters (enemyInfo.transform.position + enemyAction.enemyBodyCollider.center));
 				if (null != nearestYTelporter) {
-					runState.targetPos = nearestYTelporter.transform.position;
+					walkState.targetPos = nearestYTelporter.transform.position;
 					needYMove = true;
-					if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
+					if (Mathf.Abs (walkState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
 						nearestYTelporter.GoDownStair (enemyInfo.gameObject);
 						needYMove = false;
 					}
@@ -63,7 +69,7 @@ public class EnemyChaseChecker : ActionCheckerBase {
 	void ChaseZAxis ()
 	{
 		var myZ = enemyAction.transform.position.z;
-		var targetZ = enemyAction.detectedTarget.transform.position.z;
+		var targetZ = originPoint.z;
 		CheckAndAddTargetZList (targetZ);
 		InitTargetZListOffset (myZ);
 
@@ -71,18 +77,18 @@ public class EnemyChaseChecker : ActionCheckerBase {
 			targetZ = enemyAction.targetZList [enemyAction.targetZListOffet];
 		}
 		else {
-			targetZ = enemyAction.detectedTarget.transform.position.z;
+			targetZ = originPoint.z;
 		}
 
 		if (CompareEnemyAndTargetOnSameZ ()) {
-			SetWalkPosition (enemyAction.detectedTarget.transform.position);
+			SetWalkPosition (originPoint);
 		}
 		else {
 			if (myZ > targetZ) {
 				var nearestZTeleporter = FindNearestZTeleporter (TeleportZAxis.FindZDownTeleporters (myZ, targetZ));
 				if (null != nearestZTeleporter) {
 					SetWalkPosition (nearestZTeleporter.transform.position);
-					if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
+					if (Mathf.Abs (walkState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
 						nearestZTeleporter.TryInteract (enemyInfo.gameObject);
 					}
 				}
@@ -91,20 +97,14 @@ public class EnemyChaseChecker : ActionCheckerBase {
 				var nearestZTeleporter = FindNearestZTeleporter (TeleportZAxis.FindZUpTeleporters (myZ, targetZ));
 				if (null != nearestZTeleporter) {
 					SetWalkPosition (nearestZTeleporter.transform.position);
-					if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
+					if (Mathf.Abs (walkState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
 						nearestZTeleporter.TryInteract (enemyInfo.gameObject);
 					}
 				}
 			}
 			else {
-					enemyAction.targetZListOffet += 1;
+				enemyAction.targetZListOffet += 1;
 			}
 		}
-	}
-
-	private void SetWalkPosition (Vector3 position)
-	{
-		if (!needYMove)
-			runState.targetPos = position;
 	}
 }

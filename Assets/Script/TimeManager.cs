@@ -21,7 +21,10 @@ public class TimeManager : MonoBehaviour
 
 		dynamicObjectList.ForEach (delegate (DynamicObject obj) 
 		{
-			obj.ChangeTimeScale (0);
+				if (!obj.isImmunity)
+				{
+					obj.ChangeTimeScale (0);
+				}
 		});
 	}
 
