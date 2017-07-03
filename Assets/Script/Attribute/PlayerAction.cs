@@ -83,6 +83,8 @@ public class PlayerAction : MonoBehaviour {
 		{
 			numberPadToggleInput.Add (false);
 		}
+
+
 	}
 
 	public T GetSkill<T>()
@@ -103,7 +105,7 @@ public class PlayerAction : MonoBehaviour {
 			else if(skills[i].IsTryCancelSkill())
 				skills[i].TryCancelSkill();
 		}
-        
+
 		PlayTimePauseEffect ();
 
 		input = new Vector2 (Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));

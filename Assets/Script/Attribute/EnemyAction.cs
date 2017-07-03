@@ -32,14 +32,19 @@ public class EnemyAction : MonoBehaviour {
 			enemyInfo.GetComponentInParent<EnemyInfo> ();
 		enemyBodyCollider = enemyInfo.boxCollider;
 	}
-	
+
+	public float actionSensitive = 0.25f;
+	private float actionSensitiveTimer = 0;
+
 	// Update is called once per frame
 	void Update () {
 		if (!GetComponentInParent<DynamicObject> ().IsUpdateable ()) {
 			if (enemyInfo.isDetect) {
 				enemyInfo.isDetect = false;
 				detectedTarget = null;
-				enemyInfo.DecreaseDetectGauge ();
+				attackTarget = null;
+				enemyInfo.attackTarget = null;
+				enemyInfo.detectGauge = 0.9f * enemyInfo.maxDetectGauge;
 			}
 			return;
 		}
@@ -49,16 +54,20 @@ public class EnemyAction : MonoBehaviour {
 			transform.position.y,
 			Mathf.Round(transform.position.z * 10f)/10f
 		);
-
-		if (null == enemyInfo.attackTarget)
-			enemyInfo.attackTarget = GameSceneData.playerAction;
-
+			
 		SearchTarget ();
 
-		SelectActionbyDetectGauge ();
+		SetDetectGauge ();
 
-		SelectActionByAttackRange ();
-
+		if (actionSensitiveTimer >= actionSensitive) {
+			SelectActionbyDetectGauge ();
+			
+			SelectActionByAttackRange ();
+			
+			actionSensitiveTimer = 0;
+		} else {
+			actionSensitiveTimer += enemyInfo.dynamicObject.customDeltaTime;
+		}
 		actions [(int)enemyInfo.actionType].TryAction ();
 	}
 
@@ -89,17 +98,19 @@ public class EnemyAction : MonoBehaviour {
 	public void SelectActionByAttackRange ()
 	{
 		if (enemyInfo.isDetect) {
-			if (null != attackTarget && 
-				detectedTarget.transform.position.z == transform.position.z)
-			{
+			if (null != attackTarget &&
+			    detectedTarget.transform.position.z == transform.position.z) {
 				enemyInfo.actionType = EnemyActionType.Attack;
 				suspiciousPoint = detectedTarget.transform.position;
-			}
-			else
-			{
+			} else {
 				enemyInfo.actionType = EnemyActionType.Chase;
-				suspiciousPoint = detectedTarget.transform.position;
+				if (null != detectedTarget)
+					suspiciousPoint = detectedTarget.transform.position;
 			}
+		}
+		else
+		{
+			
 		}
 	}
 
@@ -112,7 +123,7 @@ public class EnemyAction : MonoBehaviour {
 	{
 		var center = enemyBodyCollider.transform.position + enemyBodyCollider.center.y * Vector3.up - findRange * enemyInfo.transform.localScale.x * Vector3.right * 0.5f;
 		var halfExtent = new Vector3 (findRange * 0.5f, enemyBodyCollider.size.y * 0.5f, 1f);
-		var objects = Physics.BoxCastAll (center, halfExtent, GetLookAtDirection ().x * Vector3.right, Quaternion.identity, findRange, findOutLayerMask);
+		var objects = Physics.BoxCastAll (center, halfExtent, GetLookAtDirection ().x * Vector3.right, Quaternion.identity, findRange * 0.5f, findOutLayerMask);
 
 		return objects;
 	}
@@ -176,23 +187,23 @@ public class EnemyAction : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	void SetDetectGauge ()
+	{
 		if (null != attackTarget) {
 			enemyInfo.IncreaseDetectGauge ();
-
-		} else {
+		}
+		else {
 			if (!enemyInfo.isDetect) {
 				detectedTarget = null;
 			}
-
-			if (Vector3.Distance (enemyInfo.transform.position, suspiciousPoint) >= 0.05f)
-			{
+			if (Vector3.Distance (enemyInfo.transform.position, suspiciousPoint) >= 0.1f) {
 				return;
 			}
-
 			enemyInfo.DecreaseDetectGauge ();
 		}
-	}
-		
+	}		
 
 	private List<Collider> GetTargetsInSight (RaycastHit[] inSightObjects) 
 	{

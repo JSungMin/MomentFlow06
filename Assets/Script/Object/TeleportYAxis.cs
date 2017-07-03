@@ -22,11 +22,6 @@ public class TeleportYAxis : InteractableObject {
 		cancelInteractActions += GoDownStair;
 	}
 
-	void OnTriggerEnter (Collider col)
-	{
-		
-	}
-
 	#region implemented abstract members of InteractableObject
 	public override bool TryInteract (GameObject challenger)
 	{
@@ -49,7 +44,9 @@ public class TeleportYAxis : InteractableObject {
 	{
 		if (!canGoUp)
 			return;
-		challenger.transform.position = upPosition.position;
+		//challenger.transform.position = upPosition.position;
+		challenger.GetComponentInChildren<Animator> ().GetBehaviour <GenericTeleportOutState> ().teleportPos = upPosition.position;
+		challenger.GetComponentInChildren<Animator> ().SetTrigger ("TriggerTeleport");
 		interactEvent.Invoke ();
 	}
 
@@ -57,7 +54,9 @@ public class TeleportYAxis : InteractableObject {
 	{
 		if (!canGoUp)
 			return;
-		challenger.transform.position = upPosition.position;
+		//challenger.transform.position = upPosition.position;
+		challenger.GetComponentInChildren<Animator> ().GetBehaviour <GenericTeleportOutState> ().teleportPos = upPosition.position;
+		challenger.GetComponentInChildren<Animator> ().SetTrigger ("TriggerTeleport");
 		interactEvent.Invoke ();
 	}
 
@@ -65,14 +64,18 @@ public class TeleportYAxis : InteractableObject {
 	{
 		if (!canGoDown)
 			return;
-		challenger.transform.position = downPosition.position;
+		//challenger.transform.position = downPosition.position;
+		challenger.GetComponentInChildren<Animator> ().GetBehaviour <GenericTeleportOutState> ().teleportPos = downPosition.position;
+		challenger.GetComponentInChildren<Animator> ().SetTrigger ("TriggerTeleport");
 	}
 
 	public void GoDownStair (GameObject challenger)
 	{
 		if (!canGoDown)
 			return;
-		challenger.transform.position = downPosition.position;
+		//challenger.transform.position = downPosition.position;
+		challenger.GetComponentInChildren<Animator> ().GetBehaviour <GenericTeleportOutState> ().teleportPos = downPosition.position;
+		challenger.GetComponentInChildren<Animator> ().SetTrigger ("TriggerTeleport");
 	}
 
 	public static List<TeleportYAxis> FindYUpTeleporters (Vector3 fromPos)

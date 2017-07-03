@@ -66,9 +66,15 @@ public abstract class ActionCheckerBase : MonoBehaviour {
 
 	protected bool CompareEnemyAndTargetOnSameZ ()
 	{
-		if (enemyAction.targetZListOffet == enemyAction.targetZList.Count)
+		if (enemyAction.targetZListOffet == enemyAction.targetZList.Count &&
+			enemyInfo.transform.position.z == enemyAction.targetZList[enemyAction.targetZListOffet - 1])
 		{
 			return true;
+		}
+		else if(enemyAction.targetZListOffet == enemyAction.targetZList.Count &&
+			enemyInfo.transform.position.z != enemyAction.targetZList[enemyAction.targetZListOffet - 1])
+		{
+			enemyAction.targetZListOffet -= 1;
 		}
 		return false;
 	}

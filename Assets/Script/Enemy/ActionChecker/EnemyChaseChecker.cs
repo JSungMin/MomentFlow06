@@ -34,36 +34,55 @@ public class EnemyChaseChecker : ActionCheckerBase {
 
 	void ChaseYAxis ()
 	{
-		var detectedPos = enemyAction.detectedTarget.transform.position + enemyAction.detectedTarget.GetComponent<Collider> ().bounds.center;
+		var detectedPos = enemyAction.suspiciousPoint;
+
+		if (null != enemyAction.detectedTarget)
+			detectedPos = enemyAction.detectedTarget.transform.position + enemyAction.detectedTarget.GetComponent<Collider> ().bounds.center;
+
 		if (detectedPos.y > enemyAction.enemyBodyCollider.bounds.max.y) {
 			var nearestYTelporter = FindNearestYTeleporter (TeleportYAxis.FindYUpTeleporters (enemyInfo.transform.position + enemyAction.enemyBodyCollider.center));
 			if (null != nearestYTelporter) {
 				runState.targetPos = nearestYTelporter.transform.position;
-				needYMove = true;
+				//needYMove = true;
+				Debug.Log ("Need Y " + needYMove);
 				if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
-					nearestYTelporter.GoUpStair (enemyInfo.gameObject);
-					needYMove = false;
+					if (!enemyAction.bodyAnimator.GetBehaviour<TeleportState> ().isTeleporting) {
+						nearestYTelporter.GoUpStair (enemyInfo.gameObject);
+						Debug.Log ("Go Up Stair");
+					}
+				//	needYMove = false;
 				}
 			}
 		}
-		else
-			if (detectedPos.y < enemyAction.enemyBodyCollider.bounds.min.y) {
-				var nearestYTelporter = FindNearestYTeleporter (TeleportYAxis.FindYDownTeleporters (enemyInfo.transform.position + enemyAction.enemyBodyCollider.center));
-				if (null != nearestYTelporter) {
-					runState.targetPos = nearestYTelporter.transform.position;
-					needYMove = true;
-					if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
+		else if (detectedPos.y < enemyAction.enemyBodyCollider.bounds.min.y)
+		{
+			var nearestYTelporter = FindNearestYTeleporter (TeleportYAxis.FindYDownTeleporters (enemyInfo.transform.position + enemyAction.enemyBodyCollider.center));
+			if (null != nearestYTelporter) {
+				runState.targetPos = nearestYTelporter.transform.position;
+				//needYMove = true;
+				Debug.Log ("Need Y " + needYMove);
+				if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
+					if (!enemyAction.bodyAnimator.GetBehaviour<TeleportState> ().isTeleporting) {
 						nearestYTelporter.GoDownStair (enemyInfo.gameObject);
-						needYMove = false;
+						Debug.Log ("Go Up Stair");
 					}
+				//	needYMove = false;
 				}
 			}
+		}
 	}
 
 	void ChaseZAxis ()
 	{
+		bool isUseSuspiciousPoint = true;
 		var myZ = enemyAction.transform.position.z;
-		var targetZ = enemyAction.detectedTarget.transform.position.z;
+		var targetZ = enemyAction.suspiciousPoint.z;
+
+		if (null != enemyAction.detectedTarget) {
+			targetZ = enemyAction.detectedTarget.transform.position.z;
+			isUseSuspiciousPoint = false;
+		}
+
 		CheckAndAddTargetZList (targetZ);
 		InitTargetZListOffset (myZ);
 
@@ -71,11 +90,19 @@ public class EnemyChaseChecker : ActionCheckerBase {
 			targetZ = enemyAction.targetZList [enemyAction.targetZListOffet];
 		}
 		else {
-			targetZ = enemyAction.detectedTarget.transform.position.z;
+			if (isUseSuspiciousPoint)
+				targetZ = enemyAction.suspiciousPoint.z;
+			else
+				targetZ = enemyAction.detectedTarget.transform.position.z;
 		}
 
 		if (CompareEnemyAndTargetOnSameZ ()) {
-			SetWalkPosition (enemyAction.detectedTarget.transform.position);
+			if (isUseSuspiciousPoint) {
+				SetWalkPosition (enemyAction.suspiciousPoint);
+			}
+			else {
+				SetWalkPosition (enemyAction.detectedTarget.transform.position);
+			}
 		}
 		else {
 			if (myZ > targetZ) {
@@ -97,14 +124,13 @@ public class EnemyChaseChecker : ActionCheckerBase {
 				}
 			}
 			else {
-					enemyAction.targetZListOffet += 1;
+				enemyAction.targetZListOffet += 1;
 			}
 		}
 	}
 
 	private void SetWalkPosition (Vector3 position)
 	{
-		if (!needYMove)
-			runState.targetPos = position;
+		runState.targetPos = position;
 	}
 }

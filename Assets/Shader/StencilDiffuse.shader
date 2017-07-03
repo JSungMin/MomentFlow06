@@ -4,6 +4,7 @@ Shader "Custom/StencilDiffuse"
 {
 	Properties
 	{
+		_Ref ("Stencil Ref", Float) = 10
 		[PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
 		_Color ("Tint", Color) = (1,1,1,1)
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
@@ -17,7 +18,7 @@ Shader "Custom/StencilDiffuse"
 	{
 		Stencil
 		{
-			Ref 6
+			Ref [_Ref]
 			Comp Always
 			Pass Replace
 		}

@@ -29,11 +29,20 @@ public class AimTarget : MonoBehaviour
     {
         if (toLeft)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+			if (transform.CompareTag ("Enemy"))
+			{
+				transform.GetComponent<EnemyInfo> ().SetDirection (false);
+			}
+			else
+            	transform.localScale = new Vector3(-1, 1, 1);
         }
         else
         {
-            transform.localScale = new Vector3(1, 1, 1);
+			if (transform.CompareTag ("Enemy")) {
+				transform.GetComponent<EnemyInfo> ().SetDirection (true);
+			}
+			else
+            	transform.localScale = new Vector3(1, 1, 1);
         }
     }
 

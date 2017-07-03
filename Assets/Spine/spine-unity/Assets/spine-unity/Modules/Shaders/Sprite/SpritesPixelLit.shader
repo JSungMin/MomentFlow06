@@ -2,6 +2,7 @@ Shader "Spine/Sprite/Pixel Lit"
 {
 	Properties
 	{
+		_StencilRef ("Transparent Stencil Ref", Float) = 10
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1,1,1,1)
 		_BumpMap ("Normal Map", 2D) = "bump" {}
@@ -41,6 +42,12 @@ Shader "Spine/Sprite/Pixel Lit"
 		
 		Pass
 		{
+			Stencil
+			{
+				Ref [_StencilRef]
+				Comp NotEqual
+			}
+
 			Name "FORWARD" 
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
@@ -71,6 +78,60 @@ Shader "Spine/Sprite/Pixel Lit"
 				#pragma fragment fragBase
 				
 				#include "SpritePixelLighting.cginc"	
+			ENDCG
+		}
+		Pass
+		{
+			Stencil
+			{
+				Ref [_StencilRef]
+				Comp Equal
+			}
+
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			#pragma fragmentoption ARB_precision_hint_fastest
+			#pragma target 3.0
+			#include "UnityCG.cginc"
+
+			struct appdata_t
+			{
+			float4 vertex   : POSITION;
+			float4 color    : COLOR;
+			float2 texcoord : TEXCOORD0;
+			};
+
+			struct v2f
+			{
+			float2 texcoord  : TEXCOORD0;
+			float4 vertex   : SV_POSITION;
+			float4 color    : COLOR;
+			};
+
+
+			sampler2D _MainTex;
+
+			v2f vert(appdata_t IN)
+			{
+			v2f OUT;
+			OUT.vertex = UnityObjectToClipPos(IN.vertex);
+			OUT.texcoord = IN.texcoord;
+			OUT.color = IN.color;
+
+			return OUT;
+			}
+
+			float4 frag (v2f i) : COLOR
+			{
+			float4 tex = tex2D(_MainTex, i.texcoord);
+
+			float4 c = tex;
+			c.rgb = float3(0.15,0.15,0.8);
+
+			return c;
+			}
+
 			ENDCG
 		}
 		Pass

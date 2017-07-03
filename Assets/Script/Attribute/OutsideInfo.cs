@@ -20,6 +20,35 @@ public class OutsideInfo : MonoBehaviour {
 
 	public static GameObject nearestStair = null;
 
+	public SpriteRenderer[] sprites;
+	public Color stencilColor;
+
+	public void Start ()
+	{
+		for (int i = 0; i < sprites.Length; i++)
+		{
+			var newMat = new Material (Shader.Find("Custom/CharacterShader"));
+			newMat.SetColor ("_StencilColor", stencilColor);
+			sprites [i].material = newMat;
+		}
+	}
+
+	public void Update()
+	{
+		if (switchableObstacle != null) {
+			if (isOnObstacle &&
+				switchableObstacle.transform.position.z < owner.transform.position.z) {
+				for (int i = 0; i < sprites.Length; i++) {
+					sprites [i].material.SetFloat ("_Ref", 10f);
+				}
+			} else {
+				for (int i = 0; i < sprites.Length; i++) {
+					sprites [i].material.SetFloat ("_Ref", 9f);
+				}
+			}
+		}
+	}
+
 	public void OnTriggerEnter(Collider col)
 	{
 		Debug.Log (col.name);

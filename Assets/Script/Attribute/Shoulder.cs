@@ -36,6 +36,15 @@ public class Shoulder : MonoBehaviour {
         nowEquiptWeapon = GetComponentInParent<EquiptInfo>().nowEquiptWeapon;
     }
 
+	public void SyncColorWithBody ()
+	{
+		if (null == parentAnimator.GetComponent<SpriteRenderer> ().sprite) {
+			GetComponent<SpriteRenderer> ().color = new Color (0, 0, 0, 0);
+		} else {
+			GetComponent<SpriteRenderer> ().color = parentAnimator.GetComponent<SpriteRenderer> ().color;
+		}
+	}
+
 	public void Shot ()
 	{
         if (((Gun)nowEquiptWeapon).ammo - 1 >= 0)
@@ -56,6 +65,10 @@ public class Shoulder : MonoBehaviour {
 	public void Reload()
 	{
 		int emptyAmount = ((Gun)nowEquiptWeapon).maxAmmo - ((Gun)nowEquiptWeapon).ammo;
+
+		if (gameObject.CompareTag ("Enemy")) {
+			((Gun)nowEquiptWeapon).magazine += ((Gun)nowEquiptWeapon).maxAmmo;
+		}
 
         audioSource.clip = reloadClip;
         audioSource.Play();

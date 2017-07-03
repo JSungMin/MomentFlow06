@@ -52,8 +52,8 @@ public enum EnemyActionType
 	Attack = 2,
 	Chase = 3,
 	SearchTarget = 4,
-	Restore,
-	Patrol,
+	Restore = 5,
+	Patrol = 6,
 	Damaged,
 	Die
 }

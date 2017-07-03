@@ -25,4 +25,9 @@ public class EnemyShoulderAction : Shoulder
         shoulderAnimator.enabled = true;
 		shoulderAnimator.GetComponent<SpriteRenderer> ().enabled = true;
     }
+
+	public void Update ()
+	{
+		SyncColorWithBody ();
+	}
 }

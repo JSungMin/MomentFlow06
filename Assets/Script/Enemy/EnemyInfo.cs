@@ -17,6 +17,8 @@ public class EnemyInfo : HumanInfo
     public BoxCollider viewCollider;
     [HideInInspector]
     public Rigidbody rigidBody;
+	[HideInInspector]
+	public EnemyAction enemyAction;
 
     public List<GameObject> sameRawObstacles { private set; get; }
     public List<GameObject> sameRawWalls { private set; get; }
@@ -59,8 +61,7 @@ public class EnemyInfo : HumanInfo
 
     private void Awake()
     {
-        if (attackTarget == null)
-            attackTarget = GameSceneData.playerAction;
+		enemyAction = GetComponentInChildren <EnemyAction> ();
 
         alertSituation = new SituationTimer(this);
         behindObstacleShotingSituation = new SituationTimer(this);
@@ -264,11 +265,19 @@ public class EnemyInfo : HumanInfo
     {
         if (toLeft)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+			if (transform.localScale.x != 1)
+			{
+				enemyAction.bodyAnimator.SetTrigger ("TriggerTurnLeft");
+				enemyAction.shoulderAnimator.SetTrigger ("TriggerTurnLeft");
+			}
         }
         else
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+			if (transform.localScale.x != -1)
+			{
+				enemyAction.bodyAnimator.SetTrigger ("TriggerTurnRight");
+				enemyAction.shoulderAnimator.SetTrigger ("TriggerTurnRight");
+			}
         }
     }
 
