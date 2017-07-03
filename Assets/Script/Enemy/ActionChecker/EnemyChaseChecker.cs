@@ -23,64 +23,84 @@ public class EnemyChaseChecker : ActionCheckerBase {
 				obj.GetComponentInParent<InteractableObject> ().TryInteract (enemyInfo.gameObject);
 		}
 
+		ChaseYAxis ();
+
+		ChaseZAxis ();
+		
+		enemyAction.bodyAnimator.SetTrigger ("TriggerRun");
+		enemyAction.shoulderAnimator.SetTrigger ("TriggerRun");
+	}
+	#endregion
+
+	void ChaseYAxis ()
+	{
 		var detectedPos = enemyAction.detectedTarget.transform.position + enemyAction.detectedTarget.GetComponent<Collider> ().bounds.center;
-
 		if (detectedPos.y > enemyAction.enemyBodyCollider.bounds.max.y) {
-			Debug.Log ("Up : " + detectedPos.y + "  /  " + enemyAction.enemyBodyCollider.bounds.max.y);
 			var nearestYTelporter = FindNearestYTeleporter (TeleportYAxis.FindYUpTeleporters (enemyInfo.transform.position + enemyAction.enemyBodyCollider.center));
-
 			if (null != nearestYTelporter) {
 				runState.targetPos = nearestYTelporter.transform.position;
 				needYMove = true;
-
 				if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
 					nearestYTelporter.GoUpStair (enemyInfo.gameObject);
 					needYMove = false;
 				}
 			}
-		} 
-		else if (detectedPos.y < enemyAction.enemyBodyCollider.bounds.min.y) {
-			Debug.Log ("Down : " + detectedPos.y + "  /  " + enemyAction.enemyBodyCollider.bounds.min.y);
-			var nearestYTelporter = FindNearestYTeleporter (TeleportYAxis.FindYDownTeleporters (enemyInfo.transform.position + enemyAction.enemyBodyCollider.center));
-
-			if (null != nearestYTelporter) {
-				runState.targetPos = nearestYTelporter.transform.position;
-				needYMove = true;
-				if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
-					nearestYTelporter.GoDownStair (enemyInfo.gameObject);
-					needYMove = false;
+		}
+		else
+			if (detectedPos.y < enemyAction.enemyBodyCollider.bounds.min.y) {
+				var nearestYTelporter = FindNearestYTeleporter (TeleportYAxis.FindYDownTeleporters (enemyInfo.transform.position + enemyAction.enemyBodyCollider.center));
+				if (null != nearestYTelporter) {
+					runState.targetPos = nearestYTelporter.transform.position;
+					needYMove = true;
+					if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
+						nearestYTelporter.GoDownStair (enemyInfo.gameObject);
+						needYMove = false;
+					}
 				}
 			}
-		}
+	}
 
-
+	void ChaseZAxis ()
+	{
 		var myZ = enemyAction.transform.position.z;
 		var targetZ = enemyAction.detectedTarget.transform.position.z;
-		if (targetZ == myZ) {
-			SetWalkPosition(enemyAction.detectedTarget.transform.position);
+		CheckAndAddTargetZList (targetZ);
+		InitTargetZListOffset (myZ);
+
+		if (enemyAction.targetZList.Count != enemyAction.targetZListOffet) {
+			targetZ = enemyAction.targetZList [enemyAction.targetZListOffet];
+		}
+		else {
+			targetZ = enemyAction.detectedTarget.transform.position.z;
+		}
+
+		if (CompareEnemyAndTargetOnSameZ ()) {
+			SetWalkPosition (enemyAction.detectedTarget.transform.position);
 		}
 		else {
 			if (myZ > targetZ) {
-				var nearestZTeleporter = FindNearestZTeleporter (TeleportZAxis.FindZDownTeleporters (myZ));
-				SetWalkPosition (nearestZTeleporter.transform.position);
-				if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f)
-				{
-					nearestZTeleporter.CancelTeleport (enemyInfo.gameObject);
+				var nearestZTeleporter = FindNearestZTeleporter (TeleportZAxis.FindZDownTeleporters (myZ, targetZ));
+				if (null != nearestZTeleporter) {
+					SetWalkPosition (nearestZTeleporter.transform.position);
+					if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
+						nearestZTeleporter.TryInteract (enemyInfo.gameObject);
+					}
+				}
+			}
+			else if (myZ < targetZ) {
+				var nearestZTeleporter = FindNearestZTeleporter (TeleportZAxis.FindZUpTeleporters (myZ, targetZ));
+				if (null != nearestZTeleporter) {
+					SetWalkPosition (nearestZTeleporter.transform.position);
+					if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f) {
+						nearestZTeleporter.TryInteract (enemyInfo.gameObject);
+					}
 				}
 			}
 			else {
-				var nearestZTeleporter = FindNearestZTeleporter (TeleportZAxis.FindZUpTeleporters (myZ));
-				SetWalkPosition (nearestZTeleporter.transform.position);
-				if (Mathf.Abs (runState.targetPos.x - enemyInfo.transform.position.x) <= 0.05f)
-				{
-					nearestZTeleporter.TryInteract (enemyInfo.gameObject);
-				}
+					enemyAction.targetZListOffet += 1;
 			}
 		}
-		enemyAction.bodyAnimator.SetTrigger ("TriggerRun");
-		enemyAction.shoulderAnimator.SetTrigger ("TriggerRun");
 	}
-	#endregion
 
 	private void SetWalkPosition (Vector3 position)
 	{
@@ -117,15 +137,13 @@ public class EnemyChaseChecker : ActionCheckerBase {
 	{
 		if (teleporters.Count != 0) {
 			Vector3 pos01 = enemyInfo.transform.position;
-			pos01.z = 0;
 			Vector3 pos02 = teleporters [0].transform.position;
-			pos02.z = 0;
+
 			var dis = Vector3.Distance (pos01, pos02);
 			var index = 0;
 			for (int i = 0; i < teleporters.Count; i++)
 			{
 				pos02 = teleporters [i].transform.position;
-				pos02.z = 0;
 				var tmpDis = Vector3.Distance (pos01,pos02);
 				if (tmpDis < dis)
 				{

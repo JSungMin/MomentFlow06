@@ -13,6 +13,8 @@ public class EnemyIdleActionChecker : ActionCheckerBase {
 
 	protected override void DoAction ()
 	{
+		enemyAction.targetZList.Clear ();
+		enemyAction.targetZListOffet = 0;
 		enemyAction.bodyAnimator.SetTrigger ("TriggerIdle");
 		enemyAction.shoulderAnimator.SetTrigger ("TriggerIdle");
 	}

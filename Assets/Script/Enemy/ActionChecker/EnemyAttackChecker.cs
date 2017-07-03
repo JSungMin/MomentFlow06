@@ -10,7 +10,6 @@ public class EnemyAttackChecker : ActionCheckerBase {
 
 	public override void TryAction ()
 	{
-		Debug.Log ("Attack");
 		if (IsSatisfied ()) {
 			Shoot ();
 		}

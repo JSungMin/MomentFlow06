@@ -23,6 +23,9 @@ public class EnemyAction : MonoBehaviour {
 
 	public Vector3 suspiciousPoint;
 
+	public List<int> targetZList;
+	public int targetZListOffet = 0;
+
 	// Use this for initialization
 	void Start () {
 		if (null == enemyInfo)
@@ -63,7 +66,9 @@ public class EnemyAction : MonoBehaviour {
 				detectedTarget = attackTarget;
 			return;
 		}
-		
+
+
+
 		if (enemyInfo.detectGauge == 0)
 		{
 			enemyInfo.actionType = EnemyActionType.Idle;
@@ -176,6 +181,12 @@ public class EnemyAction : MonoBehaviour {
 			if (!enemyInfo.isDetect) {
 				detectedTarget = null;
 			}
+
+			if (Vector3.Distance (enemyInfo.transform.position, suspiciousPoint) >= 0.05f)
+			{
+				return;
+			}
+
 			enemyInfo.DecreaseDetectGauge ();
 		}
 	}
@@ -188,7 +199,6 @@ public class EnemyAction : MonoBehaviour {
 		{
 			if ((1 << inSightObjects [i].collider.gameObject.layer & targetLayerMask) != 0)
 			{
-				Debug.Log (inSightObjects [i].collider.name);
 				targetColliderList.Add(inSightObjects [i].collider);
 			}
 		}

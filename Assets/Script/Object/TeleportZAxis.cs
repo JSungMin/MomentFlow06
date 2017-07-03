@@ -100,6 +100,28 @@ public class TeleportZAxis : InteractableObject {
 		return returnList;
 	}
 
+	public static List<TeleportZAxis> FindZUpTeleporters (float fromZ, float toZ)
+	{
+		var teleporter = GameObject.FindObjectsOfType <TeleportZAxis> ();
+		var returnList = new List<TeleportZAxis> ();
+		for (int i = 0; i < teleporter.Length; i++)
+		{
+			if (teleporter [i].fromZ == fromZ &&
+				teleporter [i].toZ == toZ &&
+				teleporter [i].toZ > teleporter [i].fromZ)
+			{
+				returnList.Add (teleporter [i]);
+			}
+			if (teleporter [i].toZ == fromZ &&
+				teleporter [i].fromZ == toZ &&
+				teleporter [i].toZ < teleporter [i].fromZ)
+			{
+				returnList.Add (teleporter [i]);
+			}
+		}
+		return returnList;
+	}
+
 	public static List<TeleportZAxis> FindZDownTeleporters (float fromZ)
 	{
 		var teleporter = GameObject.FindObjectsOfType <TeleportZAxis> ();
@@ -115,6 +137,29 @@ public class TeleportZAxis : InteractableObject {
 				returnList.Add (teleporter [i]);
 			}
 		}
+		return returnList;
+	}
+
+	public static List<TeleportZAxis> FindZDownTeleporters (float fromZ, float toZ)
+	{
+		var teleporter = GameObject.FindObjectsOfType <TeleportZAxis> ();
+		var returnList = new List<TeleportZAxis> ();
+		for (int i = 0; i < teleporter.Length; i++)
+		{
+			if (teleporter [i].fromZ == fromZ &&
+				teleporter [i].toZ == toZ &&
+				teleporter [i].toZ < teleporter [i].fromZ)
+			{
+				returnList.Add (teleporter [i]);
+			}
+			if (teleporter [i].toZ == fromZ &&
+				teleporter [i].fromZ == toZ &&
+				teleporter [i].toZ > teleporter [i].fromZ)
+			{
+				returnList.Add (teleporter [i]);
+			}
+		}
+		Debug.Log ("From : " + fromZ + "  To : " + toZ + "  Count : " + returnList.Count);
 		return returnList;
 	}
 }
