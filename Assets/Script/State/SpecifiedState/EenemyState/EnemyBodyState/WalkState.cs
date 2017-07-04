@@ -34,7 +34,7 @@ public class WalkState : IStateBehaviour
 			enemyInfo.SetDirectionTo(targetPos);
 		}
 
-		enemyInfo.transform.Translate(enemyInfo.GetDirection() * dynamicObject.customDeltaTime * speed);
+		enemyInfo.transform.Translate(enemyInfo.GetDirection() * Time.deltaTime * Mathf.Pow(dynamicObject.customTimeScale, 3) * speed);
 	}
 
 

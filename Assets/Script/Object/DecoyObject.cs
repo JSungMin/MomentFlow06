@@ -30,10 +30,13 @@ public class DecoyObject : FieldBase {
 		RenderRect ();
 
 		var enemies = BoxCastAllInRect ();
+		Debug.Log (enemies.Length);
 
 		for (int i = 0; i < enemies.Length; i++)
 		{
-			enemies [i].collider.GetComponentInParent<EnemyInfo> ().attackTarget = gameObject;
+			var enemyInfo = enemies [i].collider.GetComponentInParent <EnemyInfo> ();
+			enemyInfo.attackTarget = gameObject;
+			enemyInfo.enemyAction.detectedTarget = gameObject;
 		}
 	}
 		

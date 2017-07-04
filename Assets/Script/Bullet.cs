@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour {
 	public void Update()
 	{
 		flingDistance += rigid.velocity.magnitude * dynamicObject.customDeltaTime;
-		rigid.velocity = originVelocity * Mathf.Pow(dynamicObject.customTimeScale, 8f);
+		rigid.velocity = originVelocity * Mathf.Pow(dynamicObject.customTimeScale, 12f);
 		if (maxFlingDistance < flingDistance)
 		{
 			DestroyBullet ();
@@ -104,6 +104,17 @@ public class Bullet : MonoBehaviour {
 					Physics.IgnoreCollision (ignoreCollider, GetComponent<Collider>(), true);
 					return;
 				}
+			}
+			if (col.collider.CompareTag ("Decoy"))
+			{
+				col.collider.GetComponent<DecoyObject> ().playTime = col.collider.GetComponent<DecoyObject> ().lifeTime;
+				Physics.IgnoreCollision (col.collider, GetComponent<Collider>(),true);
+				return;
+			}
+			if (col.collider.CompareTag ("SlowField"))
+			{
+				Physics.IgnoreCollision (col.collider, GetComponent<Collider>(),true);
+				return;
 			}
 		}
 

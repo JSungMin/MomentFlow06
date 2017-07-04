@@ -53,7 +53,9 @@ public class Shoulder : MonoBehaviour {
             var usingBullet = ((Gun)nowEquiptWeapon).usingBullet;
             var borrowedBullet = BulletPool.Instance.BorrowBullet(usingBullet, this.gameObject);
             borrowedBullet.transform.position = shotPosition.position;
-            borrowedBullet.GetComponent<Bullet>().originVelocity = (shotPosition.position - transform.position).normalized * borrowedBullet.maxSpeed;
+			var velocity = (shotPosition.position - transform.position).normalized * borrowedBullet.maxSpeed;
+			velocity.z = 0;
+			borrowedBullet.GetComponent<Bullet>().originVelocity = velocity;
             if (Random.Range(0.0f, 1.0f) > 0.5f)
                 audioSource.clip = gunAClip;
             else

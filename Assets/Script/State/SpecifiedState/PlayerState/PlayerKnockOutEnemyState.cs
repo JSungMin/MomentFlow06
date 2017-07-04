@@ -16,7 +16,7 @@ public class PlayerKnockOutEnemyState : StateMachineBehaviour {
 		playerRigidbody.velocity = Vector3.zero;
 		if (null != grabbedEnemyBodyAnimator)
 		{
-			grabbedEnemyBodyAnimator.SetTrigger ("TriggerDie");
+			grabbedEnemyBodyAnimator.SetTrigger ("TriggerDieByStrike");
 		}
 	}
 

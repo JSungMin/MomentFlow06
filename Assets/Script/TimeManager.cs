@@ -17,6 +17,7 @@ public class TimeManager : MonoBehaviour
 
 	public void TimePause ()
 	{
+		Debug.Log ("Pause");
 		isTimePaused = true;
 
 		dynamicObjectList.ForEach (delegate (DynamicObject obj) 

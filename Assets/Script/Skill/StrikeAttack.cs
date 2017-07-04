@@ -26,6 +26,7 @@ public class StrikeAttack : SkillBase {
 
 	protected override bool CanUseSkill ()
 	{
+		Debug.Log ("Mana : " + ownerInfo.mana.ManaPoint);
 		if (ownerInfo.mana.ManaPoint != 0)
 			return true;
 		return false;
@@ -38,6 +39,7 @@ public class StrikeAttack : SkillBase {
 
 	protected override void UseSkill ()
 	{
+		
 		if (ownerInfo.CompareTag ("Player"))
 		{
 			ownerInfo.GetComponentInChildren<PlayerAction> ().GetSkill<TimePause> ().TryCancelSkill ();

@@ -38,7 +38,7 @@ public class EnemyAction : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (!GetComponentInParent<DynamicObject> ().IsUpdateable ()) {
+		if (!GetComponentInParent<DynamicObject> ().IsUpdateable () || !enemyInfo.isUpdatable) {
 			if (enemyInfo.isDetect) {
 				enemyInfo.isDetect = false;
 				detectedTarget = null;
@@ -68,6 +68,7 @@ public class EnemyAction : MonoBehaviour {
 		} else {
 			actionSensitiveTimer += enemyInfo.dynamicObject.customDeltaTime;
 		}
+		Debug.Log (actionSensitiveTimer);
 		actions [(int)enemyInfo.actionType].TryAction ();
 	}
 
@@ -102,15 +103,12 @@ public class EnemyAction : MonoBehaviour {
 			    detectedTarget.transform.position.z == transform.position.z) {
 				enemyInfo.actionType = EnemyActionType.Attack;
 				suspiciousPoint = detectedTarget.transform.position;
-			} else {
+			}
+			else {
 				enemyInfo.actionType = EnemyActionType.Chase;
 				if (null != detectedTarget)
 					suspiciousPoint = detectedTarget.transform.position;
 			}
-		}
-		else
-		{
-			
 		}
 	}
 
@@ -121,7 +119,7 @@ public class EnemyAction : MonoBehaviour {
 
 	public RaycastHit[] FindObjectsInSight ()
 	{
-		var center = enemyBodyCollider.transform.position + enemyBodyCollider.center.y * Vector3.up - findRange * enemyInfo.transform.localScale.x * Vector3.right * 0.5f;
+		var center = enemyBodyCollider.transform.position + enemyBodyCollider.center.y * Vector3.up - findRange * enemyInfo.transform.localScale.x * Vector3.right;
 		var halfExtent = new Vector3 (findRange * 0.5f, enemyBodyCollider.size.y * 0.5f, 1f);
 		var objects = Physics.BoxCastAll (center, halfExtent, GetLookAtDirection ().x * Vector3.right, Quaternion.identity, findRange * 0.5f, findOutLayerMask);
 
@@ -142,6 +140,11 @@ public class EnemyAction : MonoBehaviour {
 			attackTarget = target;
 			enemyInfo.SetAttackTarget (attackTarget);
 		}
+		else if (target.CompareTag("Decoy"))
+		{
+			attackTarget = target;
+		}
+
 	}
 
 	//Enemy가 타겟을 감지하는 루틴
@@ -159,32 +162,38 @@ public class EnemyAction : MonoBehaviour {
 
 		for (int i = 0; i < targets.Count; i++)
 		{
-			var targetOutsideInfo = targets [i].GetComponentInParent <HumanInfo> ().GetComponentInChildren <OutsideInfo> ();
-			if (!targetOutsideInfo.isOnObstacle) {
-				IdentifyAndApplyTarget(targets [i].GetComponentInParent <HumanInfo> ().bodyCollider.gameObject);
+			if (null != targets [i].GetComponentInParent <HumanInfo> ()) {
+				var targetOutsideInfo = targets [i].GetComponentInParent <HumanInfo> ().GetComponentInChildren <OutsideInfo> ();
+				if (!targetOutsideInfo.isOnObstacle) {
+					IdentifyAndApplyTarget (targets [i].GetComponentInParent <HumanInfo> ().bodyCollider.gameObject);
+				} 
+				else {
+					if (targets [i].transform.position.z == enemyInfo.transform.position.z) {
+						//Debug.Log ("같은 Z축");
+						IdentifyAndApplyTarget (targets [i].GetComponentInParent <HumanInfo> ().bodyCollider.gameObject);
+					}
+					//target이 다른 Z축에 있음
+					else if (enemyOutsideInfo.switchableObstacle == null) {
+						//Debug.Log ("AI가 밖에서 지켜 봄");
+						IdentifyAndApplyTarget (targets [i].GetComponentInParent <HumanInfo> ().bodyCollider.gameObject);
+					} else if (enemyOutsideInfo.switchableObstacle != targetOutsideInfo.switchableObstacle) {
+						//Debug.Log ("다른 switchableObstacle에서 지켜 봤을 때");
+						IdentifyAndApplyTarget (targets [i].GetComponentInParent <HumanInfo> ().bodyCollider.gameObject);
+					} else if (!targets [i].GetComponentInParent <HumanInfo> ().isCrouched) {
+						//Debug.Log ("캐릭터가 안 앉음");
+						IdentifyAndApplyTarget (targets [i].GetComponentInParent <HumanInfo> ().bodyCollider.gameObject);
+					}
+				}
 			}
 			else {
-				if (targets [i].transform.position.z == enemyInfo.transform.position.z)
-				{
-					Debug.Log ("같은 Z축");
-					IdentifyAndApplyTarget(targets [i].GetComponentInParent <HumanInfo> ().bodyCollider.gameObject);
+				if (targets [i].transform.position.z == enemyInfo.transform.position.z) {
+					//Debug.Log ("같은 Z축");
+					IdentifyAndApplyTarget (targets [i].GetComponentInParent <DynamicObject> ().gameObject);
 				}
-				//target이 다른 Z축에 있음
-				else if (enemyOutsideInfo.switchableObstacle == null)
-				{
-					Debug.Log ("AI가 밖에서 지켜 봄");
-					IdentifyAndApplyTarget(targets [i].GetComponentInParent <HumanInfo> ().bodyCollider.gameObject);
-				}
-				else if (enemyOutsideInfo.switchableObstacle != targetOutsideInfo.switchableObstacle)
-				{
-					Debug.Log ("다른 switchableObstacle에서 지켜 봤을 때");
-					IdentifyAndApplyTarget(targets [i].GetComponentInParent <HumanInfo> ().bodyCollider.gameObject);
-				}
-				else if (!targets [i].GetComponentInParent <HumanInfo>().isCrouched)
-				{
-					Debug.Log ("캐릭터가 안 앉음");
-					IdentifyAndApplyTarget(targets [i].GetComponentInParent <HumanInfo> ().bodyCollider.gameObject);
-				}
+				else if (enemyOutsideInfo.switchableObstacle == null) {
+					//Debug.Log ("AI가 밖에서 지켜 봄");
+					IdentifyAndApplyTarget (targets [i].GetComponentInParent <DynamicObject> ().gameObject);
+				} 
 			}
 		}
 	}

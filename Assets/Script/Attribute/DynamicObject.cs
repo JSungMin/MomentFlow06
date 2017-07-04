@@ -64,7 +64,7 @@ public class DynamicObject : MonoBehaviour {
 	private void SetDynamicComponents ()
 	{
 		animators = rootTransform.GetComponentsInChildren<Animator> ();
-		particles = rootTransform.GetComponentsInChildren <ParticleSystem> ();
+		particles = rootTransform.GetComponentsInChildren<ParticleSystem> ();
 	}
 
 	private void AffectCustomTimeScale ()

@@ -26,6 +26,8 @@ public class EnemyInfo : HumanInfo
     private GameObject[] enemies;
     public List<GameObject> sameRawEnemies { private set; get; }
     
+	public bool isDead = false;
+
 	//Enemy가 Target을 디텍트하기 위해 채워야 할 게이지
 	public float detectGauge; // 안전성 검증 후 private로 정할 것
 	public float maxDetectGauge; 
