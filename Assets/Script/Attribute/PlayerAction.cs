@@ -306,9 +306,15 @@ public class PlayerAction : MonoBehaviour {
 			for (int i = 0; i < outsideInfo.enemyList.Count; i++)
 			{
 				var enemy = outsideInfo.enemyList [i];
-				if (enemy.GetComponentInParent<EnemyInfo>().hp <= 0) 
+				if (enemy.GetComponentInParent<EnemyInfo>().isDead) 
+				{
+					playerAnimator.SetTrigger ("TriggerDrag");
+					break;
+				}
+				else
 				{
 					playerAnimator.SetTrigger ("TriggerGrab");
+					enemy.GetComponent<EnemyAction> ().bodyAnimator.SetTrigger ("TriggerDieByMeleeAttack");
 					break;
 				}
 			}

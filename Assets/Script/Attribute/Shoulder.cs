@@ -47,6 +47,10 @@ public class Shoulder : MonoBehaviour {
 
 	public void Shot ()
 	{
+		if (gameObject.CompareTag ("Enemy")) {
+			((Gun)nowEquiptWeapon).ammo = 1;
+		}
+
         if (((Gun)nowEquiptWeapon).ammo - 1 >= 0)
         {
             ((Gun)nowEquiptWeapon).ammo -= 1;
