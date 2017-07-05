@@ -22,6 +22,7 @@ public class DieState : IStateBehaviour
     
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       
+		animator.GetComponent<SpriteRenderer>().sortingLayerName = "Enemy";
+		animator.GetComponent<SpriteRenderer> ().sortingOrder = 0;
     }
 }

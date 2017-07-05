@@ -5,9 +5,10 @@ using UnityEngine;
 // Mana Controller
 public class Mana
 {
-    public Mana(float maxManaPoint)
+	public Mana(float defaultManaPoint,float maxManaPoint)
     {
         this.maxManaPoint = maxManaPoint;
+		manaPoint = defaultManaPoint;
     }
 
     public IEnumerator AddManaFor(float perIncManaPoint, float incDeltaTm, bool isTimePauseStillUse)
@@ -27,6 +28,15 @@ public class Mana
     }
 
     private float maxManaPoint;
+	public float MaxManaPoint
+	{
+		private set {
+			maxManaPoint = value;
+		}
+		get {
+			return maxManaPoint;
+		}
+	}
     private float manaPoint;
     public float ManaPoint
     {

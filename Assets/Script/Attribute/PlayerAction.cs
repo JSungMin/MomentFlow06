@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAction : MonoBehaviour {
+	public bool isReverseLook = false;
+
 	public Animator playerAnimator;
 	public Animator gunAnimator;
 
@@ -139,6 +141,7 @@ public class PlayerAction : MonoBehaviour {
 		CheckInteractWithNPC (nearestNPC);
 		CheckCrossObstacle (nearestObstacle);
 		CheckInteractWithObject ();
+		CheckInteractWithEnemy ();
 
 		CheckOnStair (nearestStair);
 
@@ -147,9 +150,11 @@ public class PlayerAction : MonoBehaviour {
 		TriggerActions ();
 
 		if (aimTarget.isActive)
-			aimTarget.AimToObject(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-		else
-			aimTarget.AimToForward();
+			aimTarget.AimToObject (Camera.main.ScreenToWorldPoint (Input.mousePosition));
+		else {
+			if (!playerInfo.isHided)
+				aimTarget.AimToForward(isReverseLook);
+		}
 
 		aimTarget.CheckCanVisibleShoulder ();
 	}
@@ -302,19 +307,38 @@ public class PlayerAction : MonoBehaviour {
 			{
 				outsideInfo.teleportEntrance.GetComponent<InteractableObject> ().TryInteract (this.gameObject);
 			}
+		}
+	}
 
-			for (int i = 0; i < outsideInfo.enemyList.Count; i++)
-			{
+	void CheckInteractWithEnemy ()
+	{
+		if (inputF) {
+			for (int i = 0; i < outsideInfo.enemyList.Count; i++) {
 				var enemy = outsideInfo.enemyList [i];
-				if (enemy.GetComponentInParent<EnemyInfo>().isDead) 
-				{
-					playerAnimator.SetTrigger ("TriggerDrag");
+				var enemyInfo = enemy.GetComponentInParent <EnemyInfo> ();
+				if (enemyInfo.isDead) {
+					if (!playerAnimator.GetBehaviour<PlayerDragState> ().isDrag) {
+						playerAnimator.GetBehaviour<PlayerDragState> ().draggedObject = enemyInfo.gameObject;
+						playerAnimator.SetTrigger ("TriggerDrag");
+					} else {
+						playerAnimator.SetTrigger ("TriggerDragEnd");
+					}
 					break;
 				}
-				else
-				{
-					playerAnimator.SetTrigger ("TriggerGrab");
-					enemy.GetComponent<EnemyAction> ().bodyAnimator.SetTrigger ("TriggerDieByMeleeAttack");
+				else {
+					if (null == playerAnimator.GetBehaviour<PlayerNormalGrab> ().grabbedEnemy) {
+						playerAnimator.GetBehaviour<PlayerNormalGrab> ().grabbedEnemy = enemy.GetComponent<EnemyAction> ();
+						playerAnimator.SetTrigger ("TriggerGrab");
+					}
+					else
+					{
+						playerAnimator.SetTrigger ("TriggerGrabRelease");
+						enemyInfo.transform.localScale = new Vector3 (
+							-playerInfo.transform.localScale.x,
+							playerInfo.transform.localScale.y,
+							playerInfo.transform.localScale.z
+						);
+					}
 					break;
 				}
 			}
@@ -372,9 +396,9 @@ public class PlayerAction : MonoBehaviour {
 		{
 			playerAnimator.SetTrigger ("TriggerCrouch");
 			playerAnimator.ResetTrigger ("TriggerStandUp");
-			playerAnimator.SetBool ("IsCrouching", true);
+			//playerAnimator.SetBool ("IsCrouching", true);
 		}
-		else
+		else if (!Input.GetKey (KeyCode.S) && playerAnimator.GetBool("IsCrouching"))
 		{
 			playerAnimator.SetTrigger ("TriggerStandUp");
 		}
@@ -409,7 +433,7 @@ public class PlayerAction : MonoBehaviour {
 			playerAnimator.SetBool ("IsAir", false);
 		}
 	}
-		
+
 	public float GetDistanceToGround ()
 	{
 		for (int i = 0; i < 3; i++)

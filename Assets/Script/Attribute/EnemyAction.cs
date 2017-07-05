@@ -68,7 +68,6 @@ public class EnemyAction : MonoBehaviour {
 		} else {
 			actionSensitiveTimer += enemyInfo.dynamicObject.customDeltaTime;
 		}
-		Debug.Log (actionSensitiveTimer);
 		actions [(int)enemyInfo.actionType].TryAction ();
 	}
 
@@ -162,8 +161,13 @@ public class EnemyAction : MonoBehaviour {
 
 		for (int i = 0; i < targets.Count; i++)
 		{
+			
 			if (null != targets [i].GetComponentInParent <HumanInfo> ()) {
 				var targetOutsideInfo = targets [i].GetComponentInParent <HumanInfo> ().GetComponentInChildren <OutsideInfo> ();
+
+				if (targets [i].GetComponentInParent<HumanInfo> ().isHided)
+					continue;
+
 				if (!targetOutsideInfo.isOnObstacle) {
 					IdentifyAndApplyTarget (targets [i].GetComponentInParent <HumanInfo> ().bodyCollider.gameObject);
 				} 

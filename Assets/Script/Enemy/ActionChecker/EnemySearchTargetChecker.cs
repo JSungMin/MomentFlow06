@@ -18,12 +18,22 @@ public class EnemySearchTargetChecker : ActionCheckerBase {
 		walkState = enemyAction.bodyAnimator.GetBehaviour<WalkState> ();
 
 		if (enemyAction.enemyOutsideInfo.interactableObject.Count != 0) {
-			if (Random.Range (0, 100) <= searchProbability) {
+			if (Random.Range (0, 10000) <= searchProbability) {
 				enemyAction.bodyAnimator.SetTrigger ("TriggerSearchTarget");
 
 				var obj = enemyAction.enemyOutsideInfo.interactableObject [Random.Range (0, enemyAction.enemyOutsideInfo.interactableObject.Count - 1)];
-				if (!obj.GetComponentInParent<InteractableObject> ().isInteracted)
-					obj.GetComponentInParent<InteractableObject> ().TryInteract (enemyInfo.gameObject);
+				if (obj.GetComponentInParent<InteractableObject> ().objectType == InteractableObjectType.Door) {
+					if (!obj.GetComponentInParent<InteractableObject>().isInteracted)
+					{
+						obj.GetComponentInParent<InteractableObject> ().TryInteract (enemyInfo.gameObject);
+					}
+				} 
+				else {
+					if (obj.GetComponentInParent<InteractableObject>().isInteracted)
+					{
+						obj.GetComponentInParent<InteractableObject> ().TryInteract (enemyInfo.gameObject);
+					}
+				}
 			}
 		}
 

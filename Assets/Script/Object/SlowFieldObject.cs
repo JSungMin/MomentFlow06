@@ -5,6 +5,7 @@ using UnityEngine;
 public class SlowFieldObject : FieldBase {
 	public _2dxFX_DestroyedFX effect;
 
+	public GameObject owner;
 	private bool isActivated = false;
 
 	// Use this for initialization
@@ -49,6 +50,11 @@ public class SlowFieldObject : FieldBase {
 			
 			var col = objects [i];
 			if (null != col) {
+				if (null != col.GetComponentInParent<HumanInfo>() &&
+					col.GetComponentInParent<HumanInfo>().gameObject == owner)
+				{
+					return;
+				}
 				col.ChangeTimeScale (col.customTimeScale * reductionAmount);
 				affectedList.Add (objects [i].gameObject);
 			}

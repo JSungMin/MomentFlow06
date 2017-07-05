@@ -6,6 +6,7 @@ using UnityEngine;
 public class HumanInfo : MonoBehaviour {
 
 	public float hp;
+	public float maxHp;
 	//PlayerInfo에 있는 MP를 HumanInfo단으로 끌어 올렸음 => Enemy 중 시간 능력 사용하는 녀석들이 존재
 	public Mana mana { protected set; get; }
 	public int maxPocketCapacity;
@@ -15,6 +16,7 @@ public class HumanInfo : MonoBehaviour {
 	public Collider triggerCollider;
 
 	public bool isCrouched;
+	public bool isHided;
 
 	public bool CanStoreItem()
 	{

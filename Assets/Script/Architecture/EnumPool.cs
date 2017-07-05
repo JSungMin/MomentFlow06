@@ -45,6 +45,13 @@ public enum ItemType
 	Gun
 }
 
+public enum PlayerDetectState
+{
+	Safe = 0,
+	Warning = 1,
+	Detected = 2
+}
+
 public enum EnemyActionType
 {
 	Idle = 0,

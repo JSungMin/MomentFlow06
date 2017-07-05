@@ -47,6 +47,7 @@ public class SlowField : SkillBase {
 		var position = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		position.z = ownerInfo.transform.position.z;
 		var slowField = Instantiate (slowFieldObject, position, Quaternion.identity);
+		slowField.GetComponent<SlowFieldObject> ().owner = ownerInfo.gameObject;
 		TimeManager.GetInstance ().TimeNormalize ();
 	}
 

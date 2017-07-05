@@ -73,17 +73,42 @@ public class AimTarget : MonoBehaviour
         shoulder.transform.localRotation = Quaternion.Euler(0, 0, degree + defaultAngle);
     }
 
-    public void AimToForward()
+	public void AimToForward()
+	{
+		if (transform.CompareTag ("Player")) {
+			var inputX = Input.GetAxis("Horizontal");
+			if (inputX < 0)
+			{
+				SetDirection (false);
+			}
+			else if (inputX > 0)
+			{
+				SetDirection (true);
+			}
+		}
+
+		animator.SetFloat("AimAngleRatio", 0.5f);
+
+		shoulder.transform.localRotation = Quaternion.Euler(Vector3.zero);
+	}
+
+	public void AimToForward(bool isReverse)
     {
 		if (transform.CompareTag ("Player")) {
 			var inputX = Input.GetAxis("Horizontal");
 			if (inputX < 0)
 			{
-				SetDirection(false);
+				if (isReverse)
+					SetDirection (true);
+				else
+					SetDirection (false);
 			}
 			else if (inputX > 0)
 			{
-				SetDirection(true);
+				if (isReverse)
+					SetDirection (false);
+				else
+					SetDirection (true);
 			}
 		}
 

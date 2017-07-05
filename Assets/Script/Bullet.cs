@@ -92,6 +92,7 @@ public class Bullet : MonoBehaviour {
 					return;
 				}
                 col.collider.GetComponentInParent<HumanInfo>().hp -= damage;
+				StatusUI.instance.SetHpImage ();
 			}
 			if (col.collider.CompareTag ("Enemy"))
 			{
