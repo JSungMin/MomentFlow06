@@ -1,9 +1,10 @@
 fileFormatVersion: 2
-guid: 788e4ccdbd4483740aa51b7dc62e9d8d
-timeCreated: 1499297893
+guid: 81b5213ea2a48b44e9bbfe5ad43dbb16
+timeCreated: 1499308748
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: IdleHand_write_0
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -84,7 +85,20 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: IdleHand_write_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.504, y: 0.5451}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

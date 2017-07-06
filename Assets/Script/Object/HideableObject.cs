@@ -6,10 +6,19 @@ public class HideableObject : InteractableObject {
 
 	public GameObject hidedObject;
 
+	private float hidedObjectPreviousZ;
+
+	public bool isFromLeftShadow;
+
 	public void Update()
 	{
 		if (null != hidedObject)
 		{
+			if (isFromLeftShadow) {
+				hidedObject.transform.localScale = new Vector3 (-1, 1, 1);
+			} else {
+				hidedObject.transform.localScale = new Vector3 (1,1,1);
+			}
 			hidedObject.transform.position = new Vector3 (transform.position.x, hidedObject.transform.position.y, transform.position.z);
 		}
 	}
@@ -21,6 +30,8 @@ public class HideableObject : InteractableObject {
 		hidedObject.GetComponentInChildren<Animator> ().SetTrigger ("TriggerHide");
 
 		if (hidedObject.CompareTag ("Player")) {
+			hidedObjectPreviousZ = hidedObject.transform.position.z;
+
 			hidedObject.GetComponentInChildren<Animator> ().GetBehaviour<PlayerHideState> ().hideFrom = this;
 		}
 		isInteracted = true;
@@ -30,8 +41,14 @@ public class HideableObject : InteractableObject {
 	{
 		if (null != hidedObject)
 		{
-			hidedObject.GetComponent<HumanInfo> ().isHided = false;
+			Debug.Log ("OutChallenger");
+			hidedObject.GetComponent <HumanInfo> ().isHided = false;
 			hidedObject.GetComponentInChildren<Animator> ().SetTrigger ("TriggerHideEnd");
+			hidedObject.transform.position = new Vector3 (
+				hidedObject.transform.position.x,
+				hidedObject.transform.position.y,
+				hidedObjectPreviousZ
+			);
 			hidedObject = null;
 		}
 		isInteracted = false;
