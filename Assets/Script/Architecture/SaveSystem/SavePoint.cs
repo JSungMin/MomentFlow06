@@ -25,10 +25,12 @@ public class SavePoint : MonoBehaviour {
 		var playerInfo = GameObject.FindObjectOfType<PlayerInfo> ();
 		SavePlayerInfo (playerInfo);
 		var enemies = GameObject.FindObjectsOfType<EnemyInfo> ();
+
 		for (int i = 0; i < enemies.Length; i++)
 		{
-			Saver.SaveTransform (enemies [i].name, enemies [i].transform);
+			SaveEnemyInfo (enemies [i]);
 		}
+
 		var interactables = GameObject.FindObjectsOfType<InteractableObject> ();
 		for (int i = 0; i < interactables.Length; i++)
 		{
@@ -43,6 +45,15 @@ public class SavePoint : MonoBehaviour {
 		Loader.LoadTransform (playerInfo.gameObject.name,playerInfo.transform);
 		playerInfo.hp = Loader.LoadFloat (playerInfo.gameObject.name, "HP");
 		playerInfo.equiptInfo = Loader.LoadEquiptInfo (playerInfo.name, playerInfo.equiptInfo);
+
+		var enemies = GameObject.FindObjectsOfType<EnemyInfo> ();
+
+		for (int i = 0; i < enemies.Length; i++)
+		{
+			enemies [i].gameObject.SetActive (Loader.LoadBool(enemies[i].gameObject.name, "SetActive"));
+			Loader.LoadTransform (enemies [i].gameObject.name, enemies [i].transform);
+			Loader.LoadEnemyInfo (enemies [i].gameObject.name, enemies [i]);
+		}
 	}
 
 	void SavePlayerInfo (PlayerInfo playerInfo)
@@ -50,6 +61,14 @@ public class SavePoint : MonoBehaviour {
 		Saver.SaveTransform (playerInfo.gameObject.name, playerInfo.playerTransform);
 		Saver.SaveFloat (playerInfo.gameObject.name, "HP", playerInfo.hp);
 		Saver.SaveEquiptInfo (playerInfo.gameObject.name, playerInfo.equiptInfo);
+	}
+
+	void SaveEnemyInfo (EnemyInfo enemyInfo)
+	{
+		Saver.SaveBool (enemyInfo.gameObject.name, "SetActive", enemyInfo.gameObject.activeSelf);
+		Saver.SaveTransform (enemyInfo.gameObject.name, enemyInfo.transform);
+		Saver.SaveInt (enemyInfo.gameObject.name, "ActionType", (int)enemyInfo.actionType);
+		Saver.SaveFloat (enemyInfo.gameObject.name, "DetectGauge", enemyInfo.detectGauge);
 	}
 		
 }

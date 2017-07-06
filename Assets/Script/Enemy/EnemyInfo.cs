@@ -61,6 +61,11 @@ public class EnemyInfo : HumanInfo
     // TODO 시연용으로 만들어진 것
     public GameObject attackTarget;
 
+	public void ResetToStart()
+	{
+
+	}
+
     private void Awake()
     {
 		enemyAction = GetComponentInChildren <EnemyAction> ();

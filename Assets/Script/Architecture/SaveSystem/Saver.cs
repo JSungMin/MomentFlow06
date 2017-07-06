@@ -25,6 +25,11 @@ public class Saver {
 		PlayerPrefs.SetFloat (GetSaveKey (name, typeTag), value);
 	}
 
+	public static void SaveBool (string name, string typeTag, bool value)
+	{
+		PlayerPrefs.SetString (GetSaveKey (name, typeTag), value.ToString());
+	}
+
 	public static void SaveSpriteEnabled(string name, SpriteRenderer sr)
 	{
 		PlayerPrefs.SetString (GetSaveKey(name,typeof (SpriteRenderer).Name),sr.enabled.ToString());

@@ -43,11 +43,11 @@ public class ItemBase : InteractableObject
 	//isDrinked와 혼동되지 않게 주의 할 것
 	public override bool TryInteract (GameObject challenger)
 	{
+		Debug.Log ("Try To Pick UP");
 		if (!isInteracted && !isConnected)
 		{
 			if (challenger.GetComponent<HumanInfo> ().CanStoreItem ()) 
 			{
-				Debug.Log ("Try To Pick UP");
 				owner = challenger;
 				doInteractActions.Invoke ();
 				return true;

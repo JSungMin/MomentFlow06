@@ -10,6 +10,8 @@ public class HideableObject : InteractableObject {
 
 	public bool isFromLeftShadow;
 
+	public float toZ;
+
 	public void Update()
 	{
 		if (null != hidedObject)
@@ -19,7 +21,7 @@ public class HideableObject : InteractableObject {
 			} else {
 				hidedObject.transform.localScale = new Vector3 (1,1,1);
 			}
-			hidedObject.transform.position = new Vector3 (transform.position.x, hidedObject.transform.position.y, transform.position.z);
+			hidedObject.transform.position = new Vector3 (transform.position.x, hidedObject.transform.position.y, toZ);
 		}
 	}
 

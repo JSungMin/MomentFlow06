@@ -8,6 +8,13 @@ public class Loader {
 		return SavePoint.sceneName + ":" + name + ":" + type;
 	}
 
+	public static EnemyInfo LoadEnemyInfo (string name, EnemyInfo enemyInfo)
+	{
+		enemyInfo.detectGauge = LoadFloat (name, "DetectGauge");
+		enemyInfo.actionType = (EnemyActionType)LoadInt (name, "ActionType");
+		return enemyInfo;
+	}
+
 	public static Transform LoadTransform (string name, Transform targetTrans)
 	{
 		var data = PlayerPrefs.GetString (GetSaveKey (name, typeof(Transform).Name));
@@ -27,6 +34,15 @@ public class Loader {
 	public static float LoadFloat (string name, string typeTag)
 	{
 		return PlayerPrefs.GetFloat(GetSaveKey(name,typeTag));
+	}
+
+	public static bool LoadBool (string name, string typeTag)
+	{
+		if (PlayerPrefs.GetString(GetSaveKey(name,typeTag)) == bool.TrueString)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	public static bool LoadSpriteEnabled(string name)

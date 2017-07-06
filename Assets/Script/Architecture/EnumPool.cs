@@ -62,8 +62,8 @@ public enum EnemyActionType
 	Restore = 5,
 	Patrol = 6,
 	RunAway = 7,
-	Damaged,
-	Die
+	Die = 8,
+	Damaged
 }
 
 public enum BodyStateType

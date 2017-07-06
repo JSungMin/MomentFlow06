@@ -15,5 +15,10 @@ public struct ItemInfoStruct
 	}
 }
 
+public struct OriginEnemyInfo
+{
+
+}
+
 public class StructPool {
 }

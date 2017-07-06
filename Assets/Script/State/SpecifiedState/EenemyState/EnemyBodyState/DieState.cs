@@ -18,6 +18,7 @@ public class DieState : IStateBehaviour
         enemyInfo.boxCollider.size = new Vector3(enemyInfo.boxCollider.size.x, 0.1f, 0.0f);
         
         enemyInfo.isUpdatable = false;
+		enemyInfo.hp = 0;
     }
     
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

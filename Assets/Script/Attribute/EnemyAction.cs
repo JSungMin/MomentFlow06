@@ -38,6 +38,8 @@ public class EnemyAction : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		actions [7].TryAction ();
+
 		if (!GetComponentInParent<DynamicObject> ().IsUpdateable () || !enemyInfo.isUpdatable) {
 			if (enemyInfo.isDetect) {
 				enemyInfo.isDetect = false;
