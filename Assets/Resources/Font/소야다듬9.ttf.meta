@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 74c794d8072d0444a83e4709cc498c10
+timeCreated: 1499396770
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: soya_dadum9
+  fontNames:
+  - soya_dadum9
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

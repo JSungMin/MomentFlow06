@@ -26,6 +26,9 @@ public class EnemyAction : MonoBehaviour {
 	public List<int> targetZList;
 	public int targetZListOffet = 0;
 
+	public GameObject warningBubble;
+	public GameObject detectedBubble;
+
 	// Use this for initialization
 	void Start () {
 		if (null == enemyInfo)
@@ -39,6 +42,11 @@ public class EnemyAction : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		actions [7].TryAction ();
+	
+		if (enemyInfo.isDead) {
+			warningBubble.SetActive (false);
+			detectedBubble.SetActive (false);
+		}
 
 		if (!GetComponentInParent<DynamicObject> ().IsUpdateable () || !enemyInfo.isUpdatable) {
 			if (enemyInfo.isDetect) {
@@ -49,6 +57,17 @@ public class EnemyAction : MonoBehaviour {
 				enemyInfo.detectGauge = 0.9f * enemyInfo.maxDetectGauge;
 			}
 			return;
+		}
+
+		if (enemyInfo.actionType == EnemyActionType.Suspicious) {
+			warningBubble.SetActive (true);
+			detectedBubble.SetActive (false);
+		} else if (enemyInfo.isDetect) {
+			warningBubble.SetActive (false);
+			detectedBubble.SetActive (true);
+		} else {
+			warningBubble.SetActive (false);
+			detectedBubble.SetActive (false);
 		}
 
 		transform.position = new Vector3 (

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 88daf8b2413722544bb3503635af7fae
+timeCreated: 1499396771
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: soya_soll9
+  fontNames:
+  - soya_soll9
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

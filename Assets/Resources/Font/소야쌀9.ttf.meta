@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 47cac374937bf5543a0887b6590ff453
+timeCreated: 1499396770
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: soya_ssal9
+  fontNames:
+  - soya_ssal9
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

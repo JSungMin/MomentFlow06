@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: a2e5014784572af498d5479c5d49c23d
+timeCreated: 1499396771
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: soya_nanoom9
+  fontNames:
+  - soya_nanoom9
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

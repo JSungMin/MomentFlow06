@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 8f4e23e1ddc6ba24f9f24f9819ca54ca
+timeCreated: 1499396771
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: soya_koma9
+  fontNames:
+  - soya_koma9
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

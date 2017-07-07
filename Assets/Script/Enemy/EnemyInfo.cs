@@ -91,6 +91,11 @@ public class EnemyInfo : HumanInfo
         //sameRawEnemies = AllocateSameRawObjectListByTag("Enemy");
     }
 
+	public void SetIsUpdateable (bool val)
+	{
+		isUpdatable = val;
+	}
+
     public void SetAttackTarget(GameObject target)
     {
         this.attackTarget = target;
@@ -159,6 +164,10 @@ public class EnemyInfo : HumanInfo
 		}
 		if (detectGauge == maxDetectGauge)
 		{
+			if (!isDetect) {
+				enemyAction.bodyAnimator.SetTrigger ("TriggerDetect");
+				enemyAction.shoulderAnimator.SetTrigger ("TriggerDetect");
+			}
 			detectSustainTimer = 0;
 			isDetect = true;
 		}
