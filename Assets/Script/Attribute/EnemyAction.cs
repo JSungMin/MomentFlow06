@@ -220,6 +220,14 @@ public class EnemyAction : MonoBehaviour {
 		}
 	}		
 
+	public void SetEnemyToChase (GameObject target)
+	{
+		enemyInfo.isDetect = true;
+		enemyInfo.detectGauge = enemyInfo.maxDetectGauge;
+		attackTarget = target;
+		detectedTarget = target;
+	}
+
 	private List<Collider> GetTargetsInSight (RaycastHit[] inSightObjects) 
 	{
 		List<Collider> targetColliderList = new List<Collider> ();

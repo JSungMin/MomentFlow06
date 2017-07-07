@@ -36,12 +36,20 @@ public class EnemyPatrolAction : ActionCheckerBase {
 	}
 	protected override void DoAction ()
 	{
+		if (enemyAction.enemyOutsideInfo.interactableObject.Count != 0) {
+			var obj = enemyAction.enemyOutsideInfo.interactableObject [Random.Range (0, enemyAction.enemyOutsideInfo.interactableObject.Count - 1)];
+			if (!obj.GetComponentInParent<InteractableObject> ().isInteracted && obj.GetComponentInParent<InteractableObject>().objectType == InteractableObjectType.Door)
+				obj.GetComponentInParent<InteractableObject> ().TryInteract (enemyInfo.gameObject);
+		}
+
 		if (Vector3.Distance (patrolPoints [patrolIndex], enemyInfo.transform.position) > autoStopOffset) {
 			walkState = enemyAction.bodyAnimator.GetBehaviour <WalkState> ();
 
 			ChaseYAxis ();
 
 			ChaseZAxis ();
+
+
 
 			enemyAction.bodyAnimator.SetTrigger ("TriggerWalk");
 			enemyAction.shoulderAnimator.SetTrigger ("TriggerWalk");

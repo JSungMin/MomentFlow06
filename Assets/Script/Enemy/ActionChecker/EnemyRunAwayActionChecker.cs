@@ -38,6 +38,12 @@ public class EnemyRunAwayActionChecker : ActionCheckerBase {
 	{
 		runState = enemyAction.bodyAnimator.GetBehaviour<RunState> ();
 
+		if (enemyAction.enemyOutsideInfo.interactableObject.Count != 0) {
+			var obj = enemyAction.enemyOutsideInfo.interactableObject [Random.Range (0, enemyAction.enemyOutsideInfo.interactableObject.Count - 1)];
+			if (!obj.GetComponentInParent<InteractableObject> ().isInteracted && obj.GetComponentInParent<InteractableObject>().objectType == InteractableObjectType.Door)
+				obj.GetComponentInParent<InteractableObject> ().TryInteract (enemyInfo.gameObject);
+		}
+
 		if (!isAlertSuccess) {
 			dir = (enemyAction.detectedTarget.transform.position - enemyInfo.transform.position).normalized;
 			ChaseYAxis ();

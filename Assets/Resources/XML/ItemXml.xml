@@ -14,6 +14,11 @@
             <MpHealAmount>25</MpHealAmount>
             <SpriteName>Potion01</SpriteName>
 	</Potion>
+	<Key>
+		<Id>0</Id>
+		<Name>Door Key</Name>
+        <SpriteName>DoorKey</SpriteName>
+	</Key>
       <GunAmmoItem>
             <Id>0</Id>
             <Name>0.45mm 탄</Name>

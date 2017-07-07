@@ -17,6 +17,10 @@ public class StatusUI : MonoBehaviour {
 	public Image mpGaugeImage;
 
 	private PlayerInfo playerInfo;
+	private EquiptInfo playerEquiptInfo;
+
+	public Transform itemListTransform;
+	public int itemMaxRow = 3;
 
 	// Use this for initialization
 	void Start () {
@@ -24,12 +28,14 @@ public class StatusUI : MonoBehaviour {
 		if (null == statusPane)
 			statusPane = gameObject;
 		playerInfo = GameObject.FindObjectOfType <PlayerInfo> ();
+		playerEquiptInfo = playerInfo.equiptInfo;
 	}
 
 	public void Update()
 	{
 		UpdateDetectState ();
 		UpdateMPGauge ();
+		ShowPlayerItems ();
 	}
 
 	public void SetHpImage ()
@@ -93,5 +99,24 @@ public class StatusUI : MonoBehaviour {
 	public void UpdateMPGauge()
 	{
 		mpGaugeImage.fillAmount = playerInfo.mana.ManaPoint / playerInfo.mana.MaxManaPoint;
+	}
+
+	List<ItemInfoStruct> showedItemList = new List<ItemInfoStruct>();
+
+	private void ShowPlayerItems ()
+	{
+		for (int i = 0; i < playerEquiptInfo.itemInfoList.Count; i++)
+		{
+			if (!showedItemList.Contains (playerEquiptInfo.itemInfoList [i]))
+			{
+				var newImage = new GameObject ("ItemElement");
+				var spriteRenderer = newImage.AddComponent<Image> ();
+				spriteRenderer.sprite = ItemFactory.Instance.GetItemInfo<Key> (playerEquiptInfo.itemInfoList [i].itemId).sprite;
+				newImage.transform.position = itemListTransform.position;
+				newImage.transform.parent = itemListTransform;
+				newImage.transform.localScale = new Vector3 (0.5f,0.5f,0.5f);
+				showedItemList.Add (playerEquiptInfo.itemInfoList [i]);
+			}
+		}
 	}
 }

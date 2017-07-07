@@ -74,7 +74,7 @@ public class PlayerAction : MonoBehaviour {
 		outsideInfo = GetComponent<OutsideInfo> ();
 
 		skills = new SkillBase[] { 
-			new TimePause ((HumanInfo)playerInfo, KeyCode.E, 1.0f, 0.5f, 0.5f),
+			new TimePause ((HumanInfo)playerInfo, KeyCode.E, 1.0f, 1.5f, 0.5f),
 			new TimeRecall ((HumanInfo)playerInfo ,KeyCode.R, 1.0f),
 			new StrikeAttack((HumanInfo)playerInfo  ,KeyCode.Space),
 			new Decoy ((HumanInfo)playerInfo, KeyCode.F1 , 0),
@@ -373,23 +373,23 @@ public class PlayerAction : MonoBehaviour {
 		{
 			playerAnimator.SetTrigger ("TriggerIdle");
 			gunAnimator.SetTrigger ("TriggerIdle");
-            audioSource.Stop();
+            //audioSource.Stop();
         }
 		if (!Input.GetKey (KeyCode.LeftShift) && input.x != 0)
 		{
 			playerAnimator.SetTrigger ("TriggerWalk");
 			gunAnimator.SetTrigger ("TriggerIdle");
-            audioSource.clip = walkClip;
-            if (!audioSource.isPlaying)
-                audioSource.Play();
+            //audioSource.clip = walkClip;
+            //if (!audioSource.isPlaying)
+              //  audioSource.Play();
         }
 		if (Input.GetKey (KeyCode.LeftShift) && input.x != 0) 
 		{
 			playerAnimator.SetTrigger ("TriggerRun");
 			gunAnimator.SetTrigger ("TriggerRun");
-            audioSource.clip = runClip;
-            if (!audioSource.isPlaying)
-                audioSource.Play();
+            //audioSource.clip = runClip;
+           // if (!audioSource.isPlaying)
+            //    audioSource.Play();
         }
 
 		if (Input.GetKey (KeyCode.S)) 

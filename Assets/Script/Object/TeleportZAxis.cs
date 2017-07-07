@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
 public class TeleportZAxis : InteractableObject {
@@ -161,5 +162,11 @@ public class TeleportZAxis : InteractableObject {
 		}
 		Debug.Log ("From : " + fromZ + "  To : " + toZ + "  Count : " + returnList.Count);
 		return returnList;
+	}
+
+	//빚이다 빚
+	public void ToNextScene ()
+	{
+		SceneManager.LoadScene (1);
 	}
 }

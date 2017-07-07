@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyDieChecker : ActionCheckerBase {
 
 	public GameObject[] dropItem;
 	public bool isDropItem = false;
+
+	public UnityEvent dieEvents;
 
 	#region implemented abstract members of ActionCheckerBase
 	protected override bool IsSatisfied ()
@@ -22,6 +25,7 @@ public class EnemyDieChecker : ActionCheckerBase {
 		{
 			var newDropItem = Instantiate (dropItem[i], transform.position, Quaternion.identity) as GameObject;
 		}
+		dieEvents.Invoke ();
 		isDropItem = true;
 	}
 	#endregion

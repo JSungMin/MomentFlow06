@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Key : ItemBase {
 
-	public int hp = 1;
 
 	public void Start()
 	{
@@ -13,19 +12,6 @@ public class Key : ItemBase {
 
 	public bool TryUseKey ()
 	{
-		if (hp > 0) {
-			UseKey ();
-			return true;
-		}
-		else {
-			DropItem ();
-			return false;
-		}
+		return true;
 	}
-
-	private void UseKey()
-	{
-		hp -= 1;
-	}
-
 }

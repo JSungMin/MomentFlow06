@@ -49,7 +49,6 @@ public class TimePause : SkillBase
     {
 		TimeManager.GetInstance ().TimePause ();
 		ownerInfo.mana.AddMana (-manaCost);
-        soundPlayer.StopBGM();
 		addManaForCoroutine = ownerInfo.StartCoroutine(ownerInfo.mana.AddManaFor(-manaCostPer, manaCostDelTm, true));
 
         GameObject.Find ("PauseEffect").GetComponent<ParticleSystem> ().Play ();
@@ -59,7 +58,6 @@ public class TimePause : SkillBase
     {
 		TimeManager.GetInstance ().TimeResume ();
 
-        soundPlayer.PlayBGM();
 		ownerInfo.StopCoroutine(addManaForCoroutine);
     }
 }

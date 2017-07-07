@@ -8,7 +8,7 @@ public class StencilScript : MonoBehaviour {
 	public SpriteRenderer[] sprites;
 	public Color stencilColor;
 
-	private List<Material> previousMat;
+	private List<Material> previousMat = new List<Material>();
 
 	// Use this for initialization
 	void Start () {

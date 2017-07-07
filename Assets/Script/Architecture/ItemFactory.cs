@@ -21,6 +21,7 @@ public class ItemFactory : MonoBehaviour {
 	public List<Potion> potionList;
 	public List<GunAmmoItem> gunAmmoItemList;
 	public List<GunItem> gunItemList;
+	public List<Key> keyItemList;
 
 	// Use this for initialization
 	void Awake () {
@@ -36,11 +37,12 @@ public class ItemFactory : MonoBehaviour {
 			return;
 		}
 		var potionNodes = doc.SelectNodes ("ItemSet/Potion");
-		Debug.Log (potionNodes.Count);
+		var keyNodes = doc.SelectNodes ("ItemSet/Key");
 		var gunAmmoItemNodes = doc.SelectNodes ("ItemSet/GunAmmoItem");
 		var gunItemNodes = doc.SelectNodes ("ItemSet/GunItem");
 
 		InitPotionList (potionNodes);
+		InitKeyList (keyNodes);
 		InitGunAmmoItemList (gunAmmoItemNodes);
 		InitGunItemList (gunItemNodes);
 	}
@@ -55,6 +57,17 @@ public class ItemFactory : MonoBehaviour {
 			potion.hpHealAmount = float.Parse(node.SelectSingleNode ("HpHealAmount").InnerText);
 			potion.mpHealAmount = float.Parse(node.SelectSingleNode ("MpHealAmount").InnerText);
 			potionList.Add (potion);
+		}
+	}
+
+	void InitKeyList (XmlNodeList keyNodes)
+	{
+		foreach (XmlNode node in keyNodes) {
+			var key = new Key ();
+			key.itemId = int.Parse(node.SelectSingleNode ("Id").InnerText);
+			key.itemName = node.SelectSingleNode ("Name").InnerText;
+			key.sprite = Resources.Load<Sprite> ("ItemImage/" + node.SelectSingleNode ("SpriteName").InnerText);
+			keyItemList.Add (key);
 		}
 	}
 
@@ -115,6 +128,11 @@ public class ItemFactory : MonoBehaviour {
 			newItemInfo = new GunItem ();
 			newItemInfo = GetGunItemInfo (itemId);
 		}
+		else if (typeof (T) == typeof (Key))
+		{
+			newItemInfo = new Key ();
+			newItemInfo = GetKeyInfo (itemId);
+		}
 		return (T)newItemInfo;
 	}
 
@@ -129,6 +147,17 @@ public class ItemFactory : MonoBehaviour {
 		newPotionInfo.mpHealAmount = savedPotion.mpHealAmount;
 
 		return newPotionInfo;
+	}
+
+	private Key GetKeyInfo (int keyId)
+	{
+		var savedKey = keyItemList [keyId];
+		var newKeyInfo = new Key ();
+		newKeyInfo.itemId = savedKey.itemId;
+		newKeyInfo.itemName = savedKey.itemName;
+		newKeyInfo.sprite = savedKey.sprite;
+
+		return newKeyInfo;
 	}
 
 	private GunAmmoItem GetGunAmmoItemInfo (int gunAmmoItemIndex)

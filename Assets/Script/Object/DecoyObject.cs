@@ -35,8 +35,7 @@ public class DecoyObject : FieldBase {
 		for (int i = 0; i < enemies.Length; i++)
 		{
 			var enemyInfo = enemies [i].collider.GetComponentInParent <EnemyInfo> ();
-			enemyInfo.attackTarget = gameObject;
-			enemyInfo.enemyAction.detectedTarget = gameObject;
+			enemyInfo.enemyAction.SetEnemyToChase (gameObject);
 		}
 	}
 		

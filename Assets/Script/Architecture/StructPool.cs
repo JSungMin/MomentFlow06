@@ -15,9 +15,11 @@ public struct ItemInfoStruct
 	}
 }
 
-public struct OriginEnemyInfo
+[System.Serializable]
+public struct ObjectExplainUIPoints
 {
-
+	public bool isRendered;
+	public List<Vector3> points;
 }
 
 public class StructPool {

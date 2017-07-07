@@ -36,14 +36,14 @@ public class Door : InteractableObject, ILockable, ITimeRecallableForInteractabl
 	{
 		isInteracted = true;
 		doorAnimator.SetTrigger ("TriggerOpenToRight");
-        audioSource.Play();
+        //audioSource.Play();
     }
 
 	private void OpenDoorToLeft()
 	{
 		isInteracted = true;
 		doorAnimator.SetTrigger ("TriggerOpenToLeft");
-        audioSource.Play();
+        //audioSource.Play();
     }
 
 	private void CloseDoor()
@@ -112,19 +112,9 @@ public class Door : InteractableObject, ILockable, ITimeRecallableForInteractabl
 		}
 	}
 
-	private void OnMouseEnter ()
+	public void BreakLock ()
 	{
-		GetComponentInChildren<SpriteRenderer> ().material.color = Color.red;
-	}
-
-	private void OnMouseDown ()
-	{
-		TryRecall (GameObject.FindObjectOfType<PlayerInfo>().gameObject);
-	}
-
-	private void OnMouseExit ()
-	{
-		GetComponentInChildren<SpriteRenderer> ().material.color = Color.white;
+		isLocked = false;
 	}
 
 	#region ITimeRecallableForInteractable implementation

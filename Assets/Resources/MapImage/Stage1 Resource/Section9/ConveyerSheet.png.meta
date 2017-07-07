@@ -1,0 +1,602 @@
+fileFormatVersion: 2
+guid: 3947e3e929dceb244b89723bc028ad6d
+timeCreated: 1499367555
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: ConveyerSheet_0
+    21300002: ConveyerSheet_1
+    21300004: ConveyerSheet_2
+    21300006: ConveyerSheet_3
+    21300008: ConveyerSheet_4
+    21300010: ConveyerSheet_5
+    21300012: ConveyerSheet_6
+    21300014: ConveyerSheet_7
+    21300016: ConveyerSheet_8
+    21300018: ConveyerSheet_9
+    21300020: ConveyerSheet_10
+    21300022: ConveyerSheet_11
+    21300024: ConveyerSheet_12
+    21300026: ConveyerSheet_13
+    21300028: ConveyerSheet_14
+    21300030: ConveyerSheet_15
+    21300032: ConveyerSheet_16
+    21300034: ConveyerSheet_17
+    21300036: ConveyerSheet_18
+    21300038: ConveyerSheet_19
+    21300040: ConveyerSheet_20
+    21300042: ConveyerSheet_21
+    21300044: ConveyerSheet_22
+    21300046: ConveyerSheet_23
+    21300048: ConveyerSheet_24
+    21300050: ConveyerSheet_25
+    21300052: ConveyerSheet_26
+    21300054: ConveyerSheet_27
+    21300056: ConveyerSheet_28
+    21300058: ConveyerSheet_29
+    21300060: ConveyerSheet_30
+    21300062: ConveyerSheet_31
+    21300064: ConveyerSheet_32
+    21300066: ConveyerSheet_33
+    21300068: ConveyerSheet_34
+    21300070: ConveyerSheet_35
+    21300072: ConveyerSheet_36
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 8192
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 8192
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ConveyerSheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 630
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_1
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 630
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_2
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 630
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_3
+      rect:
+        serializedVersion: 2
+        x: 2874
+        y: 630
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_4
+      rect:
+        serializedVersion: 2
+        x: 3832
+        y: 630
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_6
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 540
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_7
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 540
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_8
+      rect:
+        serializedVersion: 2
+        x: 2874
+        y: 540
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_9
+      rect:
+        serializedVersion: 2
+        x: 3832
+        y: 540
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 450
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_11
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 450
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_12
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 450
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_13
+      rect:
+        serializedVersion: 2
+        x: 2874
+        y: 450
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_14
+      rect:
+        serializedVersion: 2
+        x: 3832
+        y: 450
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_16
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 360
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_17
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 360
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_18
+      rect:
+        serializedVersion: 2
+        x: 2874
+        y: 360
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_19
+      rect:
+        serializedVersion: 2
+        x: 3832
+        y: 360
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 270
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_21
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 270
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_22
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 270
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_23
+      rect:
+        serializedVersion: 2
+        x: 2874
+        y: 270
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_24
+      rect:
+        serializedVersion: 2
+        x: 3832
+        y: 270
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_26
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 180
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_27
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 180
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_28
+      rect:
+        serializedVersion: 2
+        x: 2874
+        y: 180
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_29
+      rect:
+        serializedVersion: 2
+        x: 3832
+        y: 180
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 90
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_31
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 90
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_32
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 90
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_33
+      rect:
+        serializedVersion: 2
+        x: 2874
+        y: 90
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_34
+      rect:
+        serializedVersion: 2
+        x: 3832
+        y: 90
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConveyerSheet_36
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 0
+        width: 958
+        height: 90
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
