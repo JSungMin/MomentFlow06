@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DetectState : IStateBehaviour {
-	public DynamicObject dynamicObject;
 	private float detectTimer = 0;
 	public float detectDuration = 1.5f; 
 	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

@@ -78,6 +78,10 @@ public class EnemyRunAwayActionChecker : ActionCheckerBase {
 		enemyAction.shoulderAnimator.SetTrigger ("TriggerRun");
 	}
 
+	public override void CancelAction()
+	{
+
+	}
 	#endregion
 
 	private void SetWalkPosition (Vector3 position)

@@ -7,6 +7,8 @@ public class OutsideInfo : MonoBehaviour {
 
 	public bool isOnObstacle;
 
+	public RoomInfo onRoomInfo;
+
 	public List<GameObject> obstacleList;
 	public GameObject switchableObstacle;
 	public GameObject teleportEntrance;
@@ -42,6 +44,12 @@ public class OutsideInfo : MonoBehaviour {
 	public void OnTriggerEnter(Collider col)
 	{
 		Debug.Log (col.name);
+
+		if (null != col.GetComponent<RoomInfo> ()) {
+			onRoomInfo = col.GetComponent<RoomInfo> ();
+			return;
+		}
+
 		if (col.CompareTag("Obstacle"))
 		{
 			obstacleList.Add (col.gameObject);
@@ -123,6 +131,12 @@ public class OutsideInfo : MonoBehaviour {
 
 	public void OnTriggerExit(Collider col)
 	{
+		if (null != col.GetComponent<RoomInfo> () && null != onRoomInfo) {
+			Debug.Log ("Exit from Room : " + onRoomInfo.roomName);
+			onRoomInfo = null;
+			return;
+		}
+
 		if (col.CompareTag("Obstacle"))
 		{
 			obstacleList.Remove (col.gameObject);

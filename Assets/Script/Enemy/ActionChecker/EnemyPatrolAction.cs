@@ -73,6 +73,11 @@ public class EnemyPatrolAction : ActionCheckerBase {
 			}
 		}
 	}
+
+	public override void CancelAction()
+	{
+
+	}
 	#endregion
 
 	private void SetWalkPosition (Vector3 position)

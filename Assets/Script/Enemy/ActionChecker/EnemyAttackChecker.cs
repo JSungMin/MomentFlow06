@@ -51,5 +51,10 @@ public class EnemyAttackChecker : ActionCheckerBase {
 	{
 		Debug.Log ("암것도 없다.");
 	}
+
+	public override void CancelAction()
+	{
+
+	}
 	#endregion
 }

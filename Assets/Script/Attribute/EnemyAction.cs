@@ -89,7 +89,18 @@ public class EnemyAction : MonoBehaviour {
 		} else {
 			actionSensitiveTimer += enemyInfo.dynamicObject.customDeltaTime;
 		}
+
+		if (enemyInfo.previousActionType != enemyInfo.actionType)
+		{
+			actions[(int)enemyInfo.previousActionType].CancelAction();
+		}
 		actions [(int)enemyInfo.actionType].TryAction ();
+	}
+
+	public void SetNewAction (EnemyActionType newType)
+	{
+		enemyInfo.previousActionType = enemyInfo.actionType;
+		enemyInfo.actionType = newType;
 	}
 
 	public void SelectActionbyDetectGauge ()
@@ -120,7 +131,11 @@ public class EnemyAction : MonoBehaviour {
 	{
 		if (enemyInfo.isDetect) {
 			if (null != attackTarget &&
-			    detectedTarget.transform.position.z == transform.position.z) {
+			    detectedTarget.transform.position.z == transform.position.z &&
+				!detectedTarget.GetComponentInParent<HumanInfo>().isHided) {
+
+				Debug.Log (detectedTarget.transform.position.z + " : " + transform.position.z);
+
 				enemyInfo.actionType = EnemyActionType.Attack;
 				suspiciousPoint = detectedTarget.transform.position;
 			}
@@ -140,8 +155,8 @@ public class EnemyAction : MonoBehaviour {
 	public RaycastHit[] FindObjectsInSight ()
 	{
 		var center = enemyBodyCollider.transform.position + enemyBodyCollider.center.y * Vector3.up - findRange * enemyInfo.transform.localScale.x * Vector3.right;
-		var halfExtent = new Vector3 (findRange * 0.5f, enemyBodyCollider.size.y * 0.5f, 1f);
-		var objects = Physics.BoxCastAll (center, halfExtent, GetLookAtDirection ().x * Vector3.right, Quaternion.identity, findRange * 0.5f, findOutLayerMask);
+		var halfExtent = new Vector3 (findRange * 0.6f, enemyBodyCollider.size.y * 0.5f, 1f);
+		var objects = Physics.BoxCastAll (center, halfExtent, GetLookAtDirection ().x * Vector3.right, Quaternion.identity, findRange * 0.6f, findOutLayerMask);
 
 		return objects;
 	}
@@ -243,6 +258,7 @@ public class EnemyAction : MonoBehaviour {
 	{
 		enemyInfo.isDetect = true;
 		enemyInfo.detectGauge = enemyInfo.maxDetectGauge;
+		enemyInfo.attackTarget = target;
 		attackTarget = target;
 		detectedTarget = target;
 	}

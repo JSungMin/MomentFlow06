@@ -30,6 +30,11 @@ public class EnemyRestoreAction : ActionCheckerBase {
 			enemyAction.shoulderAnimator.SetTrigger ("TriggerIdle");
 		}
 	}
+
+	public override void CancelAction()
+	{
+
+	}
 	#endregion
 
 	private void SetWalkPosition (Vector3 position)

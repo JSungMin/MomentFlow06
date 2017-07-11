@@ -8,6 +8,11 @@ public class EnemySearchTargetChecker : ActionCheckerBase {
 	public float autoStopOffset = 0.05f;
 	WalkState walkState;
 
+	public List<InteractableObject> aroundObjects = new List<InteractableObject>();
+	private int index = 0;
+
+	private float initDetectGauge;
+
 	#region implemented abstract members of ActionCheckerBase
 	protected override bool IsSatisfied ()
 	{
@@ -16,31 +21,48 @@ public class EnemySearchTargetChecker : ActionCheckerBase {
 	protected override void DoAction ()
 	{
 		walkState = enemyAction.bodyAnimator.GetBehaviour<WalkState> ();
+		if (aroundObjects.Count == 0) {
+			initDetectGauge = enemyInfo.detectGauge;
+			var tmpObjList = enemyAction.enemyOutsideInfo.onRoomInfo.interactObjectListInRoom;
 
-		if (enemyAction.enemyOutsideInfo.interactableObject.Count != 0) {
-			if (Random.Range (0, 10000) <= searchProbability) {
-				enemyAction.bodyAnimator.SetTrigger ("TriggerSearchTarget");
+			//Sort aroundObject base SuspiciousPoint
+			tmpObjList.Sort (delegate(InteractableObject x, InteractableObject y) {
+				float dis01 = Vector3.Distance (x.transform.position, enemyAction.suspiciousPoint);
+				float dis02 = Vector3.Distance (y.transform.position, enemyAction.suspiciousPoint);
 
-				var obj = enemyAction.enemyOutsideInfo.interactableObject [Random.Range (0, enemyAction.enemyOutsideInfo.interactableObject.Count - 1)];
-				if (obj.GetComponentInParent<InteractableObject> ().objectType == InteractableObjectType.Door) {
-					if (!obj.GetComponentInParent<InteractableObject>().isInteracted)
-					{
-						obj.GetComponentInParent<InteractableObject> ().TryInteract (enemyInfo.gameObject);
-					}
-				} 
-				else {
-					if (obj.GetComponentInParent<InteractableObject>().isInteracted)
-					{
-						obj.GetComponentInParent<InteractableObject> ().TryInteract (enemyInfo.gameObject);
-					}
+				if (dis01 > dis02)
+					return 1;
+				else if (dis01 < dis02)
+					return -1;
+				else
+					return 0;
+			});
+
+			for (int i = 0; i < tmpObjList.Count; i++) {
+				if (Random.Range (0, 100) <= searchProbability) {
+					aroundObjects.Add (tmpObjList [i]);
 				}
 			}
 		}
+		else {
+			if (index == aroundObjects.Count)
+			{
+				aroundObjects.Clear ();
+				index = 0;
+				enemyInfo.detectGauge = 0;
+				Debug.Log ("Search End");
+				return;
+			}
+			walkState.targetPos = aroundObjects [index].transform.position;
+			ChaseZAxis (aroundObjects [index].transform.position);
+			AutoStopWalking (aroundObjects [index].transform.position);
+		}
+	}
 
-		ChaseZAxis ();
-
-		AutoStopWalking ();
-
+	public override void CancelAction()
+	{
+		index = 0;
+		aroundObjects.Clear ();
 	}
 	#endregion
 
@@ -49,7 +71,7 @@ public class EnemySearchTargetChecker : ActionCheckerBase {
 		walkState.targetPos = position;
 	}
 
-	void ChaseZAxis ()
+	void ChaseZAxis (Vector3 targetPos)
 	{
 		var myZ = enemyAction.transform.position.z;
 		var targetZ = enemyAction.suspiciousPoint.z;;
@@ -64,7 +86,7 @@ public class EnemySearchTargetChecker : ActionCheckerBase {
 		}
 
 		if (CompareEnemyAndTargetOnSameZ ()) {
-			SetWalkPosition (enemyAction.suspiciousPoint);
+			SetWalkPosition (targetPos);
 		}
 		else {
 			if (myZ > targetZ) {
@@ -90,12 +112,16 @@ public class EnemySearchTargetChecker : ActionCheckerBase {
 			}
 		}
 	}
-		
-	void AutoStopWalking ()
+
+	void AutoStopWalking (Vector3 targetPos)
 	{
-		if (Mathf.Abs (enemyInfo.transform.position.x - enemyAction.suspiciousPoint.x) <= autoStopOffset) {
-			enemyAction.bodyAnimator.SetTrigger ("TriggerIdle");
-			enemyAction.shoulderAnimator.SetTrigger ("TriggerIdle");
+		if (Mathf.Abs (enemyInfo.transform.position.x - targetPos.x) <= autoStopOffset) {
+
+			enemyAction.bodyAnimator.SetTrigger ("TriggerSearchTarget");
+			enemyAction.shoulderAnimator.SetTrigger ("TriggerSearchTarget");
+			aroundObjects [index].TryInteract (enemyInfo.gameObject);
+			index += 1;
+			enemyInfo.detectGauge = initDetectGauge * (1 - index / aroundObjects.Count);
 		}
 		else {
 			enemyAction.bodyAnimator.SetTrigger ("TriggerWalk");

@@ -27,6 +27,9 @@ public class EnemyIdleActionChecker : ActionCheckerBase {
 		enemyAction.bodyAnimator.SetTrigger (idleBodyTriggerArray[index]);
 		enemyAction.shoulderAnimator.SetTrigger (idleHandTriggerArray[index]);
 	}
+	public override void CancelAction()
+	{
 
+	}
 	#endregion
 }

@@ -6,6 +6,8 @@ using UnityEngine;
 public class EnemyInfo : HumanInfo
 {
 	public EnemyActionType actionType;
+	public EnemyActionType previousActionType;
+
 	public DynamicObject dynamicObject;
 
 	public int teamId;
@@ -60,11 +62,6 @@ public class EnemyInfo : HumanInfo
     public bool isEnemyAttackableEnemy = false;
     // TODO 시연용으로 만들어진 것
     public GameObject attackTarget;
-
-	public void ResetToStart()
-	{
-
-	}
 
     private void Awake()
     {
@@ -170,6 +167,16 @@ public class EnemyInfo : HumanInfo
 			}
 			detectSustainTimer = 0;
 			isDetect = true;
+		}
+	}
+
+	public IEnumerator DecraseDetectGaugeInDuration (float decreaseDuration)
+	{
+		float timer = 0;
+		while (timer <= decreaseDuration) {
+			timer += dynamicObject.customDeltaTime;
+			detectGauge = Mathf.Max(0, detectGauge - detectDecreasement * dynamicObject.customDeltaTime);
+			yield return new WaitForEndOfFrame ();
 		}
 	}
 

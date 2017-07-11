@@ -28,5 +28,10 @@ public class EnemyDieChecker : ActionCheckerBase {
 		dieEvents.Invoke ();
 		isDropItem = true;
 	}
+
+	public override void CancelAction()
+	{
+
+	}
 	#endregion
 }

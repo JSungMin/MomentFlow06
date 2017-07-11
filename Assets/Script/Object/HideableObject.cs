@@ -56,12 +56,30 @@ public class HideableObject : InteractableObject {
 		isInteracted = false;
 	}
 
+	public static HideableObject FindHidedObject (GameObject obj)
+	{
+		var hideableObjs = GameObject.FindObjectsOfType<HideableObject> ();
+
+		for (int i = 0; i < hideableObjs.Length; i++)
+		{
+			if (hideableObjs[i].hidedObject == obj)
+			{
+				return hideableObjs [i];
+			}
+		}
+		return null;
+	}
+
 	#region implemented abstract members of InteractableObject
 
 	public override bool TryInteract (GameObject challenger)
 	{
-		if (!isInteracted) {
-			HideChallenger (challenger);
+		if (challenger.CompareTag ("Player")) {
+			if (!isInteracted) {
+				HideChallenger (challenger);
+			} else {
+				OutChallenger ();
+			}
 		}
 		else {
 			OutChallenger ();

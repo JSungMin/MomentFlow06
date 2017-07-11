@@ -21,13 +21,14 @@ public abstract class ActionCheckerBase : MonoBehaviour {
 
 	public virtual void TryAction ()
 	{
-		if (IsSatisfied())
-		{
+		if (IsSatisfied ()) {
 			DoAction ();
-		}
+		} else
+			CancelAction ();
 	}
 	protected abstract bool IsSatisfied ();
 	protected abstract void DoAction ();
+	public abstract void CancelAction ();
 
 	protected void CheckAndAddTargetZList (float targetZ)
 	{
@@ -54,7 +55,6 @@ public abstract class ActionCheckerBase : MonoBehaviour {
 	{
 		if (enemyAction.targetZListOffet != enemyAction.targetZList.Count)
 		{
-			Debug.Log ("Init : " + Mathf.RoundToInt (myZ));
 			enemyAction.targetZListOffet = enemyAction.targetZList.LastIndexOf (Mathf.RoundToInt (myZ)) + 1;
 		}
 	}
